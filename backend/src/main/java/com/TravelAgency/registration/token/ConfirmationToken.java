@@ -14,7 +14,14 @@ import java.time.LocalDateTime;
 @Entity
 public class ConfirmationToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "token_sequence",
+            sequenceName = "token_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "token_sequence"
+    )
     private Long id;
     @Column(nullable = false)
     private String token;
@@ -28,7 +35,7 @@ public class ConfirmationToken {
     @ManyToOne
     @JoinColumn(
             nullable = false,
-            name = "app_user_id"
+            name = "user_id"
     )
     private User user;
 

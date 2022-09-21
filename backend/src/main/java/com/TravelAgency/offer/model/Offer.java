@@ -8,7 +8,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table (name = "offer")
@@ -18,7 +17,14 @@ import java.util.Date;
 @ToString
 public class Offer implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "offer_sequence",
+            sequenceName = "offer_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "offer_sequence"
+    )
     @Column(nullable = false, updatable = false)
     Long id;
     @Column(nullable = false, updatable = false)
