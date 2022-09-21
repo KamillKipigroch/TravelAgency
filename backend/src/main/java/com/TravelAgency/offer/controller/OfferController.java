@@ -33,7 +33,7 @@ public class OfferController {
         return new ResponseEntity<>(newOffer, HttpStatus.OK);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<Offer> updateOffer(@RequestBody Offer offer) {
         Offer updateOffer = offerService.updateOffer(offer);
         return new ResponseEntity<>(updateOffer, HttpStatus.OK);
