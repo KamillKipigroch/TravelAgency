@@ -3,14 +3,13 @@ package com.TravelAgency.offer.service;
 import com.TravelAgency.exception.OfferNoFoundException;
 import com.TravelAgency.offer.model.Offer;
 import com.TravelAgency.offer.repository.OfferRepository;
+import com.neovisionaries.i18n.CountryCode;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -24,11 +23,10 @@ public class OfferService {
         final String createBusinessKeyNumber = String.valueOf(offerRepository.findAll().stream()
                 .filter(or -> Objects.equals(or.getCountry(), offer.getCountry())
                         && Objects.equals(or.getCreateDate().getYear(), offer.getCreateDate().getYear())
-                ).toList().size());
-
+                ).toList().size() + 1);
         offer.setBusinessKey(
-                offer.getCountry().substring(0, 2)
-                        + createBusinessKeyNumber + offer.getCreateDate().getYear());
+                CountryCode.findByName(offer.getCountry()).get(0).name() + "/"
+                        + createBusinessKeyNumber + "/" + offer.getCreateDate().getYear());
         return offerRepository.save(offer);
     }
 
