@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Offer} from "./offer";
+import {Offer} from "./model/offer/offer";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {OfferService} from "./offer.service";
+import {OfferService} from "./model/offer/offer.service";
 
 @Component({
   selector: 'app-root',

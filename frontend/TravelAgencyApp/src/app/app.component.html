@@ -1,3 +1,7 @@
-<div *ngFor="let offer of offers">
-  <div>{{offer.businessKey}}</div>
+<header>
+  <app-navigation></app-navigation>
+</header>
+
+<div id="content" class="mw-100">
+  <router-outlet></router-outlet>
 </div>
