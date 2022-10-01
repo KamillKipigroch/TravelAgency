@@ -1,8 +1,7 @@
 package com.TravelAgency.offer.repository;
 
-import com.TravelAgency.offer.model.Offer;
+import com.TravelAgency.offer.model.nregistered.Offer;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 

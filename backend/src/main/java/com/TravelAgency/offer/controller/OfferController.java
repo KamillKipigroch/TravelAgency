@@ -1,6 +1,6 @@
 package com.TravelAgency.offer.controller;
 
-import com.TravelAgency.offer.model.Offer;
+import com.TravelAgency.offer.model.nregistered.Offer;
 import com.TravelAgency.offer.service.OfferService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,10 +39,11 @@ public class OfferController {
         return new ResponseEntity<>(updateOffer, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{businesskey}")
-    public ResponseEntity<Offer> delete(@PathVariable("businesskey") String businessKey) {
-        return new ResponseEntity<>(offerService.deleteOffer(
-                offerService.findOfferByBusinessKey(businessKey).getId()
-        ));
+    @PutMapping("/delete/{businesskey}")
+    public ResponseEntity<Offer> deleteOffer(@RequestBody String businessKey) {
+        Offer updateOffer = offerService.findOfferByBusinessKey(businessKey);
+        updateOffer.setVisible(false);
+        offerService.updateOffer(updateOffer);
+        return new ResponseEntity<>(updateOffer, HttpStatus.OK);
     }
 }
