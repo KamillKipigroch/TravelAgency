@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Offer} from "./model/offer/offer";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {OfferService} from "./model/offer/offer.service";
+import { PrimeNGConfig } from 'primeng/api';
+
 
 @Component({
   selector: 'app-root',
@@ -13,13 +15,14 @@ export class AppComponent implements OnInit{
 
   public offers: Offer[] | undefined;
 
-  constructor(private offerService: OfferService) { }
+  constructor(private offerService: OfferService,private primengConfig: PrimeNGConfig) { }
 
   ngOnInit() {
-    this.getOffers();
+    this.primengConfig.ripple = true;
+    this.initOffers();
   }
 
-  public getOffers():void {
+  public initOffers():void {
     this.offerService.getOffers().subscribe(
       (response:Offer[]) => {
         this.offers = response;

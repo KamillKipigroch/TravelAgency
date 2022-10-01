@@ -1,0 +1,116 @@
+
+<p-toast></p-toast>
+
+<div class="card">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+      <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedOffers()" [disabled]="!selectedOffers || !selectedOffers.length"></button>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+      <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table [value]="offers" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" responsiveLayout="scroll"
+           [(selection)]="selectedOffers" [rowHover]="true" dataKey="id"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <h5 class="m-0">Manage offers</h5>
+        <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+          <!--                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />-->
+                </span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+        <th>Image</th>
+        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
+        <th pSortableColumn="category">Category <p-sortIcon field="category"></p-sortIcon></th>
+        <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
+        <th pSortableColumn="inventoryStatus">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-offer>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="offer"></p-tableCheckbox>
+        </td>
+        <td>{{offer.name}}</td>
+        <td><img [src]="'assets/showcase/images/demo/offer/' + offer.image" [alt]="offer.name" width="100" class="shadow-4" /></td>
+        <td>{{offer.price | currency:'PLN'}}</td>
+        <td>{{offer.category}}</td>
+        <td><p-rating [ngModel]="offer.rating" [cancel]="false"></p-rating></td>
+        <td><span [class]="'offer-badge status-' + (offer.inventoryStatus ? offer.inventoryStatus.toLowerCase() : '')">{{offer.inventoryStatus}}</span></td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editOffer(offer)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteOffer(offer)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{offers ? offers.length : 0 }} offers.
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="offerDialog" [style]="{width: '450px'}" header="offer Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <img [src]="'assets/showcase/images/demo/offer/' + offer.imageUrl" [alt]="offer.imageUrl" class="offer-image" *ngIf="offer.imageUrl">
+    <div class="field">
+      <label for="name">Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="offer.businessKey" required autofocus />
+      <small class="p-error" *ngIf="submitted && !offer.businessKey">Business key its required.</small>
+    </div>
+    <div class="field">
+      <label class="mb-3">Category</label>
+      <div class="formgrid grid">
+        <div class="field-radiobutton col-6">
+          <p-radioButton id="category1" name="country" value="Poland" [(ngModel)]="offer.country"></p-radioButton>
+          <label for="category1">Accessories</label>
+        </div>
+        <div class="field-radiobutton col-6">
+          <p-radioButton id="category2" name="country" value="Egypt" [(ngModel)]="offer.country"></p-radioButton>
+          <label for="category2">Clothing</label>
+        </div>
+        <div class="field-radiobutton col-6">
+          <p-radioButton id="category3" name="country" value="Electronics" [(ngModel)]="offer.country"></p-radioButton>
+          <label for="category3">Electronics</label>
+        </div>
+        <div class="field-radiobutton col-6">
+          <p-radioButton id="category4" name="country" value="Fitness" [(ngModel)]="offer.country"></p-radioButton>
+          <label for="category4">Fitness</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="formgrid grid">
+      <div class="field col">
+        <label for="price">Price</label>
+        <p-inputNumber id="price" [(ngModel)]="offer.price" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+      </div>
+      <div class="field col">
+<!--        <label for="quantity">Quantity</label>-->
+<!--        <p-inputNumber id="quantity" [(ngModel)]="offer.quantity"></p-inputNumber>-->
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveOffer()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
