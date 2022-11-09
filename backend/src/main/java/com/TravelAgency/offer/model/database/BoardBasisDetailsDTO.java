@@ -1,4 +1,4 @@
-package com.TravelAgency.offer.model.nregistered;
+package com.TravelAgency.offer.model.database;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class BoardBasisDetails implements Serializable {
+public class BoardBasisDetailsDTO implements Serializable {
     @Id
     @SequenceGenerator(name = "s_board_basis_detail",
             sequenceName = "s_board_basis_detail",
@@ -30,8 +30,9 @@ public class BoardBasisDetails implements Serializable {
     String code;
 
     Boolean visible;
-    public BoardBasisDetails(String code) {
+
+    public BoardBasisDetailsDTO(String code) {
         this.code = code;
-        this.visible = false;
+        visible = true;
     }
 }

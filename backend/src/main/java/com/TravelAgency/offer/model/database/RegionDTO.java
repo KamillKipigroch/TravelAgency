@@ -1,4 +1,4 @@
-package com.TravelAgency.offer.model.nregistered;
+package com.TravelAgency.offer.model.database;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Region implements Serializable {
+public class RegionDTO implements Serializable {
     @Id
     @SequenceGenerator(name = "s_region",
             sequenceName = "s_region",
@@ -24,15 +24,18 @@ public class Region implements Serializable {
     )
     @Column(nullable = false, updatable = false)
     Long id;
-    @Column(nullable = false, updatable = false)
-    String code;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
-    Country country;
+    CountryDTO countryDTO;
+
+    String code;
+
     Boolean visible;
-    public Region(String code) {
+
+    public RegionDTO(CountryDTO country, String code) {
+        this.countryDTO = country;
         this.code = code;
-        this.visible = true;
+        visible = true;
     }
 }

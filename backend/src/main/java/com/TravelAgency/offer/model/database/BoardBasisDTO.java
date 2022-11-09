@@ -1,4 +1,4 @@
-package com.TravelAgency.offer.model.nregistered;
+package com.TravelAgency.offer.model.database;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class BoardBasis implements Serializable {
+public class BoardBasisDTO implements Serializable {
     @Id
     @SequenceGenerator(name = "s_board_basis",
             sequenceName = "s_board_basis",
@@ -29,15 +29,11 @@ public class BoardBasis implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "code_id")
-    BoardBasisDetails code;
+    BoardBasisDetailsDTO code;
 
     Double price;
 
     @ManyToOne
     @JoinColumn(name = "offer_details_id")
-    OfferDetails offerDetails;
-
-    public BoardBasis(BoardBasisDetails code) {
-        this.code = code;
-    }
+    OfferDetailsDTO offerDetailsDTO;
 }

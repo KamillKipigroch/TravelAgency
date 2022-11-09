@@ -1,4 +1,4 @@
-package com.TravelAgency.offer.model.nregistered;
+package com.TravelAgency.offer.model.database;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Availability implements Serializable {
+public class AvailabilityDTO implements Serializable {
     @Id
     @SequenceGenerator(name = "s_availability",
             sequenceName = "s_availability",
@@ -28,9 +28,20 @@ public class Availability implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "offer_details_id")
-    OfferDetails offer;
+    OfferDetailsDTO offer;
 
-    LocalDateTime datetime;
+    @Column(nullable = false)
+    LocalDateTime datetimeStart;
+
+    @Column(nullable = false)
+    LocalDateTime datetimeEnd;
+
+    @Column(nullable = false)
+    Double price;
+
+    Double promotionPrice;
+
+    Boolean promotion;
 
     Boolean visible;
 }

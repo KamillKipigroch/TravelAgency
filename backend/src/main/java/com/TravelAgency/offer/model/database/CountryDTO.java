@@ -1,4 +1,4 @@
-package com.TravelAgency.offer.model.nregistered;
+package com.TravelAgency.offer.model.database;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Country implements Serializable {
+public class CountryDTO implements Serializable {
     @Id
     @SequenceGenerator(name = "s_country",
             sequenceName = "s_country",
@@ -24,11 +24,12 @@ public class Country implements Serializable {
     )
     @Column(nullable = false, updatable = false)
     Long id;
+
     @Column(nullable = false, updatable = false, unique = true)
     String code;
     Boolean visible;
 
-    public Country(String code) {
+    public CountryDTO(String code) {
         this.code = code;
         this.visible = true;
     }

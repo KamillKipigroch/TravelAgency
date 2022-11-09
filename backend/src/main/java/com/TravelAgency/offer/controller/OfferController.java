@@ -1,6 +1,6 @@
 package com.TravelAgency.offer.controller;
 
-import com.TravelAgency.offer.model.nregistered.Offer;
+import com.TravelAgency.offer.model.database.OfferDTO;
 import com.TravelAgency.offer.service.OfferService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,34 +16,34 @@ public class OfferController {
     private final OfferService offerService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Offer>> getAllOffers() {
-        List<Offer> listOffers = offerService.findAllOffer();
-        return new ResponseEntity<>(listOffers, HttpStatus.OK);
+    public ResponseEntity<List<OfferDTO>> getAllOffers() {
+        List<OfferDTO> listOfferDTOS = offerService.findAllOffer();
+        return new ResponseEntity<>(listOfferDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{businesskey}")
-    public ResponseEntity<Offer> getOfferByBusinessKey(@PathVariable("businesskey") String businessKey) {
-        Offer offer = offerService.findOfferByBusinessKey(businessKey);
-        return new ResponseEntity<>(offer, HttpStatus.OK);
+    @GetMapping("/find/{business-key}")
+    public ResponseEntity<OfferDTO> getOfferByBusinessKey(@PathVariable("business-key") String businessKey) {
+        OfferDTO offerDTO = offerService.findOfferByBusinessKey(businessKey);
+        return new ResponseEntity<>(offerDTO, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Offer> createOffer(@RequestBody Offer offer) {
-        Offer newOffer = offerService.addOffer(offer);
-        return new ResponseEntity<>(newOffer, HttpStatus.OK);
+    public ResponseEntity<OfferDTO> createOffer(@RequestBody OfferDTO offerDTO) {
+        OfferDTO newOfferDTO = offerService.addOffer(offerDTO);
+        return new ResponseEntity<>(newOfferDTO, HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Offer> updateOffer(@RequestBody Offer offer) {
-        Offer updateOffer = offerService.updateOffer(offer);
-        return new ResponseEntity<>(updateOffer, HttpStatus.OK);
+    public ResponseEntity<OfferDTO> updateOffer(@RequestBody OfferDTO offerDTO) {
+        OfferDTO updateOfferDTO = offerService.updateOffer(offerDTO);
+        return new ResponseEntity<>(updateOfferDTO, HttpStatus.OK);
     }
 
-    @PutMapping("/delete/{businesskey}")
-    public ResponseEntity<Offer> deleteOffer(@RequestBody String businessKey) {
-        Offer updateOffer = offerService.findOfferByBusinessKey(businessKey);
-        updateOffer.setVisible(false);
-        offerService.updateOffer(updateOffer);
-        return new ResponseEntity<>(updateOffer, HttpStatus.OK);
+    @PutMapping("/delete/{business-key}")
+    public ResponseEntity<OfferDTO> deleteOffer(@RequestBody String businessKey) {
+        OfferDTO updateOfferDTO = offerService.findOfferByBusinessKey(businessKey);
+        updateOfferDTO.setVisible(false);
+        offerService.updateOffer(updateOfferDTO);
+        return new ResponseEntity<>(updateOfferDTO, HttpStatus.OK);
     }
 }

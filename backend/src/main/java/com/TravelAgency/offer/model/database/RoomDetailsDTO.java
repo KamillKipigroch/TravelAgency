@@ -1,4 +1,4 @@
-package com.TravelAgency.offer.model.nregistered;
+package com.TravelAgency.offer.model.database;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,11 +8,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table (name = "room_details_t")
+@Table(name = "room_details_t")
 @NoArgsConstructor
 @Getter
 @Setter
-public class RoomDetails implements Serializable {
+public class RoomDetailsDTO implements Serializable {
     @Id
     @SequenceGenerator(name = "s_room_details",
             sequenceName = "s_room_details",
@@ -24,7 +24,13 @@ public class RoomDetails implements Serializable {
     )
     @Column(nullable = false, updatable = false)
     Long id;
+
     @Column(nullable = false)
     String code;
+
     Boolean visible;
+
+    public RoomDetailsDTO(String code) {
+        this.code = code;
+    }
 }
