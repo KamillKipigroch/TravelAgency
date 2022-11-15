@@ -1,12 +1,14 @@
 package com.TravelAgency.registration;
 
-import com.TravelAgency.user.User;
-import com.TravelAgency.user.UserRole;
-import com.TravelAgency.user.UserService;
+
 import com.TravelAgency.registration.token.ConfirmationToken;
 import com.TravelAgency.registration.token.ConfirmationTokenService;
-import com.TravelAgency.sender.EmailSender;
+import com.TravelAgency.security.sender.EmailSender;
+import com.TravelAgency.security.user.model.User;
+import com.TravelAgency.security.user.model.UserRole;
+import com.TravelAgency.security.user.service.UserService;
 import lombok.AllArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @Service
 @AllArgsConstructor
 public class RegistrationService {
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
     private final static String EMAIL_NOT_VALID = "Email not valid !";
     private EmailValidator emailValidator;
     private final ConfirmationTokenService confirmationTokenService;
@@ -27,6 +30,7 @@ public class RegistrationService {
         boolean isValidEmail = emailValidator.test(request.getEmail());
         if (!isValidEmail)
             throw new IllegalStateException(EMAIL_NOT_VALID);
+
         String token =  userService.signUpUser(
                 new User(
                         request.getFirstName(),
@@ -38,10 +42,14 @@ public class RegistrationService {
                 );
 
         String link = "http://localhost:8080/api/v1/registration/confirm?token=" + token;
-        emailSender.send(
-                request.getEmail(),
-                buildEmail(request.getFirstName(), link));
-
+        try{
+            emailSender.send(
+                    request.getEmail(),
+                    buildEmail(request.getFirstName(), link));
+        }
+        catch (Exception e) {
+            logger.error("Email sender dont work !");
+        }
         return token;
     }
 
@@ -89,12 +97,12 @@ public class RegistrationService {
                 "    <tr>\n" +
                 "      <td style=\"padding-top:15pt;font-size:19px\">\n" +
                 "        Hi " + name + "\n" +
-                "        <br/> Thank you for registering in TravelAgency.\n" +
+                "        <br/> Thank you for registering in CosplayCostumes.\n" +
                 "        <br/> Please click on the link to activate your account:\n" +
                 "        <p></p>\n" +
                 "        <blockquote\n" +
                 "          style=\"background-color: #f2f1ef;padding:12pt;font-size:19px\">\n" +
-                "          <a href=\""+ link +"\">Activate your account in TravelAgency !</a>\n" +
+                "          <a href=\""+ link +"\">Activate your account in CosplayCostumes !</a>\n" +
                 "        </blockquote>\n" +
                 "        Link will expire in 15 minutes. <p>See you soon</p>\n" +
                 "      </td>\n" +

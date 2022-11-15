@@ -1,18 +1,15 @@
 package com.TravelAgency;
 
-import com.TravelAgency.offer.model.database.AirportDetailsDTO;
-import com.TravelAgency.offer.model.database.BoardBasisDetailsDTO;
-import com.TravelAgency.offer.model.database.CountryDTO;
-import com.TravelAgency.offer.model.database.RegionDTO;
-import com.TravelAgency.offer.repository.*;
-import com.amadeus.exceptions.ResponseException;
+import antlr.BaseAST;
+import com.TravelAgency.security.user.model.User;
+import com.TravelAgency.security.user.model.UserRole;
+import com.TravelAgency.security.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.List;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @Configuration
@@ -20,12 +17,11 @@ public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(AirportDetailsRepository airportDetailsRepository, BoardBasisDetailsRepository boardBasisDetailsRepository,
-                                   CountryRepository countryRepository, RegionRepository regionRepository, RoomRepository roomDetails) throws ResponseException {
+    CommandLineRunner initDatabase(UserRepository userRepository) {
 
 
         return args -> {
-
+/*
             if (boardBasisDetailsRepository.findAll().size() < 1) {
                 log.info("Preloading " + boardBasisDetailsRepository.save(new BoardBasisDetailsDTO("All inclusive")));
                 log.info("Preloading " + boardBasisDetailsRepository.save(new BoardBasisDetailsDTO("According to programme")));
@@ -401,9 +397,18 @@ public class LoadDatabase {
                         new RegionDTO(
                                 countryRepository.findByCode("United States of America").orElse(null),
                                 "Florida")
-                ));
-            }
+                ));*/
 
+
+            if (userRepository.findAll().isEmpty()) {
+                BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+                log.info("Preloading " + userRepository.save(new User("admin@admin.pl", bCryptPasswordEncoder.encode("admin@admin.pl"), UserRole.Admin)));
+                log.info("Preloading " + userRepository.save(new User("user@user.pl", bCryptPasswordEncoder.encode("user@user.pl"), UserRole.User)));
+            }
         };
+
     }
+
+    ;
 }
+

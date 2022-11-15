@@ -1,6 +1,6 @@
 package com.TravelAgency.registration.token;
 
-import com.TravelAgency.user.User;
+import com.TravelAgency.security.user.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class ConfirmationToken {
             generator = "token_sequence"
     )
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10000)
     private String token;
     @Column(nullable = false)
 
