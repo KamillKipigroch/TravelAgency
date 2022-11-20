@@ -30,7 +30,7 @@ import static com.TravelAgency.security.TokenProvider.*;
 
 @Service
 public class UserService implements UserDetailsService {
-    private final static String USER_NOT_FOUND = "Failed to find user with email ";
+    public final static String USER_NOT_FOUND = "Failed to find user with email ";
     private final static String USER_ID_NOT_FOUND = "Failed to find user with id ";
     private final static String EMAIL_IS_TAKEN = "Email is already taken ";
     private final static String CANT_LOGIN = "Email or password its incorrect";
@@ -80,7 +80,7 @@ public class UserService implements UserDetailsService {
 
         newUser.setPassword(encodedPassword);
 
-            userRepository.save(newUser);
+        userRepository.save(newUser);
 
         String token = generate(newUser);
         ConfirmationToken confirmationToken = new ConfirmationToken(
@@ -103,8 +103,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new FindException(USER_NOT_FOUND + loginUser.getEmail()));
 
         if (bCryptPasswordEncoder.matches(loginUser.getPassword(), user.getPassword())) {
-
-            return userRepository.save(user);
+            return user;
         } else
             throw new IllegalStateException(CANT_LOGIN);
     }
@@ -119,6 +118,10 @@ public class UserService implements UserDetailsService {
         if (!Objects.equals(bCryptPasswordEncoder.encode(loginUser.getPassword()), bCryptPasswordEncoder.encode(user.getPassword()))) {
             throw new IllegalStateException(CANT_LOGIN);
         }
+    }
+
+    public boolean isUserEnabled(String email) {
+        return userRepository.findUserByEmail(email).map(User::getEnabled).orElseThrow(() -> new FindException(USER_NOT_FOUND + email));
     }
 
     public int enableUser(String email) {
@@ -143,7 +146,7 @@ public class UserService implements UserDetailsService {
                 .setAudience(TOKEN_AUDIENCE)
                 .setSubject(user.getUsername())
                 .claim("rol", roles)
-                .claim("name", user.getFirstName()+" "+user.getLastName())
+                .claim("name", user.getFirstName() + " " + user.getLastName())
                 .claim("preferred_username", user.getUsername())
                 .claim("email", user.getEmail())
                 .compact();

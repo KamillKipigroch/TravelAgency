@@ -3,7 +3,7 @@ import {Offer} from "../../model/offer/offer";
 import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import {HttpErrorResponse} from "@angular/common/http";
-import {OfferService} from "../../model/offer/offer.service";
+import {OfferService} from "../_services/offer.service";
 import {empty} from "rxjs";
 
 @Component({

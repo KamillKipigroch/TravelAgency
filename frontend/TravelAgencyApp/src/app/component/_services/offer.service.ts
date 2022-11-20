@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Offer } from './offer';
+import { Offer } from '../../model/offer/offer';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -24,5 +24,5 @@ import { environment } from 'src/environments/environment';
   public deleteOffer(businessKey: String): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/offer/delete/${businessKey}`)
   }
-  
+
 }

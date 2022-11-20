@@ -5,10 +5,10 @@ import com.TravelAgency.registration.RegistrationService;
 import com.TravelAgency.security.TokenProvider;
 import com.TravelAgency.security.user.model.AuthResponse;
 import com.TravelAgency.security.user.model.LoginUser;
-import com.TravelAgency.security.user.model.User;
 import com.TravelAgency.security.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,9 +30,12 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public AuthResponse loginUser(@Valid @RequestBody LoginUser user) {
-        String token = authenticateAndGetToken(user.getEmail(), user.getPassword());
-        return new AuthResponse(token);
+    public ResponseEntity<AuthResponse> loginUser(@Valid @RequestBody LoginUser user) {
+        if(!userService.isUserEnabled(user.getEmail()))
+            throw new IllegalStateException("You must verify your email first!");
+
+        var token = authenticateAndGetToken(user.getEmail(), user.getPassword());
+        return new ResponseEntity<>(new AuthResponse(token), HttpStatus.OK);
     }
 
 

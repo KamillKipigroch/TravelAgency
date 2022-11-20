@@ -1,15 +1,44 @@
 import { Component, OnInit } from '@angular/core';
+import { StorageService } from '../_services/storage.service';
+import {Subscription} from "rxjs";
+import {MessageService} from "primeng/api";
+import {IUser} from "../../model/user/user";
 
 @Component({
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css']
+  styleUrls: ['./navigation.component.css'],
+  providers: [MessageService]
 })
 export class NavigationComponent implements OnInit {
+  private roles: string[] = [];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showModeratorBoard = false;
+  username?: string;
 
-  constructor() { }
+  constructor(
+    private storageService: StorageService,
+    private messageService:MessageService
+  ) {}
 
   ngOnInit(): void {
+    this.isLoggedIn = this.storageService.isLoggedIn();
+
+    if (this.isLoggedIn) {
+      const user:IUser = this.storageService.getUser();
+      this.roles = user.rol
+      this.showAdminBoard = this.roles.includes('Admin');
+      this.showModeratorBoard = this.roles.includes('User');
+
+      this.username = user.name;
+    }
+  }
+
+  logout(): void {
+    this.messageService.add({severity: 'info', summary: 'You can login again', detail:  "You can login again", life: 3000});
+
+    this.storageService.logout();
   }
 
 }

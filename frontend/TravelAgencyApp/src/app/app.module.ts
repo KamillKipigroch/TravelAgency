@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
-import {OfferService} from "./model/offer/offer.service";
+import {OfferService} from "./component/_services/offer.service";
 import {HttpClientModule} from "@angular/common/http";
 import {NavigationComponent} from './component/navigation/navigation.component';
 import {RouterModule} from "@angular/router";
@@ -23,9 +23,13 @@ import {DialogModule} from "primeng/dialog";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RegisterComponent} from "./component/user/register/register.component";
+import {LoginComponent} from "./component/user/login/login.component";
 
 @NgModule({
   declarations: [
+    RegisterComponent,
+    LoginComponent,
     AppComponent,
     NavigationComponent,
     HomeComponent,
@@ -53,6 +57,14 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
       {
         path: 'configure/offers',
         component: ConfigureOfferComponent
+      },
+      {
+        path: 'login',
+        component: LoginComponent
+      },
+      {
+        path: 'register',
+        component: RegisterComponent
       },
       {
         path: '**',
