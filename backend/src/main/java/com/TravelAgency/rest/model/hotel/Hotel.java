@@ -1,12 +1,17 @@
-package com.TravelAgency.rest.model;
+package com.TravelAgency.rest.model.hotel;
 
+import com.TravelAgency.rest.model.hotelImage.HotelImage;
+import com.TravelAgency.rest.model.offer.Offer;
+import com.TravelAgency.rest.model.room.Room;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Set;
 
 @Entity
@@ -19,17 +24,18 @@ public class Hotel implements Serializable {
     @SequenceGenerator(name = "s_hotel", sequenceName = "s_hotel", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s_hotel")
     @Column(nullable = false, updatable = false)
+    @JsonIgnore
     Long id;
 
     @OneToOne
     @JoinColumn(name = "offer_id")
+    @JsonIgnore
     Offer offer;
 
-    int standard;
+    @Max(5) @Min(0) int standard;
 
-    @OneToMany
-    @JoinColumn(name = "image_id")
-    Set<Image> images;
+    @OneToMany(mappedBy = "offer")
+    Set<HotelImage> offerImageSet;
 
 
     @OneToMany

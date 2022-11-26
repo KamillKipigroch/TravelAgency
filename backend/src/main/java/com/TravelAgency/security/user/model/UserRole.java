@@ -5,6 +5,6 @@ import javax.persistence.Table;
 @Table(name = "user_role_t")
 public enum UserRole {
     User,
-    Employer,
+    Employee,
     Admin
 }

@@ -1,4 +1,4 @@
-package com.TravelAgency.rest.model;
+package com.TravelAgency.rest.model.roomDetail;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class RoomDetails implements Serializable {
+public class RoomDetail implements Serializable {
     @Id
     @SequenceGenerator(name = "s_room_details", sequenceName = "s_room_details", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "s_room_details")
@@ -20,11 +20,11 @@ public class RoomDetails implements Serializable {
     Long id;
 
     @Column(nullable = false)
-    String value;
+    String name;
 
     Boolean visible;
 
-    public RoomDetails(String value) {
-        this.value = value;
+    public RoomDetail(String name) {
+        this.name = name;
     }
 }

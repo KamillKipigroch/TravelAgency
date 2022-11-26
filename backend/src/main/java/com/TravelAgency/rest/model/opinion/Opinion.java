@@ -1,6 +1,10 @@
-package com.TravelAgency.rest.model;
+package com.TravelAgency.rest.model.opinion;
 
+import com.TravelAgency.rest.model.opinionImage.OpinionImage;
+import com.TravelAgency.rest.model.offer.Offer;
 import com.TravelAgency.security.user.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,23 +32,32 @@ public class Opinion implements Serializable {
     @Column(nullable = false, updatable = false)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"id","userRole", "username", "authorities","accountNonExpired","credentialsNonExpired","accountNonLocked"})
     User user;
+
+    @ManyToOne
+    @JoinColumn(name = "offer_id")
+    @JsonIgnore
+    Offer offer;
 
     private Double value;
 
     private String description;
+
+    @OneToMany(mappedBy = "opinion")
+    @JsonIgnoreProperties({"opinion"})
+    private Set<OpinionImage> opinionImages;
 
     private LocalDateTime createDate;
 
     private Boolean visible;
 
 
-    public Opinion(User user,  Double value, String description, LocalDateTime createDate) {
+    public Opinion(User user, Offer offer, Double value, String description, LocalDateTime createDate) {
         this.user = user;
-//        this.product = product;
-//        this.images = images;
+        this.offer = offer;
         this.value = value;
         this.description = description;
         this.createDate = createDate;

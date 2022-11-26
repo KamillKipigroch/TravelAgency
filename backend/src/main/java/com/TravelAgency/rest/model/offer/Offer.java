@@ -1,5 +1,6 @@
-package com.TravelAgency.rest.model;
+package com.TravelAgency.rest.model.offer;
 
+import com.TravelAgency.rest.model.hotel.Hotel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +24,7 @@ public class Offer implements Serializable {
     Long id;
 
     @Column(nullable = false, updatable = false)
-    String businessKey;
+    String offerCode;
 
     @OneToOne
     @JoinColumn(name = "hotel_id")

@@ -1,6 +1,6 @@
 <div class="bd-example">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" routerLinkActive="active current" routerLink="/home">Travel Agency</a>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 70pt">
+    <a class="navbar-brand"  styleClass="mb-5" routerLinkActive="active current" routerLink="/home">Travel Agency</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -23,7 +23,10 @@
           Configure
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="/configure/room-details">RoomDetails</a>
+          <a class="dropdown-item" routerLink="/configure/order-status">OrderStatus</a>
           <a class="dropdown-item" routerLink="/configure/offers">Offers</a>
+
           <a class="dropdown-item" href="#">Employee</a>
         </div>
       </li>

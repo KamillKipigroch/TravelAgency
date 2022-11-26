@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StorageService } from '../_services/storage.service';
+import { StorageService } from '../services/storage.service';
 import {Subscription} from "rxjs";
 import {MessageService} from "primeng/api";
 import {IUser} from "../../model/user/user";
@@ -29,7 +29,7 @@ export class NavigationComponent implements OnInit {
       const user:IUser = this.storageService.getUser();
       this.roles = user.rol
       this.showAdminBoard = this.roles.includes('Admin');
-      this.showModeratorBoard = this.roles.includes('User');
+      this.showModeratorBoard = this.roles.includes('Employee');
 
       this.username = user.name;
     }

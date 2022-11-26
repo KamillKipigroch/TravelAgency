@@ -1,6 +1,7 @@
 package com.TravelAgency;
 
-import antlr.BaseAST;
+import com.TravelAgency.rest.model.country.Country;
+import com.TravelAgency.rest.repository.CountryRepository;
 import com.TravelAgency.security.user.model.User;
 import com.TravelAgency.security.user.model.UserRole;
 import com.TravelAgency.security.user.repository.UserRepository;
@@ -17,7 +18,7 @@ public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    CommandLineRunner initDatabase(UserRepository userRepository) {
+    CommandLineRunner initDatabase(UserRepository userRepository, CountryRepository countryRepository) {
 
 
         return args -> {
@@ -57,37 +58,37 @@ public class LoadDatabase {
                 log.info("Preloading " + airportDetailsRepository.save(new AirportDetailsDTO("Warszawa - Radom")));
                 log.info("Preloading " + airportDetailsRepository.save(new AirportDetailsDTO("Wrozław")));
                 log.info("Preloading " + airportDetailsRepository.save(new AirportDetailsDTO("Zielona Góra")));
-            }
+            }*/
             if (countryRepository.findAll().size() < 1) {
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Albania")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Azores")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Bali")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Bulgaria")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Cabo Verde")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Canary Islands")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Croatia")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Cuba")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Cyprus")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Dominican Republic")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Egypt")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Georgia")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Greece")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Italy")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Madagascar")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Madeira")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Maldives")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Mexico")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Oman")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Poland")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Portugal")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Spain")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Thailand")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Turkey")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("United Arab Emirates")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("United States of America")));
-                log.info("Preloading " + countryRepository.save(new CountryDTO("Zanzibar")));
+                log.info("Preloading " + countryRepository.save(new Country("Albania")));
+                log.info("Preloading " + countryRepository.save(new Country("Azores")));
+                log.info("Preloading " + countryRepository.save(new Country("Bali")));
+                log.info("Preloading " + countryRepository.save(new Country("Bulgaria")));
+                log.info("Preloading " + countryRepository.save(new Country("Cabo Verde")));
+                log.info("Preloading " + countryRepository.save(new Country("Canary Islands")));
+                log.info("Preloading " + countryRepository.save(new Country("Croatia")));
+                log.info("Preloading " + countryRepository.save(new Country("Cuba")));
+                log.info("Preloading " + countryRepository.save(new Country("Cyprus")));
+                log.info("Preloading " + countryRepository.save(new Country("Dominican Republic")));
+                log.info("Preloading " + countryRepository.save(new Country("Egypt")));
+                log.info("Preloading " + countryRepository.save(new Country("Georgia")));
+                log.info("Preloading " + countryRepository.save(new Country("Greece")));
+                log.info("Preloading " + countryRepository.save(new Country("Italy")));
+                log.info("Preloading " + countryRepository.save(new Country("Madagascar")));
+                log.info("Preloading " + countryRepository.save(new Country("Madeira")));
+                log.info("Preloading " + countryRepository.save(new Country("Maldives")));
+                log.info("Preloading " + countryRepository.save(new Country("Mexico")));
+                log.info("Preloading " + countryRepository.save(new Country("Oman")));
+                log.info("Preloading " + countryRepository.save(new Country("Poland")));
+                log.info("Preloading " + countryRepository.save(new Country("Portugal")));
+                log.info("Preloading " + countryRepository.save(new Country("Spain")));
+                log.info("Preloading " + countryRepository.save(new Country("Thailand")));
+                log.info("Preloading " + countryRepository.save(new Country("Turkey")));
+                log.info("Preloading " + countryRepository.save(new Country("United Arab Emirates")));
+                log.info("Preloading " + countryRepository.save(new Country("United States of America")));
+                log.info("Preloading " + countryRepository.save(new Country("Zanzibar")));
             }
-            if (regionRepository.findAll().size() < 1 && countryRepository.findAll().size() > 0) {
+            /*if (regionRepository.findAll().size() < 1 && countryRepository.findAll().size() > 0) {
                 List<CountryDTO> countryDTOList = countryRepository.findAll();
                 countryDTOList.forEach(countryDTO -> {
                     log.info("Preloading " + regionRepository.save(

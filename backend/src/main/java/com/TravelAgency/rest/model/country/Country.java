@@ -1,4 +1,4 @@
-package com.TravelAgency.rest.model;
+package com.TravelAgency.rest.model.country;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,14 +26,11 @@ public class Country implements Serializable {
     Long id;
 
     @Column(nullable = false, updatable = false)
-    String code;
-
-    @Column(nullable = false)
-    String value;
+    String name;
     Boolean visible;
 
-    public Country(String code) {
-        this.code = code;
+    public Country(String name) {
+        this.name = name;
         this.visible = true;
     }
 }

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {Offer} from "../../model/offer/offer";
+import {Offer} from "../../../../model/offer/offer";
 import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import {HttpErrorResponse} from "@angular/common/http";
-import {OfferService} from "../_services/offer.service";
+import {OfferService} from "../../../services/offer.service";
 import {empty} from "rxjs";
 
 @Component({

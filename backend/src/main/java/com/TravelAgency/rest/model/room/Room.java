@@ -1,5 +1,8 @@
-package com.TravelAgency.rest.model;
+package com.TravelAgency.rest.model.room;
 
+import com.TravelAgency.rest.model.roomDetail.RoomDetail;
+import com.TravelAgency.rest.model.hotel.Hotel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,10 +30,11 @@ public class Room implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "room_details_id")
-    RoomDetails roomDetails;
+    RoomDetail roomDetail;
 
     @ManyToOne
     @JoinColumn(name = "hotel_dto_id")
+    @JsonIgnore
     Hotel hotel;
 
     Double price;
