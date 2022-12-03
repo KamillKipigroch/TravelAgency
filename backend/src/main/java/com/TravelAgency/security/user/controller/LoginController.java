@@ -1,7 +1,7 @@
 package com.TravelAgency.security.user.controller;
 
-import com.TravelAgency.registration.RegistrationRequest;
-import com.TravelAgency.registration.RegistrationService;
+import com.TravelAgency.security.user.registration.RegistrationRequest;
+import com.TravelAgency.security.user.registration.RegistrationService;
 import com.TravelAgency.security.TokenProvider;
 import com.TravelAgency.security.user.model.AuthResponse;
 import com.TravelAgency.security.user.model.LoginUser;
@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.lang.module.FindException;
+
+import static com.TravelAgency.comunicates.Communicates.VERIFY_YOUR_EMAIL;
 
 @RestController
 @AllArgsConstructor
@@ -31,10 +34,17 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> loginUser(@Valid @RequestBody LoginUser user) {
-        if(!userService.isUserEnabled(user.getEmail()))
-            throw new IllegalStateException("You must verify your email first!");
-
-        var token = authenticateAndGetToken(user.getEmail(), user.getPassword());
+        String token;
+        try {
+            if (!userService.isUserEnabled(user.getEmail()))
+                throw new IllegalStateException(VERIFY_YOUR_EMAIL);
+            token = authenticateAndGetToken(user.getEmail(), user.getPassword());
+        } catch (Exception e) {
+            if (e.getMessage() != VERIFY_YOUR_EMAIL) {
+                throw new FindException("Bad login or Password");
+            }
+            throw new FindException(VERIFY_YOUR_EMAIL);
+        }
         return new ResponseEntity<>(new AuthResponse(token), HttpStatus.OK);
     }
 

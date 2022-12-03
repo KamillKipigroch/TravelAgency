@@ -1,6 +1,9 @@
 package com.TravelAgency.rest.service;
 
+import com.TravelAgency.rest.model.country.Country;
+import com.TravelAgency.rest.model.hotel.Hotel;
 import com.TravelAgency.rest.model.offer.Offer;
+import com.TravelAgency.rest.model.offer.OfferRequest;
 import com.TravelAgency.rest.model.opinion.Opinion;
 import com.TravelAgency.rest.model.opinion.OpinionRequest;
 import com.TravelAgency.rest.repository.OfferRepository;
@@ -29,25 +32,14 @@ public class OfferService {
                 .orElseThrow(() -> new FindException(NOT_FOUND_WITH_ID + id));
     }
 
-    public Offer findByOfferCode(String code) {
-        return offerRepository.findByOfferCode(code)
-                .orElseThrow(() -> new FindException(NOT_FOUND_WITH_NAME ));
-    }
 
-    public Offer add(OpinionRequest request) {
+    public Offer add(OfferRequest offerRequest, Country country) {
         var newObject = new Offer();
+        newObject.setCountry(country);
+        newObject.setDescription(offerRequest.getDescription());
         newObject.setCreateDate(LocalDateTime.now());
         newObject.setVisible(true);
         return offerRepository.save(newObject);
-    }
-
-    public Offer update(Opinion opinion) {
-        var update = offerRepository.findById(opinion.getId()).orElseThrow(() ->
-                new FindException(NOT_FOUND_WITH_ID + opinion.getId()));
-//        update.setVisible(setVisibleopinion.getValue());
-        update.setDescription(opinion.getDescription());
-        update.setVisible(opinion.getVisible());
-        return offerRepository.save(update);
     }
 
     public void delete(Long id) {

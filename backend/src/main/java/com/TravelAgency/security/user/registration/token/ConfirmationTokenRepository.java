@@ -1,4 +1,4 @@
-package com.TravelAgency.registration.token;
+package com.TravelAgency.security.user.registration.token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

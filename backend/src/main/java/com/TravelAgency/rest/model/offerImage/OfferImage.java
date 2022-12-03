@@ -1,4 +1,4 @@
-package com.TravelAgency.rest.model.hotelImage;
+package com.TravelAgency.rest.model.offerImage;
 
 import com.TravelAgency.rest.model.offer.Offer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class HotelImage implements Serializable {
+public class OfferImage implements Serializable {
     @Id
     @SequenceGenerator(name = "s_offer_image",
             sequenceName = "s_offer_image",
@@ -36,7 +36,7 @@ public class HotelImage implements Serializable {
 
     private Boolean visible;
 
-    public HotelImage(String name, Offer offer) {
+    public OfferImage(String name, Offer offer) {
         this.name = name;
         this.offer= offer;
         this.visible = true;

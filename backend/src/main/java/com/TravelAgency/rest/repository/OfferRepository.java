@@ -7,7 +7,6 @@ import java.util.Optional;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
     Optional<Offer> findById(Long id);
-    Optional<Offer> findByOfferCode(String offerCode);
 
 
 }

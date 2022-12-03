@@ -1,11 +1,14 @@
 package com.TravelAgency.rest.model.offerAvailability;
 
+import com.TravelAgency.rest.model.offer.Offer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,11 +29,16 @@ public class OfferAvailability implements Serializable {
     @Column(nullable = false, updatable = false)
     Long id;
 
-    @Column(nullable = false)
-    LocalDateTime datetimeStart;
+    @ManyToOne
+    @JoinColumn(name = "offer_id")
+    @JsonIgnore
+    Offer offer;
 
     @Column(nullable = false)
-    LocalDateTime datetimeEnd;
+    LocalDate datetimeStart;
+
+    @Column(nullable = false)
+    LocalDate datetimeEnd;
 
     @Column(nullable = false)
     Double price;

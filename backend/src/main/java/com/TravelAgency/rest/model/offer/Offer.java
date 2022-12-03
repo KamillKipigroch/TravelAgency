@@ -1,6 +1,10 @@
 package com.TravelAgency.rest.model.offer;
 
+import com.TravelAgency.rest.model.country.Country;
 import com.TravelAgency.rest.model.hotel.Hotel;
+import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
+import com.TravelAgency.rest.model.offerImage.OfferImage;
+import com.TravelAgency.rest.model.opinion.Opinion;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,6 +13,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "offer_t")
@@ -23,12 +29,21 @@ public class Offer implements Serializable {
     @Column(nullable = false, updatable = false)
     Long id;
 
-    @Column(nullable = false, updatable = false)
-    String offerCode;
+    @OneToMany(mappedBy = "offer")
+    Set<Hotel> hotel;
 
     @OneToOne
-    @JoinColumn(name = "hotel_id")
-    Hotel hotel;
+    @JoinColumn(name = "country_id")
+    Country country;
+
+    @OneToMany(mappedBy = "offer")
+    Set<OfferImage> images;
+
+    @OneToMany(mappedBy = "offer")
+    Set<Opinion> opinions;
+
+    @OneToMany(mappedBy = "offer")
+    Set<OfferAvailability> availabilities = new HashSet<>();
 
     String description;
 

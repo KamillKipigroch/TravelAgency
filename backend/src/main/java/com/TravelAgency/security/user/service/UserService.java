@@ -1,9 +1,11 @@
 package com.TravelAgency.security.user.service;
 
-import com.TravelAgency.registration.token.ConfirmationToken;
-import com.TravelAgency.registration.token.ConfirmationTokenService;
+import com.TravelAgency.security.user.registration.RegisterUserRequest;
+import com.TravelAgency.security.user.registration.token.ConfirmationToken;
+import com.TravelAgency.security.user.registration.token.ConfirmationTokenService;
 import com.TravelAgency.security.user.model.LoginUser;
 import com.TravelAgency.security.user.model.User;
+import com.TravelAgency.security.user.model.UserRole;
 import com.TravelAgency.security.user.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,7 +24,6 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -67,7 +68,7 @@ public class UserService implements UserDetailsService {
                 new FindException(USER_NOT_FOUND + email));
     }
 
-    public String signUpUser(User newUser) {
+    public String signUpUser(User newUser, boolean setEnabled) {
         boolean userExist =
                 userRepository.findUserByEmail(newUser.getEmail()).isPresent();
 
@@ -79,6 +80,7 @@ public class UserService implements UserDetailsService {
                 .encode(newUser.getPassword());
 
         newUser.setPassword(encodedPassword);
+        newUser.setEnabled(setEnabled);
 
         userRepository.save(newUser);
 
@@ -95,6 +97,12 @@ public class UserService implements UserDetailsService {
         return token;
     }
 
+    public List<User> findAllUsers(){
+        return userRepository.findAll().stream().filter(it-> it.getUserRole()== UserRole.User).toList();
+    }
+    public List<User> findAllEmployers(){
+        return userRepository.findAll().stream().filter(it-> it.getUserRole()== UserRole.Employee).toList();
+    }
     public User loginUser(LoginUser loginUser) {
         if (loginUser == null || loginUser.getEmail().isEmpty()) {
             throw new FindException(USER_NOT_FOUND);
@@ -108,24 +116,25 @@ public class UserService implements UserDetailsService {
             throw new IllegalStateException(CANT_LOGIN);
     }
 
-    public void logoutUser(User user) {
-        if (user == null) {
-            throw new IllegalStateException(USER_NOT_FOUND);
-        }
-        User loginUser = userRepository.findUserByEmail(user.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException(USER_NOT_FOUND + user.getEmail()));
-
-        if (!Objects.equals(bCryptPasswordEncoder.encode(loginUser.getPassword()), bCryptPasswordEncoder.encode(user.getPassword()))) {
-            throw new IllegalStateException(CANT_LOGIN);
-        }
-    }
-
     public boolean isUserEnabled(String email) {
         return userRepository.findUserByEmail(email).map(User::getEnabled).orElseThrow(() -> new FindException(USER_NOT_FOUND + email));
     }
 
     public int enableUser(String email) {
         return userRepository.enableUser(email);
+    }
+
+    public User lockUser(RegisterUserRequest request) {
+        var user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(FindException::new);
+
+        user.setLocked(true);
+        return userRepository.save(user);
+    }
+    public User unlockUser(RegisterUserRequest request) {
+        var user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(FindException::new);
+
+        user.setLocked(false);
+        return userRepository.save(user);
     }
 
     public String generate(User user) {

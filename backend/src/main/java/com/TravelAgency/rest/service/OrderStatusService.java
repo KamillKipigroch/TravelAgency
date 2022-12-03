@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.lang.module.FindException;
 import java.util.List;
 
-import static com.TravelAgency.comunicates.Communicates.DONT_EXIST;
+import static com.TravelAgency.comunicates.Communicates.IS_ALREADY_EXIST;
 import static com.TravelAgency.comunicates.Communicates.NOT_FOUND_WITH_ID;
 
 
@@ -29,7 +29,7 @@ public class OrderStatusService {
 
     public OrderStatus add(OrderStatusRequest request) {
         if (orderStatusRepository.findByName(request.getName()).isPresent()) {
-            throw new FindException(DONT_EXIST + request.getName());
+            throw new FindException(IS_ALREADY_EXIST + request.getName());
         }
         var newObject = new OrderStatus();
         newObject.setVisible(true);

@@ -6,7 +6,7 @@ import lombok.Data;
 public class OpinionRequest {
     private String userEmail;
 
-    private String offerCode;
+    private Long offerId;
 
     private Double value;
 

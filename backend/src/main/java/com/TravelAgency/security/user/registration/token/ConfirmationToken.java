@@ -1,4 +1,4 @@
-package com.TravelAgency.registration.token;
+package com.TravelAgency.security.user.registration.token;
 
 import com.TravelAgency.security.user.model.User;
 import lombok.Getter;

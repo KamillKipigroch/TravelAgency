@@ -64,7 +64,7 @@ public class LoadDatabase {
                 log.info("Preloading " + countryRepository.save(new Country("Azores")));
                 log.info("Preloading " + countryRepository.save(new Country("Bali")));
                 log.info("Preloading " + countryRepository.save(new Country("Bulgaria")));
-                log.info("Preloading " + countryRepository.save(new Country("Cabo Verde")));
+                log.info("Preloading " + countryRepository.save(new Country("Cab Verde")));
                 log.info("Preloading " + countryRepository.save(new Country("Canary Islands")));
                 log.info("Preloading " + countryRepository.save(new Country("Croatia")));
                 log.info("Preloading " + countryRepository.save(new Country("Cuba")));

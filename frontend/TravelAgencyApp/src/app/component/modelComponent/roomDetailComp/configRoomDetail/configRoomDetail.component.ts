@@ -3,6 +3,8 @@ import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import {HttpErrorResponse} from "@angular/common/http";
 import {RoomDetail, RoomDetailService} from "../../../services/roomDetail.service";
+import {IUser} from "../../../../model/user/user";
+import {StorageService} from "../../../services/storage.service";
 
 @Component({
   selector: 'app-configure-offer',
@@ -30,8 +32,15 @@ export class ConfigRoomDetailComponent implements OnInit {
 
   submitted: boolean = false;
 
+  showAdminBoard:  boolean = false;
+
+  showModeratorBoard: boolean = false;
+
+  private roles: string[] = [];
+
+
   constructor(private roomDetailService: RoomDetailService, private messageService: MessageService,
-              private confirmationService: ConfirmationService) {
+              private confirmationService: ConfirmationService, private storageService: StorageService) {
     this.choose = {
       id: 0,
       name: '',
@@ -41,6 +50,13 @@ export class ConfigRoomDetailComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    const user:IUser = this.storageService.getUser();
+    this.roles = user.rol
+    this.showAdminBoard = this.roles.includes('Admin');
+    this.showModeratorBoard = this.roles.includes('Employee');
+
+
     this.choose = {
       id: 0,
       name: '',
@@ -61,7 +77,9 @@ export class ConfigRoomDetailComponent implements OnInit {
         this.all = response;
       },
       (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.messageService.add({
+          severity: 'error', summary: 'Error', detail: 'Something go wrong ', life: 3000
+        });
       }
     );
   }

@@ -8,7 +8,6 @@ import {RouterModule} from "@angular/router";
 import {HomeComponent} from './component/home/home.component';
 import {OfferComponent} from './component/modelComponent/offerComp/offer/offer.component';
 import {NotFoundComponent} from './component/not-found/not-found.component';
-import {ConfigureOfferComponent} from './component/modelComponent/offerComp/configOffer/configure-offer.component';
 import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
 import {FileUploadModule} from "primeng/fileupload";
@@ -32,6 +31,10 @@ import {CheckboxModule} from "primeng/checkbox";
 import {
   ConfigOrderStatusComponent
 } from "./component/modelComponent/order-status/configOrderStatus/configOrderStatus.component";
+import {EmployeeComponent} from "./component/modelComponent/employee/employee/employee.component";
+import {UserComponent} from "./component/modelComponent/user/user/user.component";
+import {DataViewModule} from "primeng/dataview";
+import {CardModule} from "primeng/card";
 
 @NgModule({
   declarations: [
@@ -41,9 +44,10 @@ import {
     NavigationComponent,
     HomeComponent,
     OfferComponent,
-    ConfigureOfferComponent,
     ConfigOrderStatusComponent,
     ConfigRoomDetailComponent,
+    EmployeeComponent,
+    UserComponent,
 
     NotFoundComponent
 
@@ -63,12 +67,20 @@ import {
         component: HomeComponent
       },
       {
-        path: 'offers',
+        path: 'all',
         component: OfferComponent
       },
       {
-        path: 'configure/offers',
-        component: ConfigureOfferComponent
+        path: 'last-minute',
+        component: OfferComponent
+      },
+      {
+        path: 'employers',
+        component: EmployeeComponent
+      },
+      {
+        path: 'users',
+        component: UserComponent
       },
       {
         path: 'configure/room-details',
@@ -104,10 +116,12 @@ import {
     DialogModule,
     RippleModule,
     InputTextModule,
-    CheckboxModule
+    CheckboxModule,
+    DataViewModule,
+    CardModule
   ],
   providers: [OfferService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

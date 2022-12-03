@@ -1,0 +1,103 @@
+<p-toast></p-toast>
+
+<div class="card">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table [value]="all" [rows]="10" [paginator]="true" [globalFilterFields]="['id']" responsiveLayout="scroll" [rowHover]="true" dataKey="id"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="id">Id
+          <p-sortIcon field="id"></p-sortIcon>
+        </th>
+        <th pSortableColumn="firstName">First Name
+          <p-sortIcon field="firstName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="lastName">Last Name
+          <p-sortIcon field="lastName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="email">Email
+          <p-sortIcon field="email"></p-sortIcon>
+        </th>
+        <th pSortableColumn="locked">Locked
+          <p-sortIcon field="locked"></p-sortIcon>
+        </th>
+        <th pSortableColumn="enabled">Enabled
+          <p-sortIcon field="enabled"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.locked}}</td>
+        <td>{{user.enabled}}</td>
+        <td>
+          <button *ngIf="!user.enabled" pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-success mr-2"
+                  (click)="enable(user)"></button>
+
+          <button *ngIf="user.locked" pButton pRipple icon="pi pi-lock-open" class="p-button-rounded p-button-warning"
+                  (click)="lockOrUnlock(user)"></button>
+
+          <button *ngIf="!user.locked" pButton pRipple icon="pi pi-lock" class="p-button-rounded p-button-warning"
+                  (click)="lockOrUnlock(user)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <div class="flex align-items-center justify-content-between">
+        In total there are {{all ? all.length : 0 }} elements
+      </div>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog [(visible)]="addEditDialog" [style]="{width: '450px'}" [header]="header" [modal]="true"
+          (invalid)="choose.email" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="firstName">First name</label>
+      <input type="text" pInputText id="firstName" [(ngModel)]="choose.firstName" required autofocus/>
+      <small class="p-error" *ngIf="submitted && choose.firstName!=''">First Name its required.</small>
+    </div>
+    <div class="field">
+      <label for="lastName">Last name</label>
+      <input type="text" pInputText id="lastName" [(ngModel)]="choose.lastName" required autofocus/>
+      <small class="p-error" *ngIf="submitted && !choose.lastName">Last Name its required.</small>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" pInputText id="email" [(ngModel)]="choose.email" required email autofocus #prmEmail="ngModel"/>
+      <small class="p-error" *ngIf="submitted && !choose.email ">Email its required.</small>
+    </div>
+    <div class="field" *ngIf="header!='Add new'" style="padding-top: 10pt">
+      <h6>Enabled</h6 >
+      <div class="field-checkbox">
+        <p-checkbox [(ngModel)]="choose.enabled" [binary]="true" id="enabled" style="padding-bottom: 5pt; margin-left: 10pt" ></p-checkbox>
+        <label for="enabled" style="margin-top: 5pt; margin-left: 10pt">{{choose.enabled}}</label>
+      </div>
+    </div>
+    <div class="field" style="padding-top: 10pt" *ngIf="header!='Add new'">
+      <h6>Locked</h6 >
+      <div class="field-checkbox">
+        <p-checkbox [(ngModel)]="choose.locked" [binary]="true" id="locked" style="padding-bottom: 5pt; margin-left: 10pt"></p-checkbox>
+        <label for="enabled" style="margin-top: 5pt; margin-left: 10pt">{{choose.locked}}</label>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

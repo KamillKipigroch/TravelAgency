@@ -11,23 +11,29 @@
         <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item" routerLinkActive="active current">
-        <a class="nav-link" routerLink="#">Last Minute</a>
+        <a class="nav-link" routerLink="/last-minute">Last Minute</a>
       </li>
 
       <li class="nav-item" routerLinkActive="active current">
-        <a class="nav-link" routerLink="/offers">Offers</a>
+        <a class="nav-link" routerLink="/all">All</a>
       </li>
-      <li class="nav-item dropdown" *ngIf="showAdminBoard">
-        <a class="nav-link dropdown-toggle" routerLinkActive="active current" id="navbarDropdown" role="button"
+
+      <li class="nav-item" *ngIf="showAdminBoard" routerLinkActive="active current">
+        <a class="nav-link" routerLink="/users">Customers</a>
+      </li>
+
+      <li class="nav-item" *ngIf="showAdminBoard" routerLinkActive="active current">
+      <a class="nav-link" routerLink="/employers">Employers</a>
+      </li>
+
+      <li class="nav-item dropdown" *ngIf="showAdminBoard" routerLinkActive="active current" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Configure
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" routerLink="/configure/room-details">RoomDetails</a>
           <a class="dropdown-item" routerLink="/configure/order-status">OrderStatus</a>
-          <a class="dropdown-item" routerLink="/configure/offers">Offers</a>
-
-          <a class="dropdown-item" href="#">Employee</a>
         </div>
       </li>
     </ul>

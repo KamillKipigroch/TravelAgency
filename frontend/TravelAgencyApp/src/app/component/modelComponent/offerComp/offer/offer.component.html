@@ -1,1 +1,17 @@
-<p>offert-component works!</p>
+<div>
+  <div *ngFor="let offer of offers | slice:0:(more ? undefined : number)">
+    <div id="offer" class="card ">
+      <p-card class="justify-content-center" [header]="offer.hotel[0].name.toString()"
+              [subheader]="offer.country.name.toString()" [style]="{width: '100%'}">
+        <ng-template pTemplate="header" styleclass="wi">
+          <img [alt]="offer.hotel[0].name" [src]="offer.images[0].name" style="width: 100%;max-height: 550pt">
+        </ng-template>
+        <p>{{offer.description}}</p>
+        <ng-template pTemplate="footer">
+          <p-button label="Save" icon="pi pi-check"></p-button>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+  <button (click)="number = 10">{{ more ? 'less':'more' }}</button>
+</div>

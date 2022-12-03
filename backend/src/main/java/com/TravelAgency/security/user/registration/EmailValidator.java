@@ -1,4 +1,4 @@
-package com.TravelAgency.registration;
+package com.TravelAgency.security.user.registration;
 
 import org.springframework.stereotype.Service;
 

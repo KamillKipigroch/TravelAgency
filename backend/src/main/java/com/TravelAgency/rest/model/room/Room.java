@@ -33,9 +33,11 @@ public class Room implements Serializable {
     RoomDetail roomDetail;
 
     @ManyToOne
-    @JoinColumn(name = "hotel_dto_id")
+    @JoinColumn(name = "hotel_id")
     @JsonIgnore
     Hotel hotel;
+
+    String description;
 
     Double price;
 

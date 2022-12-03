@@ -1,4 +1,4 @@
-package com.TravelAgency.registration.token;
+package com.TravelAgency.security.user.registration.token;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

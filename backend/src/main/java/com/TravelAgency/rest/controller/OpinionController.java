@@ -34,7 +34,7 @@ public class OpinionController {
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     public ResponseEntity<Opinion> add(@RequestBody OpinionRequest request) {
         var user = userService.findUserByEmail(request.getUserEmail());
-        var offer = offerService.findByOfferCode(request.getOfferCode());
+        var offer = offerService.findById(request.getOfferId());
         var roomDetails = opinionService.add(request, user, offer);
         return new ResponseEntity<>(roomDetails, HttpStatus.OK);
     }
