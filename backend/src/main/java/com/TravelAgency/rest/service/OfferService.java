@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.lang.module.FindException;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.TravelAgency.comunicates.Communicates.*;
 
@@ -24,7 +26,10 @@ public class OfferService {
     private final OfferRepository offerRepository;
 
     public List<Offer> findAll() {
-        return offerRepository.findAll();
+        var offers = offerRepository.findAll();
+        offers.forEach(offer -> offer.setAvailabilities(
+                offer.getAvailabilities().stream().filter(availability -> availability.getDatetimeStart().isAfter(ChronoLocalDate.from(LocalDateTime.now()))).collect(Collectors.toSet())));
+        return offers;
     }
 
     public Offer findById(Long id) {

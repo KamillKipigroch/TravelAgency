@@ -1,57 +1,58 @@
-<div class="bd-example">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 70pt">
-    <a class="navbar-brand"  styleClass="mb-5" routerLinkActive="active current" routerLink="/home">Travel Agency</a>
+<div class="global" style="font-size: 15pt">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" style="font-size: 20pt" styleClass="mb-5" routerLinkActive="active current"
+       routerLink="/home"><b>Travel Agency</b></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active current">
-        <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" routerLinkActive="active current">
-        <a class="nav-link" routerLink="/last-minute">Last Minute</a>
-      </li>
-
-      <li class="nav-item" routerLinkActive="active current">
-        <a class="nav-link" routerLink="/all">All</a>
-      </li>
-
-      <li class="nav-item" *ngIf="showAdminBoard" routerLinkActive="active current">
-        <a class="nav-link" routerLink="/users">Customers</a>
-      </li>
-
-      <li class="nav-item" *ngIf="showAdminBoard" routerLinkActive="active current">
-      <a class="nav-link" routerLink="/employers">Employers</a>
-      </li>
-
-      <li class="nav-item dropdown" *ngIf="showAdminBoard" routerLinkActive="active current" [routerLinkActiveOptions]="{exact: true}">
-        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
-           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Configure
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" routerLink="/configure/room-details">RoomDetails</a>
-          <a class="dropdown-item" routerLink="/configure/order-status">OrderStatus</a>
-        </div>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-2">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    </form>
-    <div class="ml-4">
-      <ul class="navbar-nav ">
-        <li class="nav-item" *ngIf="!isLoggedIn">
-          <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" routerLinkActive="active current">
+          <a class="nav-link" routerLink="/home">Home <span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item" *ngIf="!isLoggedIn">
-          <a href="/login" class="nav-link" routerLink="login">Login</a>
+        <li class="nav-item" routerLinkActive="active current">
+          <a class="nav-link" routerLink="/last-minute">Last Minute</a>
         </li>
-        <li class="nav-item" *ngIf="isLoggedIn">
-          <a href class="nav-link" (click)="logout()">LogOut</a>
+
+        <li class="nav-item" routerLinkActive="active current">
+          <a class="nav-link" routerLink="/all">All</a>
+        </li>
+
+        <li class="nav-item" *ngIf="showAdminBoard" routerLinkActive="active current">
+          <a class="nav-link" routerLink="/users">Customers</a>
+        </li>
+
+        <li class="nav-item" *ngIf="showAdminBoard" routerLinkActive="active current">
+          <a class="nav-link" routerLink="/employers">Employers</a>
+        </li>
+
+        <li class="nav-item dropdown" *ngIf="showAdminBoard" routerLinkActive="active current"
+            [routerLinkActiveOptions]="{exact: true}">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Configure
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="font-size: 15pt">
+            <a class="dropdown-item" routerLink="/configure/room-details">RoomDetails</a>
+            <a class="dropdown-item" routerLink="/configure/order-status">OrderStatus</a>
+          </div>
         </li>
       </ul>
+      <div>
+        <ul class="navbar-nav ">
+          <li class="nav-item" *ngIf="!isLoggedIn">
+            <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
+          </li>
+          <li class="nav-item" *ngIf="!isLoggedIn">
+            <a href="/login" class="nav-link" routerLink="login">Login</a>
+          </li>
+          <li class="nav-item" *ngIf="isLoggedIn">
+            <a href class="nav-link" (click)="logout()">LogOut</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </div>

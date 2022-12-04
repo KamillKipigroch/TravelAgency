@@ -40,9 +40,6 @@ public class OfferAvailability implements Serializable {
     @Column(nullable = false)
     LocalDate datetimeEnd;
 
-    @Column(nullable = false)
-    Double price;
-
     Double promotionPrice;
 
     Boolean promotion;

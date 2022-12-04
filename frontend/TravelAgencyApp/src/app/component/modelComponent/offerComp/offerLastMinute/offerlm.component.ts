@@ -1,14 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {Country, Offer, OfferService} from "../../../services/offer.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {MessageService, SelectItem} from "primeng/api";
 
 @Component({
   selector: 'app-offer-component',
-  templateUrl: './offer.component.html',
-  styleUrls: ['./offer.component.css']
+  templateUrl: './offerlm.component.html',
+  styleUrls: ['./offerlm.component.css']
 })
-export class OfferComponent implements OnInit {
+export class OfferLastMinuteComponent implements OnInit, OnChanges {
 
   offers: Offer[] = [];
   all: Offer[] = [];
@@ -26,14 +25,23 @@ export class OfferComponent implements OnInit {
   people: number = 1;
   todayDate = new Date();
 
-  constructor(private offerService: OfferService) {
+  ngOnChanges() {
+    this.ngOnInit();
   }
+
+  constructor(private offerService: OfferService) {}
 
   ngOnInit() {
     this.offerService.getOffers().subscribe(
       (response: Offer[]) => {
+        response = response.filter(offer => offer.availabilities.some(available => available.promotion))
+        response.forEach(offer => offer.availabilities.sort(function (x, y) {
+          return (x.promotion === y.promotion) ? 0 : x ? -1 : 1;
+        }))
+
         this.all = response
         this.offers = response
+
         this.setSelectedAvailable()
         this.setOfferPrice()
       },
@@ -73,7 +81,6 @@ export class OfferComponent implements OnInit {
             return new Date(available.datetimeStart).getTime() >= new Date(this.rangeDates[0]).getTime() &&
               new Date(available.datetimeEnd).getTime() <= new Date(this.rangeDates[1]).getTime()
           })
-
         }
       )
     } else if (this.rangeDates[0] != null) {
@@ -107,7 +114,9 @@ export class OfferComponent implements OnInit {
 
   private setSelectedAvailable() {
     this.offers.forEach(offer => {
-      offer.selectedAvailabilities = offer.availabilities
+      offer.selectedAvailabilities = offer.availabilities.filter(available => {
+       return available.promotion
+      })
     })
   }
 
@@ -121,9 +130,5 @@ export class OfferComponent implements OnInit {
       this.sortOrder = 1;
       this.sortField = value;
     }
-  }
-
-  reloadPage(): void {
-    window.location.replace("http://localhost:4200/offer-detail");
   }
 }

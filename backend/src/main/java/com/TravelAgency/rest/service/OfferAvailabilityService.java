@@ -35,7 +35,6 @@ public class OfferAvailabilityService {
     public OfferAvailability add(Offer offer, OfferAvailabilityRequest offerAvailability){
         var newObject = new OfferAvailability();
         newObject.setOffer(offer);
-        newObject.setPrice(offerAvailability.getPrice());
         newObject.setPromotionPrice(offerAvailability.getPromotionPrice());
         newObject.setDatetimeEnd(offerAvailability.getDatetimeEnd().toLocalDate());
         newObject.setDatetimeStart(offerAvailability.getDatetimeStart().toLocalDate());
@@ -46,7 +45,6 @@ public class OfferAvailabilityService {
     public OfferAvailability update(Offer offer, OfferAvailability offerAvailability){
         var newObject = new OfferAvailability();
         newObject.setOffer(offer);
-        newObject.setPrice(offerAvailability.getPrice());
         newObject.setDatetimeEnd(offerAvailability.getDatetimeEnd());
         newObject.setDatetimeStart(offerAvailability.getDatetimeStart());
         newObject.setPromotion(offerAvailability.getPromotion());

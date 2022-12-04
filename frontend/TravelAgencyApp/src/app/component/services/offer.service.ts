@@ -17,6 +17,10 @@ export class OfferService {
     return this.http.get<Offer[]>(`${this.apiServerUrl}/offer/get-all`)
   }
 
+  public getCountry(): Observable<Country[]> {
+    return this.http.get<Country[]>(`${this.apiServerUrl}/country/get-all`)
+  }
+
   public addOffer(offer: Offer): Observable<Offer> {
     return this.http.post<Offer>(`${this.apiServerUrl}/offer/add`, offer)
   }
@@ -36,30 +40,39 @@ export class Offer {
 
   public id: number = 0;
 
-  public country: Country = new Country(0, "");
+  public country: Country = new Country(0, "","");
 
   public hotel: Hotel[] = [];
 
   public images:Image[] = [];
+
   public availabilities:OfferAvailability[] = [];
+
+  public selectedAvailabilities:OfferAvailability[] = [];
 
   public opinions: Opinion[] = [];
 
   public description: String = "";
 
   public visible: Boolean = true;
+
   public price:number = 0;
+
   public days:number = 0;
+
+  public promotionPrice: number = 0;
 
 }
 
 export class Country {
   public id: number = 0;
   public name: String = "";
+  public code: String = "";
 
-  constructor(id: number, name: String) {
+  constructor(id: number, name: String, code:String) {
     this.id = id;
     this.name = name;
+    this.code = code;
   }
 }
 
@@ -124,4 +137,6 @@ export class OfferAvailability {
   public id: number = 0;
   public datetimeStart: Date = new Date();
   public datetimeEnd: Date = new Date();
+  public promotion : boolean = false;
+  public promotionPrice: number = 0;
 }

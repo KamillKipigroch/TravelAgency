@@ -12,7 +12,7 @@ import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
 import {FileUploadModule} from "primeng/fileupload";
 import {InputNumberModule} from "primeng/inputnumber";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {ToastModule} from "primeng/toast";
 import {ToolbarModule} from "primeng/toolbar";
@@ -22,8 +22,8 @@ import {DialogModule} from "primeng/dialog";
 import {RippleModule} from "primeng/ripple";
 import {InputTextModule} from "primeng/inputtext";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {RegisterComponent} from "./component/user/register/register.component";
-import {LoginComponent} from "./component/user/login/login.component";
+import {RegisterComponent} from "./component/modelComponent/user/register/register.component";
+import {LoginComponent} from "./component/modelComponent/user/login/login.component";
 import {
   ConfigRoomDetailComponent
 } from "./component/modelComponent/roomDetailComp/configRoomDetail/configRoomDetail.component";
@@ -35,6 +35,12 @@ import {EmployeeComponent} from "./component/modelComponent/employee/employee/em
 import {UserComponent} from "./component/modelComponent/user/user/user.component";
 import {DataViewModule} from "primeng/dataview";
 import {CardModule} from "primeng/card";
+import {GalleriaModule} from "primeng/galleria";
+import {AutoCompleteModule} from "primeng/autocomplete";
+import {ListboxModule} from "primeng/listbox";
+import {CalendarModule} from "primeng/calendar";
+import {CaptchaModule} from "primeng/captcha";
+import {OfferLastMinuteComponent} from "./component/modelComponent/offerComp/offerLastMinute/offerlm.component";
 
 @NgModule({
   declarations: [
@@ -48,6 +54,7 @@ import {CardModule} from "primeng/card";
     ConfigRoomDetailComponent,
     EmployeeComponent,
     UserComponent,
+    OfferLastMinuteComponent,
 
     NotFoundComponent
 
@@ -72,7 +79,7 @@ import {CardModule} from "primeng/card";
       },
       {
         path: 'last-minute',
-        component: OfferComponent
+        component: OfferLastMinuteComponent
       },
       {
         path: 'employers',
@@ -118,7 +125,13 @@ import {CardModule} from "primeng/card";
     InputTextModule,
     CheckboxModule,
     DataViewModule,
-    CardModule
+    CardModule,
+    GalleriaModule,
+    AutoCompleteModule,
+    ListboxModule,
+    CalendarModule,
+    CaptchaModule,
+    ReactiveFormsModule
   ],
   providers: [OfferService],
   bootstrap: [AppComponent],

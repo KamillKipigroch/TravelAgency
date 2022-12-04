@@ -25,12 +25,17 @@ public class Country implements Serializable {
     @Column(nullable = false, updatable = false)
     Long id;
 
-    @Column(nullable = false, updatable = false)
+    @Column(updatable = false)
     String name;
+
+
+    @Column(updatable = false)
+    String code;
     Boolean visible;
 
-    public Country(String name) {
+    public Country(String name, String code) {
         this.name = name;
+        this.code = code;
         this.visible = true;
     }
 }
