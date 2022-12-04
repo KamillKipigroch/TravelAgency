@@ -1,0 +1,16 @@
+.centered {
+}
+.container {
+  position: relative;
+  text-align: center;
+}
+#text{
+  font-family: Artifika, serif;
+  text-align: center;
+  font-size: 43px;
+}
+
+.recommended{
+  margin: 50pt;
+  padding-bottom: 100pt;
+}

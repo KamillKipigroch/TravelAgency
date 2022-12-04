@@ -41,6 +41,8 @@ import {ListboxModule} from "primeng/listbox";
 import {CalendarModule} from "primeng/calendar";
 import {CaptchaModule} from "primeng/captcha";
 import {OfferLastMinuteComponent} from "./component/modelComponent/offerComp/offerLastMinute/offerlm.component";
+import {CarouselModule} from "primeng/carousel";
+import {OfferDetailComponent} from "./component/modelComponent/offerComp/offerDetail/offerDetail.component";
 
 @NgModule({
   declarations: [
@@ -55,84 +57,93 @@ import {OfferLastMinuteComponent} from "./component/modelComponent/offerComp/off
     EmployeeComponent,
     UserComponent,
     OfferLastMinuteComponent,
+    OfferDetailComponent,
 
     NotFoundComponent
 
   ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    HttpClientModule,
-    RouterModule.forRoot([
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      },
-      {
-        path: 'home',
-        component: HomeComponent
-      },
-      {
-        path: 'all',
-        component: OfferComponent
-      },
-      {
-        path: 'last-minute',
-        component: OfferLastMinuteComponent
-      },
-      {
-        path: 'employers',
-        component: EmployeeComponent
-      },
-      {
-        path: 'users',
-        component: UserComponent
-      },
-      {
-        path: 'configure/room-details',
-        component: ConfigRoomDetailComponent
-      },
-      {
-        path: 'configure/order-status',
-        component: ConfigOrderStatusComponent
-      },
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'register',
-        component: RegisterComponent
-      },
-      {
-        path: '**',
-        component: NotFoundComponent
-      }
-    ]),
-    ButtonModule,
-    TableModule,
-    FileUploadModule,
-    InputNumberModule,
-    FormsModule,
-    RadioButtonModule,
-    ToastModule,
-    ToolbarModule,
-    ConfirmDialogModule,
-    RatingModule,
-    DialogModule,
-    RippleModule,
-    InputTextModule,
-    CheckboxModule,
-    DataViewModule,
-    CardModule,
-    GalleriaModule,
-    AutoCompleteModule,
-    ListboxModule,
-    CalendarModule,
-    CaptchaModule,
-    ReactiveFormsModule
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        BrowserModule,
+        HttpClientModule,
+        RouterModule.forRoot([
+            {
+                path: '',
+                redirectTo: 'home',
+                pathMatch: 'full'
+            },
+            {
+                path: 'home',
+                component: HomeComponent
+            },
+          {
+            path: 'all',
+            component: OfferComponent
+          },
+          {
+            path: 'offer-detail',
+            component: OfferDetailComponent
+          },
+            {
+                path: 'last-minute',
+                component: OfferLastMinuteComponent
+            },
+            {
+                path: 'employers',
+                component: EmployeeComponent
+            },
+            {
+                path: 'users',
+                component: UserComponent
+            },
+            {
+                path: 'configure/room-details',
+                component: ConfigRoomDetailComponent
+            },
+            {
+                path: 'configure/order-status',
+                component: ConfigOrderStatusComponent
+            },
+            {
+                path: 'login',
+                component: LoginComponent
+            },
+            {
+                path: 'register',
+                component: RegisterComponent
+            },
+            {
+                path: '**',
+                component: NotFoundComponent
+            }
+        ],
+      {scrollPositionRestoration: 'enabled'}
+        ),
+        ButtonModule,
+        TableModule,
+        FileUploadModule,
+        InputNumberModule,
+        FormsModule,
+        RadioButtonModule,
+        ToastModule,
+        ToolbarModule,
+        ConfirmDialogModule,
+        RatingModule,
+        DialogModule,
+        RippleModule,
+        InputTextModule,
+        CheckboxModule,
+        DataViewModule,
+        CardModule,
+        GalleriaModule,
+        AutoCompleteModule,
+        ListboxModule,
+        CalendarModule,
+        CaptchaModule,
+        ReactiveFormsModule,
+        CarouselModule,
+    ],
+
   providers: [OfferService],
   bootstrap: [AppComponent],
 })

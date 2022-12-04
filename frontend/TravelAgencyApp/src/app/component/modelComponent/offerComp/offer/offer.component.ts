@@ -11,19 +11,29 @@ import {MessageService, SelectItem} from "primeng/api";
 export class OfferComponent implements OnInit {
 
   offers: Offer[] = [];
+
   all: Offer[] = [];
 
   sortOrder: number = 0;
 
   sortField: string = "";
+
   more: boolean = false;
+
   number: number = 3;
+
   readonly: boolean = true;
+
   selectedCountries: Country[] = [];
+
   countries: Country[] = [];
+
   rangeDates: Date[] = [];
+
   millisecondsPerDay = 1000 * 60 * 60 * 24;
+
   people: number = 1;
+
   todayDate = new Date();
 
   constructor(private offerService: OfferService) {
@@ -109,18 +119,6 @@ export class OfferComponent implements OnInit {
     this.offers.forEach(offer => {
       offer.selectedAvailabilities = offer.availabilities
     })
-  }
-
-  onSortChange(event: any) {
-    let value = event.value;
-
-    if (value.indexOf('!') === 0) {
-      this.sortOrder = -1;
-      this.sortField = value.substring(1, value.length);
-    } else {
-      this.sortOrder = 1;
-      this.sortField = value;
-    }
   }
 
   reloadPage(): void {

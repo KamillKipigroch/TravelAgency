@@ -1,0 +1,10 @@
+.sticky {
+  position: sticky;
+  top: 0;
+  padding: 10px;
+}
+@media screen and (max-width: 1024px) {
+  .filters {
+    display: none !important;
+  }
+}

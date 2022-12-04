@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from "jwt-decode";
+import {Offer} from "./offer.service";
 
 const USER_KEY = 'auth-user';
 
