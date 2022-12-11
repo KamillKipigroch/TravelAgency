@@ -3,12 +3,14 @@ package com.TravelAgency.rest.model.offer;
 import com.TravelAgency.rest.model.country.Country;
 import com.TravelAgency.rest.model.hotel.Hotel;
 import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
+import com.TravelAgency.rest.model.offerAvailability.OfferAvailabilityComparator;
 import com.TravelAgency.rest.model.offerImage.OfferImage;
 import com.TravelAgency.rest.model.opinion.Opinion;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.SortComparator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,7 +23,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Offer implements Serializable {
     @Id
     @SequenceGenerator(name = "s_offer", sequenceName = "s_offer", allocationSize = 1)
@@ -43,7 +44,8 @@ public class Offer implements Serializable {
     Set<Opinion> opinions;
 
     @OneToMany(mappedBy = "offer")
-    Set<OfferAvailability> availabilities = new HashSet<>();
+    @SortComparator(OfferAvailabilityComparator.class)
+    Set<OfferAvailability> availabilities;
 
     String description;
 
@@ -51,6 +53,4 @@ public class Offer implements Serializable {
     LocalDateTime createDate;
 
     Boolean visible;
-
-
 }

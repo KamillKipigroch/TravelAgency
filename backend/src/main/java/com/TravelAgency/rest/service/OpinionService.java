@@ -3,6 +3,7 @@ package com.TravelAgency.rest.service;
 import com.TravelAgency.rest.model.offer.Offer;
 import com.TravelAgency.rest.model.opinion.Opinion;
 import com.TravelAgency.rest.model.opinion.OpinionRequest;
+import com.TravelAgency.rest.model.opinionImage.OpinionImage;
 import com.TravelAgency.rest.repository.OpinionRepository;
 import com.TravelAgency.security.user.model.User;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,8 @@ public class OpinionService {
         var newObject = new Opinion();
         newObject.setUser(user);
         newObject.setOffer(offer);
+        newObject.setHeader(request.getHeader());
+        newObject.setDescription(request.getDescription());
         newObject.setValue(request.getValue());
         newObject.setCreateDate(LocalDateTime.now());
         newObject.setVisible(true);

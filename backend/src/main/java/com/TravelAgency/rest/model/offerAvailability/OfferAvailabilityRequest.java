@@ -15,5 +15,7 @@ public class OfferAvailabilityRequest {
     Double price;
 
     Double promotionPrice;
+
+    Boolean promotion;
 }
 

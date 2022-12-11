@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Cloud {
-
     @Value("${cloudinary.cloud_name}")
     private String cloudName;
 

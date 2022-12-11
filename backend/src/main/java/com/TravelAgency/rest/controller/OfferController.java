@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.module.FindException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +28,7 @@ public class OfferController {
     private final CountryService countryService;
     private final HotelService hotelService;
     private final OfferImageService offerImageService;
+    private final RoomImageService roomImageService;
     private final OfferAvailabilityService offerAvailabilityService;
     private final RoomDetailService roomDetailService;
     private final OpinionService opinionService;
@@ -39,6 +39,13 @@ public class OfferController {
     public ResponseEntity<List<Offer>> getAll() {
         var offers = offerService.findAll();
         return new ResponseEntity<>(offers, HttpStatus.OK);
+    }
+
+    @Operation(security = {})
+    @RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Offer> getBrand(@PathVariable Long id) {
+        var offer = offerService.findById(id);
+        return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
     @PostMapping("/add")
@@ -65,13 +72,17 @@ public class OfferController {
         }
 
         if (request.getHotel().getRooms() != null && !request.getHotel().getRooms().isEmpty()) {
-            request.getHotel().getRooms().forEach(it -> {
-                RoomDetail roomDetail = roomDetailService.findById(it.getRoomDetailId());
-                roomService.add(it, hotel,roomDetail);
+            request.getHotel().getRooms().forEach(roomRequest -> {
+                RoomDetail roomDetail = roomDetailService.findById(roomRequest.getRoomDetailId());
+                var room = roomService.add(roomRequest, hotel, roomDetail);
+                roomRequest.getImages().forEach(image -> {
+                    roomImageService.add(room, image);
+                });
+
             });
         }
         if (request.getImages() != null && !request.getImages().isEmpty()) {
-           request.getImages().forEach(it -> images.add(offerImageService.add(offer, it)));
+            request.getImages().forEach(it -> images.add(offerImageService.add(offer, it)));
         }
         var respond = offerService.findById(offer.getId());
         respond.setHotel(new HashSet<>());

@@ -1,5 +1,6 @@
 package com.TravelAgency.rest.model.order;
 
+import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
 import com.TravelAgency.rest.model.orderStatus.OrderStatus;
 import com.TravelAgency.rest.model.offer.Offer;
 import com.TravelAgency.security.user.model.User;
@@ -33,18 +34,12 @@ public class Order implements Serializable {
     private OrderStatus orderStatus;
 
     @ManyToOne
-    @JoinColumn(name = "offer_id")
-    private Offer offer;
+    @JoinColumn(name = "deadline")
+    private OfferAvailability deadline;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     private Boolean visible;
-
-    public Order(Offer offer, User user) {
-        this.offer = offer;
-        this.user = user;
-        this.visible = true;
-    }
 }

@@ -1,15 +1,18 @@
 package com.TravelAgency.rest.model.offerAvailability;
 
 import com.TravelAgency.rest.model.offer.Offer;
+import com.TravelAgency.rest.model.room.Room;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SortComparator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table (name = "availability_t")
@@ -39,6 +42,9 @@ public class OfferAvailability implements Serializable {
 
     @Column(nullable = false)
     LocalDate datetimeEnd;
+
+    @Column(nullable = false)
+    Double price;
 
     Double promotionPrice;
 

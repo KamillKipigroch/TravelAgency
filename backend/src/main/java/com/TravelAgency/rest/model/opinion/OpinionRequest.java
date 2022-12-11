@@ -1,5 +1,6 @@
 package com.TravelAgency.rest.model.opinion;
 
+import com.TravelAgency.rest.model.ImageRequest;
 import lombok.Data;
 
 @Data
@@ -10,6 +11,7 @@ public class OpinionRequest {
 
     private Double value;
 
+    private String header;
     private String description;
 
     Boolean visible;

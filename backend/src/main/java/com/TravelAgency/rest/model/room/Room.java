@@ -2,6 +2,7 @@ package com.TravelAgency.rest.model.room;
 
 import com.TravelAgency.rest.model.roomDetail.RoomDetail;
 import com.TravelAgency.rest.model.hotel.Hotel;
+import com.TravelAgency.rest.model.roomImage.RoomImage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "room_t")
@@ -31,6 +33,9 @@ public class Room implements Serializable {
     @ManyToOne
     @JoinColumn(name = "room_details_id")
     RoomDetail roomDetail;
+
+    @OneToMany(mappedBy = "room")
+    Set<RoomImage> roomImage;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")

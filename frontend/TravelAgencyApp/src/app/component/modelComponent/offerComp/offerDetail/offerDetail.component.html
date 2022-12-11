@@ -1,29 +1,220 @@
 <p-toast></p-toast>
 
-<p-gmap #gmap [style]="{'width':'100%','height':'320px', 'margin-bottom': '1em'}" [options]="options" [overlays]="overlays"
-        (onMapClick)="handleMapClick($event)" (onOverlayClick)="handleOverlayClick($event)" (onOverlayDragEnd)="handleDragEnd($event)"></p-gmap>
+<div class="detailContainer">
+  <div *ngIf=" offer != undefined">
+    <div class="row" style="height: 400pt">
+      <div class="col-8">
+        <p-galleria [value]="offer.images"
+                    [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
+          <ng-template pTemplate="item" let-image>
+            <img [src]="image.name" class="scaling-image content" [alt]="offer.hotel[0].name"/>
+          </ng-template>
+        </p-galleria>
+      </div>
+      <div class="col-4">
+        <div class="content" *ngIf="offer.hotel[0]">
+          <p-rating [readonly]="true" *ngIf="offer.hotel[0].standard != undefined" [ngModel]="offer.hotel[0].standard"
+                    [cancel]="false"></p-rating>
 
-<button type="button" pButton label="Clear" icon="pi pi-times" (click)="clear()" style="margin-right:.25em"></button>
-<button type="button" pButton label="Zoom In" icon="pi pi-plus" (click)="zoomIn(gmap.getMap())" style="margin-right:.25em"></button>
-<button type="button" pButton label="Zoom Out" icon="pi pi-minus" (click)="zoomOut(gmap.getMap())"></button>
+          <h3>Hotel Name : <br>{{offer.hotel[0].name}}</h3>
+          <br>
+          <p><b>Date start</b>  {{selectedItem.datetimeStart}} </p>
+          <p><b>Date end</b>  {{selectedItem.datetimeEnd}}</p>
+          <p><b>Days</b> {{offer.days}}</p>
+          <br>
 
-<p-dialog showEffect="fade" [(visible)]="dialogVisible" header="New Location" [style]="{width: '300px'}">>
-  <div class="grid p-fluid" *ngIf="selectedPosition">
-    <div class="col-2"><label for="title">Label</label></div>
-    <div class="col-10"><input type="text" pInputText id="title" [(ngModel)]="markerTitle"></div>
-
-    <div class="col-2"><label for="lat">Lat</label></div>
-    <div class="col-10"><input id="lat" type="text" readonly pInputText [ngModel]="selectedPosition.lat()"></div>
-
-    <div class="col-2"><label for="lng">Lng</label></div>
-    <div class="col-10"><input id="lng" type="text" readonly pInputText [ngModel]="selectedPosition.lng()"></div>
-
-    <div class="col-2"><label for="drg">Drag</label></div>
-    <div class="col-10"><p-checkbox [(ngModel)]="draggable" binary="true" [style]="{'margin-top':'.25em'}"></p-checkbox></div>
-  </div>
-  <ng-template pTemplate="footer">
-    <div>
-      <button type="button" pButton label="Add Marker" icon="pi-plus" (click)="addMarker()"></button>
+          <p style="margin-top:0;" *ngIf="offer.promotionPrice == null">Price : {{offer.price}}$</p>
+          <p style="margin-top:0;" *ngIf="offer.promotionPrice != null"><s>Price : {{offer.price}}$</s></p>
+          <p style="margin-top:0;" *ngIf="offer.promotionPrice != null">Promotion price : {{offer.promotionPrice}}$</p>
+          <br>
+          <button pButton pRipple type="button" label="Order" style="width: 15rem"
+                  class="p-button-outlined p-button-rounded p-button-success"></button>
+          <br>
+          <button pButton pRipple type="button" label="Add Opinion" (click)="openNew()"
+                  style="margin-top: 10pt; width: 15rem" class="p-button-outlined p-button-rounded"></button>
+        </div>
+      </div>
     </div>
-  </ng-template>
-</p-dialog>
+    <div class="col-xs-9">
+      <br>
+      <p-tabMenu [model]="items" [activeItem]="activeItem"></p-tabMenu>
+      <div style="width:100%;border-top:1px solid silver" *ngIf="detailTab">
+        <p style="padding:15px;">
+          <small>
+            Stay connected either on the phone or the Web with the Galaxy S4 I337 from Samsung. With 16 GB of memory and
+            a
+            4G connection, this phone stores precious photos and video and lets you upload them to a cloud or social
+            network at blinding-fast speed. With a 17-hour operating life from one charge, this phone allows you keep in
+            touch even on the go.
+
+            With its built-in photo editor, the Galaxy S4 allows you to edit photos with the touch of a finger,
+            eliminating extraneous background items. Usable with most carriers, this smartphone is the perfect companion
+            for work or entertainment.
+          </small>
+        </p>
+        <small>
+          <ul>
+            <li>Super AMOLED capacitive touchscreen display with 16M colors</li>
+            <li>Available on GSM, AT T, T-Mobile and other carriers</li>
+            <li>Compatible with GSM 850 / 900 / 1800; HSDPA 850 / 1900 / 2100 LTE; 700 MHz Class 17 / 1700 / 2100
+              networks
+            </li>
+            <li>MicroUSB and USB connectivity</li>
+            <li>Interfaces with Wi-Fi 802.11 a/b/g/n/ac, dual band and Bluetooth</li>
+            <li>Wi-Fi hotspot to keep other devices online when a connection is not available</li>
+            <li>SMS, MMS, email, Push Mail, IM and RSS messaging</li>
+            <li>Front-facing camera features autofocus, an LED flash, dual video call capability and a sharp 4128 x 3096
+              pixel picture
+            </li>
+            <li>Features 16 GB memory and 2 GB RAM</li>
+            <li>Upgradeable Jelly Bean v4.2.2 to Jelly Bean v4.3 Android OS</li>
+            <li>17 hours of talk time, 350 hours standby time on one charge</li>
+            <li>Available in white or black</li>
+            <li>Model I337</li>
+            <li>Package includes phone, charger, battery and user manual</li>
+            <li>Phone is 5.38 inches high x 2.75 inches wide x 0.13 inches deep and weighs a mere 4.59 oz</li>
+          </ul>
+        </small>
+      </div>
+    </div>
+
+    <div style="width:100%;border-top:1px solid silver" *ngIf="calendarTab">
+      <p>You can change date for offer in here :</p>
+      <p-dropdown [options]="allDates" [(ngModel)]="selectedItem" [autoDisplayFirst]="true"
+                  (onChange)="initOrUpdateOfferData()" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                  [style]="{'width': '400pt'}"></p-dropdown>
+      <br>
+      <p-calendar [(ngModel)]="selectedDate" selectionMode="range" [readonlyInput]="true" [focusTrap]="true"
+                  [inline]="true" [disabled]="true" [style]="{'width': '400pt'}" id="dataPicker"></p-calendar>
+    </div>
+  </div>
+
+  <div style="width:100%;border-top:1px solid silver" *ngIf="roomTab">
+    <p>You can select room in here :</p>
+    <div id="RoomPanel" *ngFor="let room of offer.hotel[0].rooms">
+      <p-card class="justify-content-center" [header]="room.roomDetail.name.toString()"
+              [subheader]="room.price.toString()+'$'" [style]="{'margin-bottom': '50pt', 'padding': '10pt'}">
+        <ng-template pTemplate="header" styleclass="wi">
+          <p-galleria [value]="room.roomImage"
+                      [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
+            <ng-template pTemplate="item" let-image>
+              <img [src]="image.name" class="scaling-image content" style="max-height: 400pt"
+                   [alt]="offer.hotel[0].name"/>
+            </ng-template>
+          </p-galleria>
+        </ng-template>
+        <div>
+          <div style="padding:15px;">
+            <h4>Description:</h4>
+            {{room.description}}
+            <br>
+          </div>
+        </div>
+
+        <ng-template pTemplate="footer">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm cente">
+              </div>
+              <div class="col-sm">
+                <p-toggleButton inputId="test" [ngModel]="room.selected" id="toogle" [disabled]="room.selected"
+                                (onChange)="selectedRoom(room)" onLabel="Selected" offLabel="You can change"
+                                onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '15em'}"></p-toggleButton>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </div>
+
+  <!--  opinion image tab -->
+  <div style="width:100%;border-top:1px solid silver" *ngIf="opinionsTab">
+    <p-accordion [multiple]="true">
+      <div *ngFor="let opinion of offer.opinions">
+        <p-accordionTab>
+          <ng-template pTemplate="header">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                  {{opinion.header}}
+
+                </div>
+                <div class="col-sm">
+                  <p-rating [(ngModel)]="opinion.value"
+                            [cancel]="false" [readonly]="true"
+                            iconOnClass="pi pi-thumbs-up-fill"
+                            iconOffClass="pi pi-thumbs-up"
+                  ></p-rating>
+                </div>
+                <div class="col-sm">
+                  {{displayDate(opinion)}}
+                </div>
+              </div>
+            </div>
+          </ng-template>
+
+          <div styleclass="wi">
+            <p>{{opinion.description}}</p>
+
+            <div  style="max-width: 450pt; max-height: 400pt">
+
+            <p-galleria [value]="opinion.opinionImages"
+                        [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
+              <ng-template pTemplate="item" let-image>
+                <img [src]="image.url" class="scaling-image content" style="max-width: 400pt; max-height: 400pt" [alt]="opinion.header"/>
+              </ng-template>
+            </p-galleria>
+              </div>
+
+          </div>
+        </p-accordionTab>
+      </div>
+    </p-accordion>
+  </div>
+
+
+  <p-dialog [(visible)]="addEditOpinion" [style]="{width: '650px'}" [header]="header" [modal]="true"
+            styleClass="p-fluid">
+    <ng-template pTemplate="content">
+      <p-rating [(ngModel)]="newEditOpinion.value"
+                iconCancelClass="pi pi-undo"
+                iconOnClass="pi pi-thumbs-up-fill"
+                iconOffClass="pi pi-thumbs-up"
+      ></p-rating>
+      <div class="field">
+        <label for="header">Header</label>
+        <input type="text" pInputText id="header" [(ngModel)]="newEditOpinion.header" required autofocus/>
+        <small class="p-error" *ngIf="submitted && !newEditOpinion.header">Name its required.</small>
+      </div>
+      <div class="field" style="padding-top: 2rem">
+        <span class="p-float-label">
+        <textarea class="form-control"
+                  name="description"
+                  rows="10"
+                  cols="8"
+                  [(ngModel)]="newEditOpinion.description"
+        ></textarea>
+        </span>
+      </div>
+
+      <div class="field" style="padding-top: 2rem">
+        <p-fileUpload name="demo[]" url="./upload.php" [maxFileSize]="1000000" [showUploadButton]="true"
+                      (onSelect)="onUpload($event)"
+                      [multiple]="true" accept="image/*">
+          <ng-template pTemplate="content">
+            <ul *ngIf="uploadedFiles.length">
+              <li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+            </ul>
+          </ng-template>
+        </p-fileUpload>
+      </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+      <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
+    </ng-template>
+  </p-dialog>
+</div>

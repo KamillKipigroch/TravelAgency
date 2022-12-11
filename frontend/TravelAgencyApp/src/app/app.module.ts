@@ -43,6 +43,12 @@ import {CaptchaModule} from "primeng/captcha";
 import {OfferLastMinuteComponent} from "./component/modelComponent/offerComp/offerLastMinute/offerlm.component";
 import {CarouselModule} from "primeng/carousel";
 import {OfferDetailComponent} from "./component/modelComponent/offerComp/offerDetail/offerDetail.component";
+import {GMapModule} from "primeng/gmap";
+import {TabMenuModule} from "primeng/tabmenu";
+import {DropdownModule} from "primeng/dropdown";
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {AccordionModule} from "primeng/accordion";
 
 @NgModule({
   declarations: [
@@ -67,57 +73,57 @@ import {OfferDetailComponent} from "./component/modelComponent/offerComp/offerDe
         BrowserModule,
         HttpClientModule,
         RouterModule.forRoot([
-            {
-                path: '',
-                redirectTo: 'home',
-                pathMatch: 'full'
-            },
-            {
-                path: 'home',
-                component: HomeComponent
-            },
-          {
-            path: 'all',
-            component: OfferComponent
-          },
-          {
-            path: 'offer-detail',
-            component: OfferDetailComponent
-          },
-            {
-                path: 'last-minute',
-                component: OfferLastMinuteComponent
-            },
-            {
-                path: 'employers',
-                component: EmployeeComponent
-            },
-            {
-                path: 'users',
-                component: UserComponent
-            },
-            {
-                path: 'configure/room-details',
-                component: ConfigRoomDetailComponent
-            },
-            {
-                path: 'configure/order-status',
-                component: ConfigOrderStatusComponent
-            },
-            {
-                path: 'login',
-                component: LoginComponent
-            },
-            {
-                path: 'register',
-                component: RegisterComponent
-            },
-            {
-                path: '**',
-                component: NotFoundComponent
-            }
-        ],
-      {scrollPositionRestoration: 'enabled'}
+                {
+                    path: '',
+                    redirectTo: 'home',
+                    pathMatch: 'full'
+                },
+                {
+                    path: 'home',
+                    component: HomeComponent
+                },
+                {
+                    path: 'all',
+                    component: OfferComponent
+                },
+                {
+                    path: 'offer-detail',
+                    component: OfferDetailComponent
+                },
+                {
+                    path: 'last-minute',
+                    component: OfferLastMinuteComponent
+                },
+                {
+                    path: 'employers',
+                    component: EmployeeComponent
+                },
+                {
+                    path: 'users',
+                    component: UserComponent
+                },
+                {
+                    path: 'configure/room-details',
+                    component: ConfigRoomDetailComponent
+                },
+                {
+                    path: 'configure/order-status',
+                    component: ConfigOrderStatusComponent
+                },
+                {
+                    path: 'login',
+                    component: LoginComponent
+                },
+                {
+                    path: 'register',
+                    component: RegisterComponent
+                },
+                {
+                    path: '**',
+                    component: NotFoundComponent
+                }
+            ],
+            {scrollPositionRestoration: 'enabled'}
         ),
         ButtonModule,
         TableModule,
@@ -142,6 +148,12 @@ import {OfferDetailComponent} from "./component/modelComponent/offerComp/offerDe
         CaptchaModule,
         ReactiveFormsModule,
         CarouselModule,
+        GMapModule,
+        TabMenuModule,
+        DropdownModule,
+        ToggleButtonModule,
+        InputTextareaModule,
+        AccordionModule,
     ],
 
   providers: [OfferService],

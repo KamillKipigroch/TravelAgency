@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import {Offer} from "./offer.service";
 
 const USER_KEY = 'auth-user';
+const OFFER_ID = 'offer-id';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,11 @@ export class StorageService {
 
   clean(): void {
     window.sessionStorage.clear();
+  }
+
+  public saveOffer(offerId: any): void{
+    window.sessionStorage.removeItem(OFFER_ID)
+    window.sessionStorage.setItem(OFFER_ID, offerId)
   }
 
   public saveToken(token: any): void {
@@ -24,17 +30,16 @@ export class StorageService {
     if (token) {
       return jwt_decode(token);
     }
-
     return {};
+  }
+
+  public getOfferId(): any {
+    return window.sessionStorage.getItem(OFFER_ID);
   }
 
   public isLoggedIn(): boolean {
     const token = window.sessionStorage.getItem(USER_KEY);
-    if (token) {
-      return true;
-    }
-
-    return false;
+    return !!token;
   }
 
   public logout():any {

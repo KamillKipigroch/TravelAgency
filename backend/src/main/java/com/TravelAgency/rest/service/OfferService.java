@@ -4,6 +4,7 @@ import com.TravelAgency.rest.model.country.Country;
 import com.TravelAgency.rest.model.hotel.Hotel;
 import com.TravelAgency.rest.model.offer.Offer;
 import com.TravelAgency.rest.model.offer.OfferRequest;
+import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
 import com.TravelAgency.rest.model.opinion.Opinion;
 import com.TravelAgency.rest.model.opinion.OpinionRequest;
 import com.TravelAgency.rest.repository.OfferRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.lang.module.FindException;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 

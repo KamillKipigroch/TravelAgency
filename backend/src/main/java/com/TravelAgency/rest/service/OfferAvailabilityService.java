@@ -36,9 +36,11 @@ public class OfferAvailabilityService {
         var newObject = new OfferAvailability();
         newObject.setOffer(offer);
         newObject.setPromotionPrice(offerAvailability.getPromotionPrice());
+        newObject.setPromotion(offerAvailability.getPromotion());
         newObject.setDatetimeEnd(offerAvailability.getDatetimeEnd().toLocalDate());
         newObject.setDatetimeStart(offerAvailability.getDatetimeStart().toLocalDate());
         newObject.setVisible(true);
+        newObject.setPrice(offerAvailability.getPrice());
         return availabilityRepository.save(newObject);
     }
 

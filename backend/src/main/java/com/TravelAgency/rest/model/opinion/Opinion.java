@@ -44,6 +44,8 @@ public class Opinion implements Serializable {
 
     private Double value;
 
+    private String header;
+
     private String description;
 
     @OneToMany(mappedBy = "opinion")

@@ -100,7 +100,6 @@ export class ConfigOrderStatusComponent implements OnInit {
     this.choose = {...roomDetail};
     this.addEditDialog = true;
     this.header = "Edit";
-
   }
 
   delete(room: OrderStatus) {

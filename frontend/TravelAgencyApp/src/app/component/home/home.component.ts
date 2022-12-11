@@ -21,15 +21,18 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     const user: IUser = this.storageService.getUser();
     if (user.rol != null)
       this.isAdmin = user.rol.includes('Admin');
+
     this.offerService.getOffers().subscribe(
       (response: Offer[]) => {
         this.offers = response
         this.setSelectedAvailable()
         this.setOfferPrice()
       })
+
   }
 
   setOfferPrice() {
@@ -49,6 +52,7 @@ export class HomeComponent implements OnInit {
   }
 
   checkOfferDetail(offer :Offer){
+    this.storageService.saveOffer(offer.id.toString())
     this.router.navigate(['offer-detail'], {state: offer})
   }
 
