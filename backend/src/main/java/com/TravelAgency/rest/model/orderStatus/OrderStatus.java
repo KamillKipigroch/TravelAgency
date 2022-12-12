@@ -28,12 +28,7 @@ public class OrderStatus implements Serializable {
     private String name;
 
     private Boolean visible;
-    @Column(nullable = false, unique = true)
-    private int level;
 
-    public OrderStatus(String name, int level) {
-        this.name = name;
-        this.level = level;
-        this.visible = true;
-    }
+    @Column(nullable = false)
+    private Integer level;
 }

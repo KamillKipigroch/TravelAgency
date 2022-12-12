@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.module.FindException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,43 +51,34 @@ public class OfferController {
 
     @PostMapping("/add")
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
-    public ResponseEntity<Offer> add(@RequestBody OfferRequest request) {
-
-        if (hotelService.findByName(request.getHotel().getName()).isPresent()) {
+    public ResponseEntity<Offer> add(@RequestBody Offer request) {
+        var requestHotel = request.getHotel().stream().findFirst().orElseThrow(() -> new FindException("Hotel with this name already exist !"));
+        if (hotelService.findByName(requestHotel.getName()).isPresent()) {
             throw new FindException("Hotel with this name already exist !");
         }
 
-        var country = countryService.findById(request.getCountryId());
+        var country = countryService.findById(request.getCountry().getId());
         var offer = offerService.add(request, country);
 
-        var hotel = hotelService.addHotel(request.getHotel(), offer);
-        Set<OfferAvailability> availability = new HashSet<>();
-        Set<OfferImage> images = new HashSet<>();
+        var hotel = hotelService.addHotel(request.getHotel().get(0), offer);
+        List<OfferAvailability> availability = new ArrayList<>();
 
-        if (request.getAvailability() != null) {
+        var availabe = request.getAvailabilities().get(0);
+        if (request.getAvailabilities() != null) {
             for (int i = 0; i < 10; i++) {
-                availability.add(offerAvailabilityService.add(offer, request.getAvailability()));
-                request.getAvailability().setDatetimeEnd(request.getAvailability().getDatetimeEnd().plusDays(7));
-                request.getAvailability().setDatetimeStart(request.getAvailability().getDatetimeStart().plusDays(7));
+                availability.add(offerAvailabilityService.add(offer, availabe));
+                availabe.setDatetimeEnd(availabe.getDatetimeEnd().plusDays(7));
+                availabe.setDatetimeStart(availabe.getDatetimeStart().plusDays(7));
             }
         }
 
-        if (request.getHotel().getRooms() != null && !request.getHotel().getRooms().isEmpty()) {
-            request.getHotel().getRooms().forEach(roomRequest -> {
-                RoomDetail roomDetail = roomDetailService.findById(roomRequest.getRoomDetailId());
-                var room = roomService.add(roomRequest, hotel, roomDetail);
-                roomRequest.getImages().forEach(image -> {
-                    roomImageService.add(room, image);
-                });
-
+        if (request.getHotel().get(0).getRooms() != null && !request.getHotel().get(0).getRooms().isEmpty()) {
+            request.getHotel().get(0).getRooms().forEach(roomRequest -> {
+                var room = roomService.add(roomRequest, hotel);
             });
         }
-        if (request.getImages() != null && !request.getImages().isEmpty()) {
-            request.getImages().forEach(it -> images.add(offerImageService.add(offer, it)));
-        }
         var respond = offerService.findById(offer.getId());
-        respond.setHotel(new HashSet<>());
-        respond.setImages(images);
+        respond.setHotel(new ArrayList<>());
         respond.getHotel().add(hotel);
         respond.setAvailabilities(availability);
         return new ResponseEntity<>(respond, HttpStatus.OK);

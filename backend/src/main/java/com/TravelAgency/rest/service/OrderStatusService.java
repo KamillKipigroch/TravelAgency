@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.lang.module.FindException;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.TravelAgency.comunicates.Communicates.IS_ALREADY_EXIST;
@@ -19,7 +20,11 @@ public class OrderStatusService {
     private final OrderStatusRepository orderStatusRepository;
 
     public List<OrderStatus> findAll() {
-        return orderStatusRepository.findAll();
+        Comparator<OrderStatus> comparator =
+                (OrderStatus o1, OrderStatus o2) -> Long.compare(o1.getLevel(), o2.getLevel());
+        var list = orderStatusRepository.findAll();
+        list.sort(comparator);
+        return list;
     }
 
     public OrderStatus findById(Long id) {
@@ -32,6 +37,7 @@ public class OrderStatusService {
             throw new FindException(IS_ALREADY_EXIST + request.getName());
         }
         var newObject = new OrderStatus();
+        newObject.setLevel(request.getLevel());
         newObject.setVisible(true);
         newObject.setName(request.getName());
         return orderStatusRepository.save(newObject);
@@ -40,6 +46,7 @@ public class OrderStatusService {
     public OrderStatus update(OrderStatus category) {
         var update = orderStatusRepository.findById(category.getId()).orElseThrow(() ->
                 new FindException(NOT_FOUND_WITH_ID + category.getId()));
+        update.setLevel(category.getLevel());
         update.setName(category.getName());
         update.setVisible(category.getVisible());
         return orderStatusRepository.save(update);

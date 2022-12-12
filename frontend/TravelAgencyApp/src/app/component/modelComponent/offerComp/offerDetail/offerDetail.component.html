@@ -18,8 +18,8 @@
 
           <h3>Hotel Name : <br>{{offer.hotel[0].name}}</h3>
           <br>
-          <p><b>Date start</b>  {{selectedItem.datetimeStart}} </p>
-          <p><b>Date end</b>  {{selectedItem.datetimeEnd}}</p>
+          <p><b>Date start</b>  {{selectedAvailability.datetimeStart}} </p>
+          <p><b>Date end</b>  {{selectedAvailability.datetimeEnd}}</p>
           <p><b>Days</b> {{offer.days}}</p>
           <br>
 
@@ -27,7 +27,7 @@
           <p style="margin-top:0;" *ngIf="offer.promotionPrice != null"><s>Price : {{offer.price}}$</s></p>
           <p style="margin-top:0;" *ngIf="offer.promotionPrice != null">Promotion price : {{offer.promotionPrice}}$</p>
           <br>
-          <button pButton pRipple type="button" label="Order" style="width: 15rem"
+          <button pButton pRipple type="button" label="Order" style="width: 15rem"(click)="order()"
                   class="p-button-outlined p-button-rounded p-button-success"></button>
           <br>
           <button pButton pRipple type="button" label="Add Opinion" (click)="openNew()"
@@ -80,7 +80,7 @@
 
     <div style="width:100%;border-top:1px solid silver" *ngIf="calendarTab">
       <p>You can change date for offer in here :</p>
-      <p-dropdown [options]="allDates" [(ngModel)]="selectedItem" [autoDisplayFirst]="true"
+      <p-dropdown [options]="allDates" [(ngModel)]="selectedAvailability" [autoDisplayFirst]="true"
                   (onChange)="initOrUpdateOfferData()" [virtualScroll]="true" [virtualScrollItemSize]="38"
                   [style]="{'width': '400pt'}"></p-dropdown>
       <br>
@@ -114,10 +114,10 @@
         <ng-template pTemplate="footer">
           <div class="container">
             <div class="row">
-              <div class="col-sm cente">
+              <div class="col-sm">
               </div>
               <div class="col-sm">
-                <p-toggleButton inputId="test" [ngModel]="room.selected" id="toogle" [disabled]="room.selected"
+                <p-toggleButton inputId="test" [ngModel]="room.selected" id="toggle" [disabled]="room.selected"
                                 (onChange)="selectedRoom(room)" onLabel="Selected" offLabel="You can change"
                                 onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '15em'}"></p-toggleButton>
               </div>

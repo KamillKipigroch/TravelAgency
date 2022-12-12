@@ -3,6 +3,7 @@ package com.TravelAgency.rest.model.order;
 import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
 import com.TravelAgency.rest.model.orderStatus.OrderStatus;
 import com.TravelAgency.rest.model.offer.Offer;
+import com.TravelAgency.rest.model.room.Room;
 import com.TravelAgency.security.user.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,10 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "deadline")
     private OfferAvailability deadline;
+
+    @ManyToOne
+    @JoinColumn(name = "room")
+    private Room room;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

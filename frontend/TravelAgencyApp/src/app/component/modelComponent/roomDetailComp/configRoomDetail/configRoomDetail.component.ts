@@ -127,7 +127,7 @@ export class ConfigRoomDetailComponent implements OnInit {
               this.messageService.add({
                 severity: 'error',
                 summary: 'Error',
-                detail: 'Something go wrong ' + error.detail,
+                detail: 'Something go wrong ' + error.error.message,
                 life: 3000
               });
             }
@@ -158,7 +158,7 @@ export class ConfigRoomDetailComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Something go wrong ' + error.message,
+            detail: 'Something go wrong ' + error.error.message,
             life: 3000
           });
         }

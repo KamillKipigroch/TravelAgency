@@ -172,6 +172,7 @@ export class OfferAvailability {
   public id: number = 0;
   public datetimeStart: Date = new Date();
   public datetimeEnd: Date = new Date();
+  public price:number = 10;
   public promotion: boolean = false;
   public promotionPrice: number = 0;
 }

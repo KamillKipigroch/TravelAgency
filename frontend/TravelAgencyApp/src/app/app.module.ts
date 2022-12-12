@@ -49,6 +49,8 @@ import {DropdownModule} from "primeng/dropdown";
 import {ToggleButtonModule} from "primeng/togglebutton";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {AccordionModule} from "primeng/accordion";
+import {NewEditOfferComponent} from "./component/modelComponent/offerComp/newEditOffer/newEditOffer.component";
+import {FieldsetModule} from "primeng/fieldset";
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import {AccordionModule} from "primeng/accordion";
     NavigationComponent,
     HomeComponent,
     OfferComponent,
+    NewEditOfferComponent,
     ConfigOrderStatusComponent,
     ConfigRoomDetailComponent,
     EmployeeComponent,
@@ -68,93 +71,99 @@ import {AccordionModule} from "primeng/accordion";
     NotFoundComponent
 
   ],
-    imports: [
-        BrowserAnimationsModule,
-        BrowserModule,
-        HttpClientModule,
-        RouterModule.forRoot([
-                {
-                    path: '',
-                    redirectTo: 'home',
-                    pathMatch: 'full'
-                },
-                {
-                    path: 'home',
-                    component: HomeComponent
-                },
-                {
-                    path: 'all',
-                    component: OfferComponent
-                },
-                {
-                    path: 'offer-detail',
-                    component: OfferDetailComponent
-                },
-                {
-                    path: 'last-minute',
-                    component: OfferLastMinuteComponent
-                },
-                {
-                    path: 'employers',
-                    component: EmployeeComponent
-                },
-                {
-                    path: 'users',
-                    component: UserComponent
-                },
-                {
-                    path: 'configure/room-details',
-                    component: ConfigRoomDetailComponent
-                },
-                {
-                    path: 'configure/order-status',
-                    component: ConfigOrderStatusComponent
-                },
-                {
-                    path: 'login',
-                    component: LoginComponent
-                },
-                {
-                    path: 'register',
-                    component: RegisterComponent
-                },
-                {
-                    path: '**',
-                    component: NotFoundComponent
-                }
-            ],
-            {scrollPositionRestoration: 'enabled'}
-        ),
-        ButtonModule,
-        TableModule,
-        FileUploadModule,
-        InputNumberModule,
-        FormsModule,
-        RadioButtonModule,
-        ToastModule,
-        ToolbarModule,
-        ConfirmDialogModule,
-        RatingModule,
-        DialogModule,
-        RippleModule,
-        InputTextModule,
-        CheckboxModule,
-        DataViewModule,
-        CardModule,
-        GalleriaModule,
-        AutoCompleteModule,
-        ListboxModule,
-        CalendarModule,
-        CaptchaModule,
-        ReactiveFormsModule,
-        CarouselModule,
-        GMapModule,
-        TabMenuModule,
-        DropdownModule,
-        ToggleButtonModule,
-        InputTextareaModule,
-        AccordionModule,
-    ],
+  imports: [
+    BrowserAnimationsModule,
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+        {
+          path: '',
+          redirectTo: 'home',
+          pathMatch: 'full'
+        },
+        {
+          path: 'home',
+          component: HomeComponent
+        },
+        {
+          path: 'all',
+          component: OfferComponent
+        },
+        {
+          path: 'offer-detail',
+          component: OfferDetailComponent
+        },
+        {
+          path: 'last-minute',
+          component: OfferLastMinuteComponent
+        },
+        {
+          path: 'employers',
+          component: EmployeeComponent
+        },
+        {
+          path: 'users',
+          component: UserComponent
+        },
+        {
+          path: 'configure/room-details',
+          component: ConfigRoomDetailComponent
+        },
+        {
+          path: 'configure/order-status',
+          component: ConfigOrderStatusComponent
+        },
+        {
+          path: 'login',
+          component: LoginComponent
+        },
+        {
+          path: 'register',
+          component: RegisterComponent
+        },
+        {
+          path: 'configure/new-offer',
+          component: NewEditOfferComponent
+        },
+
+        {
+          path: '**',
+          component: NotFoundComponent
+        }
+      ],
+      {scrollPositionRestoration: 'enabled'}
+    ),
+    ButtonModule,
+    TableModule,
+    FileUploadModule,
+    InputNumberModule,
+    FormsModule,
+    RadioButtonModule,
+    ToastModule,
+    ToolbarModule,
+    ConfirmDialogModule,
+    RatingModule,
+    DialogModule,
+    RippleModule,
+    InputTextModule,
+    CheckboxModule,
+    DataViewModule,
+    CardModule,
+    GalleriaModule,
+    AutoCompleteModule,
+    ListboxModule,
+    CalendarModule,
+    CaptchaModule,
+    ReactiveFormsModule,
+    CarouselModule,
+    GMapModule,
+    TabMenuModule,
+    DropdownModule,
+    ToggleButtonModule,
+    InputTextareaModule,
+    AccordionModule,
+    FieldsetModule,
+  ],
 
   providers: [OfferService],
   bootstrap: [AppComponent],

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ConfirmationService} from 'primeng/api';
 import {MessageService} from 'primeng/api';
 import {HttpErrorResponse} from "@angular/common/http";
-import {OrderStatus, OrderStatusService} from "../../../services/oorderStatus.service";
+import {OrderStatus, OrderStatusService} from "../../../services/orderStatus.service";
 import {IUser} from "../../../../model/user/user";
 import {StorageService} from "../../../services/storage.service";
 
@@ -43,6 +43,7 @@ export class ConfigOrderStatusComponent implements OnInit {
     this.choose = {
       id: 0,
       name: '',
+      level: 0,
       visible: true,
     };
   }
@@ -57,6 +58,7 @@ export class ConfigOrderStatusComponent implements OnInit {
     this.choose = {
       id: 0,
       name: '',
+      level:0,
       visible: true,
     };
     this.initOffers();
@@ -141,6 +143,7 @@ export class ConfigOrderStatusComponent implements OnInit {
   }
 
   save() {
+    console.log(this.choose)
     this.submitted = true;
 
     if (this.choose.id != 0) {
@@ -169,7 +172,7 @@ export class ConfigOrderStatusComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Something go wrong' + error.message,
+            detail: 'Something go wrong' + error.error.message,
             life: 3000
           });
         }
@@ -178,6 +181,6 @@ export class ConfigOrderStatusComponent implements OnInit {
     this.all = [...this.all!];
     this.addEditDialog = false;
     this.header = "Edit";
-    this.choose = {id: 0, name: '', visible: true};
+    this.choose = {id: 0, level:0, name: '', visible: true};
   }
 }

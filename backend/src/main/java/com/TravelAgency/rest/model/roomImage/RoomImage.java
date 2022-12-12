@@ -35,11 +35,5 @@ public class RoomImage implements Serializable {
 
     private String name;
 
-    private String type;
-
-    @Lob
-    @Column(name = "imageData",length = 5000)
-    private byte[] imageData;
-
     private Boolean visible;
 }

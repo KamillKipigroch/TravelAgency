@@ -28,5 +28,6 @@ import { environment } from 'src/environments/environment';
 export class OrderStatus{
   public id:number = 0;
   public name:String = "" ;
+  public level:number = 0;
   public visible:Boolean = true;
 }

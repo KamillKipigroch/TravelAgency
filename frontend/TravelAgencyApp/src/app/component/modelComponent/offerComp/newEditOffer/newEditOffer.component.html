@@ -1,0 +1,139 @@
+<p-toast></p-toast>
+
+<p-tabMenu [model]="tabs" [activeItem]="activeTab"></p-tabMenu>
+<div *ngIf="detailTab">
+  <p-fieldset legend="Offer Images" [toggleable]="true">
+    <div class="field" style="padding-top: 2rem">
+      <p-fileUpload name="demo[]" url="./upload.php" [maxFileSize]="1000000" [showUploadButton]="true"
+                    (onSelect)="onUploadOfferImage($event)"
+                    [multiple]="true" accept="image/*">
+        <ng-template pTemplate="content">
+          <ul *ngIf="onUploadOfferImage.length">
+            <li *ngFor="let file of offerImage">{{file.name}} - {{file.size}} bytes</li>
+          </ul>
+        </ng-template>
+      </p-fileUpload>
+    </div>
+  </p-fieldset>
+
+  <p-fieldset legend="Description" [toggleable]="true">
+    <div class="field" style="padding-top: 2rem">
+      <label for="name">Name: </label>
+      <input type="text" pInputText id="name" style="margin-left: 15pt"
+             [(ngModel)]="offer.hotel[0].name" required autofocus/>
+    </div>
+    <div class="field" style="padding-top: 2rem">
+      <label for="name">Country: </label>
+      <p-listbox [showToggleAll]="false" [options]="countries" [(ngModel)]="offer.country"
+                 [checkbox]="false" [multiple]="false" optionLabel="select" [listStyle]="{'max-height':'300px'}">
+        <ng-template let-country pTemplate="item">
+          <div class="country-item">
+            <div>{{country.name}}</div>
+          </div>
+        </ng-template>
+      </p-listbox>
+    </div>
+    <div class="field" style="padding-top: 2rem">
+      <label>Standard: </label>
+      <p-rating [(ngModel)]="offer.hotel[0].standard" [cancel]="false"></p-rating>
+    </div>
+
+    <div class="field" style="padding-top: 2rem">
+      <label>Description: </label>
+      <textarea class="form-control" name="description"
+                rows="10" cols="8" [(ngModel)]="offer.description"></textarea>
+    </div>
+  </p-fieldset>
+</div>
+
+
+<div *ngIf="calendarTab">
+  <div *ngFor="let available of offer.availabilities">
+
+    <div class="field" style="padding-top: 2rem">
+      <label for="availablePrice">Price: </label>
+      <p-inputNumber [style]="{'margin-left': '33pt'}" [(ngModel)]="available.price" id="availablePrice"
+                     inputId="currency-us" mode="currency" currency="USD"
+                     locale="en-US" [minFractionDigits]="2"></p-inputNumber>
+      <br>
+    </div>
+    <div class="field" style="padding-top: 2rem">
+      <label for="promotionPrice">Promotion Price: </label>
+      <p-inputNumber [style]="{'margin-left': '33pt'}" [(ngModel)]="available.price" id="promotionPrice"
+                     inputId="currency-us" mode="currency" currency="USD"
+                     locale="en-US" [minFractionDigits]="2"></p-inputNumber>
+    </div>
+    <div class="field" style="padding-top: 2rem">
+      <label for="promotion">Promotion: </label>
+      <p-checkbox [(ngModel)]="available.promotion" [binary]="true"
+                  [style]="{'margin-left': '10pt', 'padding-bottom':'15pt'}" id="promotion"></p-checkbox>
+      <br>
+    </div>
+    <div class="field" style="padding-top: 2rem">
+      <br><br>
+      <p-calendar [showButtonBar]="false" [minDate]="todayDate" [inline]="true"
+                  [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true"
+                  inputId="range"></p-calendar>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="roomTab">
+  <p-button [icon]="'pi pi-plus'" (click)="addNewRoom()" styleClass="p-button-text" label="Add new room"></p-button>
+  <p-button [icon]="'pi pi-minus'" (click)="deleteLastRoom()" styleClass="p-button-text ml-2"
+            label="Delete last room"></p-button>
+  <div *ngFor="let room of offer.hotel[0].rooms">
+    <p-accordion [multiple]="true">
+      <p-accordionTab>
+        <p-fieldset legend="Room Images" [toggleable]="true">
+          <div class="field" style="padding-top: 2rem">
+            <p-fileUpload name="demo[]" url="./upload.php" [maxFileSize]="1000000" [showUploadButton]="true"
+                          (onSelect)="onUploadRoomImage($event)"
+                          [multiple]="true" accept="image/*">
+              <ng-template pTemplate="content">
+                <ul *ngIf="onUploadOfferImage.length">
+                  <li *ngFor="let file of offerImage">{{file.name}} - {{file.size}} bytes</li>
+                </ul>
+              </ng-template>
+            </p-fileUpload>
+          </div>
+        </p-fieldset>
+
+        <p-fieldset legend="Description" [toggleable]="true">
+          <div class="field" style="padding-top: 2rem">
+            <label for="roomQuantity">Quantity: </label>
+            <input type="number" pInputText id="roomQuantity" style="margin-left: 15pt"
+                   [(ngModel)]="room.quantity" required autofocus/>
+          </div>
+          <div class="field" style="padding-top: 2rem">
+            <label for="roomPrice">Price: </label>
+            <p-inputNumber [style]="{'margin-left': '33pt'}" [(ngModel)]="room.price" id="roomPrice"
+                           inputId="currency-us" mode="currency" currency="USD"
+                           locale="en-US" [minFractionDigits]="2"></p-inputNumber>
+          </div>
+          <div class="field" style="padding-top: 2rem">
+            <label for="roomDetail">Room detail: </label>
+            <p-listbox id="roomDetail" [showToggleAll]="false" [options]="roomDetails" [(ngModel)]="room.roomDetail"
+                       [checkbox]="false" [multiple]="false" optionLabel="select" [listStyle]="{'max-height':'150pt'}">
+              <ng-template let-roomDetails pTemplate="item">
+                <div class="country-item">
+                  <div>{{roomDetails.name}}</div>
+                </div>
+              </ng-template>
+            </p-listbox>
+          </div>
+          <div class="field" style="padding-top: 2rem">
+            <label>Description: </label>
+            <textarea class="form-control" name="description"
+                      rows="10" cols="8" [(ngModel)]="room.description"></textarea>
+          </div>
+        </p-fieldset>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+
+</div>
+<div class="d-flex justify-content-center" style="margin-top: 30pt">
+  <button pButton pRipple type="button" label="Save Offer" style="width: 300pt" (click)="addEditOffer()"
+          class=" p-button-rounded p-button-success"></button>
+</div>

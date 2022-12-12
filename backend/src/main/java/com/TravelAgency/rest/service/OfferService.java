@@ -30,7 +30,7 @@ public class OfferService {
     public List<Offer> findAll() {
         var offers = offerRepository.findAll();
         offers.forEach(offer -> offer.setAvailabilities(
-                offer.getAvailabilities().stream().filter(availability -> availability.getDatetimeStart().isAfter(ChronoLocalDate.from(LocalDateTime.now()))).collect(Collectors.toSet())));
+                offer.getAvailabilities().stream().filter(availability -> availability.getDatetimeStart().isAfter(ChronoLocalDate.from(LocalDateTime.now()))).toList()));
         return offers;
     }
 
@@ -40,7 +40,7 @@ public class OfferService {
     }
 
 
-    public Offer add(OfferRequest offerRequest, Country country) {
+    public Offer add(Offer offerRequest, Country country) {
         var newObject = new Offer();
         newObject.setCountry(country);
         newObject.setDescription(offerRequest.getDescription());

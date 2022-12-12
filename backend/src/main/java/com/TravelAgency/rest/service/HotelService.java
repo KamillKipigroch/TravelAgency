@@ -1,7 +1,6 @@
 package com.TravelAgency.rest.service;
 
 import com.TravelAgency.rest.model.hotel.Hotel;
-import com.TravelAgency.rest.model.hotel.HotelRequest;
 import com.TravelAgency.rest.model.offer.Offer;
 import com.TravelAgency.rest.repository.HotelRepository;
 import lombok.AllArgsConstructor;
@@ -27,7 +26,7 @@ public class HotelService {
         return hotelRepository.findByName(name);
     }
 
-    public Hotel addHotel(HotelRequest hotelRequest, Offer offer) {
+    public Hotel addHotel(Hotel hotelRequest, Offer offer) {
         if (hotelRepository.findByName(hotelRequest.getName()).isPresent()) {
             throw new FindException(IS_ALREADY_EXIST);
         }

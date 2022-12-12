@@ -1,7 +1,12 @@
 package com.TravelAgency.rest.service;
 
+import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
 import com.TravelAgency.rest.model.order.Order;
+import com.TravelAgency.rest.model.order.OrderRequest;
+import com.TravelAgency.rest.model.orderStatus.OrderStatus;
+import com.TravelAgency.rest.model.room.Room;
 import com.TravelAgency.rest.repository.OrderRepository;
+import com.TravelAgency.security.user.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +25,20 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
+    public List<Order> findUserOrders(User user) {
+        return orderRepository.findAll().stream().filter(order -> order.getUser().getEmail().equals(user.getEmail())).toList();
+    }
+
     public Order findById(Long id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new FindException(NOT_FOUND_WITH_ID + id));
+    }
+    public Order addOrder(OrderStatus status, OfferAvailability deadline, Room room, User user) {
+        var order = new Order();
+        order.setOrderStatus(status);
+        order.setDeadline(deadline);
+        order.setRoom(room);
+        order.setUser(user);
+        return orderRepository.save(order);
     }
 }

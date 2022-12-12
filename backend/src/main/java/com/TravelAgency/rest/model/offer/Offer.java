@@ -6,17 +6,16 @@ import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
 import com.TravelAgency.rest.model.offerAvailability.OfferAvailabilityComparator;
 import com.TravelAgency.rest.model.offerImage.OfferImage;
 import com.TravelAgency.rest.model.opinion.Opinion;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.SortComparator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "offer_t")
@@ -31,21 +30,22 @@ public class Offer implements Serializable {
     Long id;
 
     @OneToMany(mappedBy = "offer")
-    Set<Hotel> hotel;
+    List<Hotel> hotel;
 
     @OneToOne
     @JoinColumn(name = "country_id")
     Country country;
 
     @OneToMany(mappedBy = "offer")
-    Set<OfferImage> images;
+    List<OfferImage> images;
 
     @OneToMany(mappedBy = "offer")
-    Set<Opinion> opinions;
+    List<Opinion> opinions;
 
     @OneToMany(mappedBy = "offer")
     @SortComparator(OfferAvailabilityComparator.class)
-    Set<OfferAvailability> availabilities;
+    @JsonIgnoreProperties({"offer"})
+    List<OfferAvailability> availabilities;
 
     String description;
 

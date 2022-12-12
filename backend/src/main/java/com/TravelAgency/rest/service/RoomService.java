@@ -23,10 +23,10 @@ public class RoomService {
                 .orElseThrow(() -> new FindException(NOT_FOUND_WITH_ID + id));
     }
 
-    public Room add(RoomRequest roomRequest, Hotel hotel, RoomDetail roomDetail){
+    public Room add(Room roomRequest, Hotel hotel){
         var newObject = new Room();
         newObject.setHotel(hotel);
-        newObject.setRoomDetail(roomDetail);
+        newObject.setRoomDetail(roomRequest.getRoomDetail());
         newObject.setPrice(roomRequest.getPrice());
         newObject.setDescription(roomRequest.getDescription());
         newObject.setQuantity(roomRequest.getQuantity());

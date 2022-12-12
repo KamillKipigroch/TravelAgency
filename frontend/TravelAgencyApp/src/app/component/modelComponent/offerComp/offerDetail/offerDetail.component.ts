@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {Country, Image, Offer, OfferService, Opinion, Room} from "../../../services/offer.service";
+import {Country, Offer, OfferAvailability, OfferService, Opinion, Room} from "../../../services/offer.service";
 import {Router,} from "@angular/router";
-import {IUser} from "../../../../model/user/user";
 import {StorageService} from "../../../services/storage.service";
 import {MenuItem, MessageService} from "primeng/api";
-import {ImageRequest, OpinionRequest, OpinionService} from "../../../services/opinion.service";
-import {OrderStatus} from "../../../services/oorderStatus.service";
+import {OpinionRequest, OpinionService} from "../../../services/opinion.service";
 import {formatDate} from "@angular/common";
+import {OrderRequest, OrderService} from "../../../services/order.service";
 
 @Component({
   selector: 'app-offer-component',
@@ -29,8 +28,6 @@ export class OfferDetailComponent implements OnInit {
 
   people: number = 1;
 
-  isAdmin: boolean = false;
-
   items: MenuItem[] = [];
 
   detailTab = true;
@@ -47,33 +44,18 @@ export class OfferDetailComponent implements OnInit {
 
   allDates: any [] = [];
 
-  selectedItem: any;
+  selectedAvailability: OfferAvailability = new OfferAvailability();
 
   uploadedFiles: any[] = [];
 
-  responsiveOptions:any[] = [
-    {
-      breakpoint: '1024px',
-      numVisible: 5
-    },
-    {
-      breakpoint: '768px',
-      numVisible: 3
-    },
-    {
-      breakpoint: '560px',
-      numVisible: 1
-    }
-  ];
-
   activeItem: MenuItem = {
-    label: 'Detail', icon: 'pi pi-fw pi-home', command: (event: Event) => {
+    label: 'Detail', icon: 'pi pi-fw pi-home', command: () => {
       this.unselectAllTab();
       this.detailTab = true
     }
   };
 
-  constructor(private router: Router, private offerService: OfferService, private messageService: MessageService,
+  constructor(private router: Router, private offerService: OfferService, private orderService: OrderService, private messageService: MessageService,
               private storageService: StorageService, private opinionService: OpinionService) {
     if (this.router.getCurrentNavigation()!.extras!.state != null) {
       this.offer = this.router.getCurrentNavigation()!.extras!.state as Offer
@@ -87,36 +69,31 @@ export class OfferDetailComponent implements OnInit {
   ngOnInit() {
     this.items = [
       {
-        label: 'Detail', icon: 'pi pi-fw pi-home', command: (event: Event) => {
+        label: 'Detail', icon: 'pi pi-fw pi-home', command: () => {
           this.unselectAllTab();
           this.detailTab = true
         }
       },
       {
-        label: 'Opinions', icon: 'pi pi-fw  pi-comments', command: (event: Event) => {
+        label: 'Opinions', icon: 'pi pi-fw  pi-comments', command: () => {
           this.unselectAllTab();
           this.opinionsTab = true
         }
       },
       {
-        label: 'Calendar', icon: 'pi pi-fw pi-calendar-times', command: (event: Event) => {
+        label: 'Calendar', icon: 'pi pi-fw pi-calendar-times', command: () => {
           this.unselectAllTab();
           this.calendarTab = true
         }
       },
       {
-        label: 'Room', icon: 'pi pi-fw pi-moon', command: (event: Event) => {
+        label: 'Room', icon: 'pi pi-fw pi-moon', command: () => {
           this.unselectAllTab();
           this.roomTab = true
         }
       }
     ];
     this.activeItem = this.items[0];
-
-
-    const user: IUser = this.storageService.getUser();
-    if (user.rol != null)
-      this.isAdmin = user.rol.includes('Admin');
 
     const offerId = this.storageService.getOfferId()
     if (this.offer.id == 0) {
@@ -149,23 +126,23 @@ export class OfferDetailComponent implements OnInit {
         value: available
       })
     })
-    this.selectedItem = this.allDates[0].value;
+    this.selectedAvailability = this.allDates[0].value;
   }
 
   initOrUpdateOfferData() {
     this.calendarTab = false
-    this.selectedDate[0] = new Date(this.selectedItem.datetimeStart)
-    this.selectedDate[1] = new Date(this.selectedItem.datetimeEnd)
+    this.selectedDate[0] = new Date(this.selectedAvailability.datetimeStart)
+    this.selectedDate[1] = new Date(this.selectedAvailability.datetimeEnd)
 
-    this.offer!.days = ((new Date(this.selectedItem.datetimeEnd).getTime() -
-      new Date(this.selectedItem.datetimeStart).getTime()) / this.millisecondsPerDay) + 1
+    this.offer!.days = ((new Date(this.selectedAvailability.datetimeEnd).getTime() -
+      new Date(this.selectedAvailability.datetimeStart).getTime()) / this.millisecondsPerDay) + 1
 
     this.offer!.price = (this.offer!.hotel[0].rooms[this.roomSelected].price * this.offer!.days) * this.people;
 
-    if (this.selectedItem.promotion != null && this.selectedItem.promotion) {
+    if (this.selectedAvailability.promotion != null && this.selectedAvailability.promotion) {
 
       this.offer!.promotionPrice =
-        (this.offer!.hotel[this.roomSelected].rooms[this.roomSelected].price - this.selectedItem.promotionPrice) * this.offer!.days * this.people;
+        (this.offer!.hotel[this.roomSelected].rooms[this.roomSelected].price - this.selectedAvailability.promotionPrice) * this.offer!.days * this.people;
     }
 
   }
@@ -190,7 +167,7 @@ export class OfferDetailComponent implements OnInit {
     this.offer.hotel[0].rooms.forEach(room => room.selected = false)
   }
 
-  edit(opinion: Opinion) {
+  edit() {
     this.submitted = false;
     this.addEditOpinion = true;
     this.header = "Edit";
@@ -241,6 +218,38 @@ export class OfferDetailComponent implements OnInit {
         this.offer.opinions?.push(responseOpinion);
       })
     this.header = "Edit";
+  }
+
+  order(){
+    if (this.storageService.isLoggedIn()){
+      let orderRequest = new OrderRequest();
+      orderRequest.selectedRoom = this.offer!.hotel[0].rooms[this.roomSelected].id
+      console.log(this.selectedAvailability.id)
+      orderRequest.offerAvailabilityId = this.selectedAvailability.id;
+      let user = this.storageService.getUser()
+      orderRequest.userEmail = user.email;
+      this.orderService.add(orderRequest).subscribe(
+        () => {
+          this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Ordered !', life: 3000});
+        },
+        (error: any) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail:  error.error.message,
+            life: 3000
+          });
+
+        })
+    }
+    else {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'You must be logged to add opinion !',
+        life: 3000
+      });
+    }
   }
 
   displayDate(opinion: Opinion):string {

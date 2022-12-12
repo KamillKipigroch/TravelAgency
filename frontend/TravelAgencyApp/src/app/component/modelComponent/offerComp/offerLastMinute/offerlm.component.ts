@@ -1,6 +1,8 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {Country, Offer, OfferService} from "../../../services/offer.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
+import {StorageService} from "../../../services/storage.service";
 
 @Component({
   selector: 'app-offer-component',
@@ -29,7 +31,8 @@ export class OfferLastMinuteComponent implements OnInit, OnChanges {
     this.ngOnInit();
   }
 
-  constructor(private offerService: OfferService) {}
+  constructor(private router: Router, private offerService: OfferService,
+              private storageService: StorageService) {}
 
   ngOnInit() {
     this.offerService.getOffers().subscribe(
@@ -130,5 +133,9 @@ export class OfferLastMinuteComponent implements OnInit, OnChanges {
       this.sortOrder = 1;
       this.sortField = value;
     }
+  }
+  checkOfferDetail(offer :Offer){
+    this.storageService.saveOffer(offer.id.toString())
+    this.router.navigate(['offer-detail'], {state: offer})
   }
 }

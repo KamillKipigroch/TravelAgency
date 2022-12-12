@@ -34,7 +34,6 @@ public class OfferAvailability implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "offer_id")
-    @JsonIgnore
     Offer offer;
 
     @Column(nullable = false)

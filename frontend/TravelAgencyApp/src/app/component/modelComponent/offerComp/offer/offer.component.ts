@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Country, Offer, OfferService} from "../../../services/offer.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MessageService, SelectItem} from "primeng/api";
+import {Router} from "@angular/router";
+import {StorageService} from "../../../services/storage.service";
 
 @Component({
   selector: 'app-offer-component',
@@ -36,7 +38,8 @@ export class OfferComponent implements OnInit {
 
   todayDate = new Date();
 
-  constructor(private offerService: OfferService) {
+  constructor(private router: Router, private offerService: OfferService,
+              private storageService: StorageService) {
   }
 
   ngOnInit() {
@@ -121,7 +124,8 @@ export class OfferComponent implements OnInit {
     })
   }
 
-  reloadPage(): void {
-    window.location.replace("http://localhost:4200/offer-detail");
+  checkOfferDetail(offer :Offer){
+    this.storageService.saveOffer(offer.id.toString())
+    this.router.navigate(['offer-detail'], {state: offer})
   }
 }

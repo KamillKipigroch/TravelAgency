@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Data
 public class OfferRequest {
-    HotelRequest hotel;
+    HotelRequest[] hotel;
 
     Long  countryId;
 
