@@ -1,7 +1,7 @@
 package com.TravelAgency.rest.service;
 
-import com.TravelAgency.rest.model.hotel.Hotel;
-import com.TravelAgency.rest.model.offer.Offer;
+import com.TravelAgency.rest.model.database.Hotel;
+import com.TravelAgency.rest.model.database.Offer;
 import com.TravelAgency.rest.repository.HotelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

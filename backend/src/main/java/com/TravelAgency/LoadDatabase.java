@@ -1,6 +1,6 @@
 package com.TravelAgency;
 
-import com.TravelAgency.rest.model.country.Country;
+import com.TravelAgency.rest.model.database.Country;
 import com.TravelAgency.rest.repository.CountryRepository;
 import com.TravelAgency.security.user.model.User;
 import com.TravelAgency.security.user.model.UserRole;

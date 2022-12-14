@@ -1,6 +1,6 @@
 package com.TravelAgency.rest.repository;
 
-import com.TravelAgency.rest.model.opinionImage.OpinionImage;
+import com.TravelAgency.rest.model.database.OpinionImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

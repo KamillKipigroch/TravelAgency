@@ -1,8 +1,8 @@
 package com.TravelAgency.rest.controller;
 
-import com.TravelAgency.rest.model.opinion.Opinion;
-import com.TravelAgency.rest.model.opinion.OpinionRequest;
-import com.TravelAgency.rest.model.opinionImage.OpinionImage;
+import com.TravelAgency.rest.model.database.Opinion;
+import com.TravelAgency.rest.model.dto.OpinionRequest;
+import com.TravelAgency.rest.model.database.OpinionImage;
 import com.TravelAgency.rest.service.OfferService;
 import com.TravelAgency.rest.service.OpinionImageService;
 import com.TravelAgency.rest.service.OpinionService;

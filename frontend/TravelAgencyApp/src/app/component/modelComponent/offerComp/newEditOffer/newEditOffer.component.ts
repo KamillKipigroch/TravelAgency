@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Country, Hotel, Offer, OfferAvailability, OfferService, Room} from "../../../services/offer.service";
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Country, Hotel, Image, Offer, OfferAvailability, OfferService, Room} from "../../../services/offer.service";
 import {Router,} from "@angular/router";
 import {StorageService} from "../../../services/storage.service";
 import {MessageService} from "primeng/api";
@@ -20,11 +20,9 @@ export class NewEditOfferComponent implements OnInit {
   roomTab = false;
   roomDetails: RoomDetail[] = [];
   offerImage: File[] = [];
-  roomImage: File[] = [];
   countries: Country[] = [];
   console = console;
   todayDate = new Date();
-  rangeDates = [];
 
   tabs = [
     {
@@ -85,13 +83,25 @@ export class NewEditOfferComponent implements OnInit {
 
 
     const offerId = this.storageService.getOfferId()
-    if (false) {
+
+    if (offerId) {
+      console.log("I try get Offer By Id ")
       this.offerService.getOfferById(offerId).subscribe(
         (response: Offer) => {
           this.offer = response as Offer
         })
+    } else {
+      this.offer.availabilities.push(new OfferAvailability())
     }
-    this.offer.availabilities.push(new OfferAvailability())
+
+
+    this.offer.availabilities.forEach(available => {
+      let range = []
+      range.push(new Date(available.datetimeStart))
+      range.push(new Date(available.datetimeEnd))
+      available.rangeDate = range
+    })
+
   }
 
   addNewRoom() {
@@ -110,9 +120,10 @@ export class NewEditOfferComponent implements OnInit {
     }
   }
 
-  onUploadRoomImage(event: any) {
+  onUploadRoomImage(event: any, room: Room) {
     for (let file of event.files) {
-      this.roomImage.push(file)
+      let roomIndex = this.offer.hotel[0].rooms.indexOf(room);
+      this.offer.hotel[0].rooms[roomIndex].roomImageFile.push(file);
     }
   }
 
@@ -120,19 +131,61 @@ export class NewEditOfferComponent implements OnInit {
     this.offer.hotel[0].rooms.splice(-1)
   }
 
-  addEditOffer() {
-    console.log(this.offer)
-    if (this.validData()) {
+  uploadRoomImage(rooms: Room[]) {
+    this.offer.hotel[0].rooms.forEach(room => {
+      let roomId = rooms.find(r => r.description == room.description)!.id
+      if (room.roomImageFile)
+        room.roomImageFile.forEach(file =>
+          this.offerService.uploadRoomImage(file, roomId).subscribe()
+        )
+    })
+  }
 
-      this.offerService.addOffer(this.offer).subscribe(
+  uploadOfferImage(offerId: number) {
+    if (!this.offerImage)
+      return
+    this.offerImage.forEach(file =>
+      this.offerService.uploadOfferImage(file, offerId).subscribe()
+    )
+  }
+
+
+  addEditOffer() {
+    if (!this.validData()) {
+      return
+    }
+    const offerId = this.storageService.getOfferId()
+    this.offer.availabilities.forEach(available => {
+        available.datetimeStart = available.rangeDate[0]
+        available.datetimeEnd = available.rangeDate[1]
+      }
+    )
+    if (offerId) {
+      this.offerService.updateOffer(this.offer).subscribe(
         (response) => {
-          this.messageService.add({severity: 'info', summary: 'Successful', detail: "s", life: 3000});
+          this.uploadRoomImage(response.hotel[0].rooms);
+          this.uploadOfferImage(response.id);
+          this.messageService.add({severity: 'info', summary: 'Successful', detail: "Offer updated", life: 3000});
         },
-        (error:any) =>{
+        (error: any) => {
           this.messageService.add({
             severity: 'error', summary: 'Error',
-            detail: 'Something go wrong with '+error.error.message, life: 3000
-          });}
+            detail: 'Something go wrong with edit ' + error.error.message, life: 3000
+          });
+        })
+    } else {
+      this.offerService.addOffer(this.offer).subscribe(
+        (response) => {
+          this.uploadRoomImage(response.hotel[0].rooms);
+          this.uploadOfferImage(response.id);
+          this.messageService.add({severity: 'info', summary: 'Successful', detail: "Offer uploaded", life: 3000});
+        },
+        (error: any) => {
+          this.messageService.add({
+            severity: 'error', summary: 'Error',
+            detail: 'Something go wrong with ' + error.error.message, life: 3000
+          });
+        }
       )
     }
 
@@ -143,7 +196,7 @@ export class NewEditOfferComponent implements OnInit {
   }
 
   checkArray(array: any[]): boolean {
-    return array.length != 0;
+    return array != null && array.length != 0;
   }
 
   checkNumber(num: number): boolean {
@@ -152,6 +205,9 @@ export class NewEditOfferComponent implements OnInit {
 
   private validData(): boolean {
     let valid = this.checkArray(this.offerImage)
+
+    if (!valid)
+      valid = this.checkArray(this.offer.images)
     this.showInfoIfNoValid("offer images", valid)
 
     if (valid) {
@@ -176,24 +232,27 @@ export class NewEditOfferComponent implements OnInit {
       this.showInfoIfNoValid("rooms", valid)
     }
 
-    if (valid) {
-      valid = this.checkArray(this.roomImage)
-      this.showInfoIfNoValid("roomImage", valid)
-    }
 
     if (valid) {
       for (let i = 0, len = this.offer.hotel[0].rooms.length; i < len; i++) {
         let room = this.offer.hotel[0].rooms[i];
         valid = this.checkString(room.description)
-        if(valid){
+        if (valid) {
+          valid = this.checkArray(this.offer.hotel[0].rooms[i].roomImageFile)
+          if (!valid)
+            valid = this.checkArray(this.offer.hotel[0].rooms[i].roomImage)
+          this.showInfoIfNoValid("roomImage", valid)
+        }
+
+        if (valid) {
           valid = this.checkNumber(room.quantity)
           this.showInfoIfNoValid("room quantity", valid)
         }
-        if(valid){
+        if (valid) {
           valid = this.checkString(room.description)
           this.showInfoIfNoValid("room description", valid)
         }
-        if(valid){
+        if (valid) {
           valid = this.checkNumber(room.roomDetail.id)
           this.showInfoIfNoValid("room roomDetail", valid)
         }
@@ -206,11 +265,11 @@ export class NewEditOfferComponent implements OnInit {
     return valid
   }
 
-  showInfoIfNoValid(text: String, valid:boolean){
-    if(!valid){
+  showInfoIfNoValid(text: String, valid: boolean) {
+    if (!valid) {
       this.messageService.add({
         severity: 'error', summary: 'Error',
-        detail: 'Something go wrong with '+text, life: 3000
+        detail: 'Something go wrong with ' + text, life: 3000
       });
     }
   }

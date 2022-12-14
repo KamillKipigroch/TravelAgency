@@ -1,7 +1,6 @@
 package com.TravelAgency.rest.service;
 
-import com.TravelAgency.rest.model.country.Country;
-import com.TravelAgency.rest.model.offer.Offer;
+import com.TravelAgency.rest.model.database.Country;
 import com.TravelAgency.rest.repository.CountryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

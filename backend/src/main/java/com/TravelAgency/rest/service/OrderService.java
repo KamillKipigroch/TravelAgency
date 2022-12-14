@@ -1,10 +1,9 @@
 package com.TravelAgency.rest.service;
 
-import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
-import com.TravelAgency.rest.model.order.Order;
-import com.TravelAgency.rest.model.order.OrderRequest;
-import com.TravelAgency.rest.model.orderStatus.OrderStatus;
-import com.TravelAgency.rest.model.room.Room;
+import com.TravelAgency.rest.model.database.OfferAvailability;
+import com.TravelAgency.rest.model.database.Order;
+import com.TravelAgency.rest.model.database.OrderStatus;
+import com.TravelAgency.rest.model.database.Room;
 import com.TravelAgency.rest.repository.OrderRepository;
 import com.TravelAgency.security.user.model.User;
 import lombok.AllArgsConstructor;

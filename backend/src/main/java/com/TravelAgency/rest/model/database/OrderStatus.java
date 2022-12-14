@@ -1,4 +1,4 @@
-package com.TravelAgency.rest.model.orderStatus;
+package com.TravelAgency.rest.model.database;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

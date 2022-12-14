@@ -1,11 +1,6 @@
-package com.TravelAgency.rest.model.offer;
+package com.TravelAgency.rest.model.database;
 
-import com.TravelAgency.rest.model.country.Country;
-import com.TravelAgency.rest.model.hotel.Hotel;
-import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
-import com.TravelAgency.rest.model.offerAvailability.OfferAvailabilityComparator;
-import com.TravelAgency.rest.model.offerImage.OfferImage;
-import com.TravelAgency.rest.model.opinion.Opinion;
+import com.TravelAgency.rest.model.dto.OfferAvailabilityComparator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

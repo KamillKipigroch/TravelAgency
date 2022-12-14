@@ -1,6 +1,6 @@
 package com.TravelAgency.rest.repository;
 
-import com.TravelAgency.rest.model.offer.Offer;
+import com.TravelAgency.rest.model.database.Offer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,23 +1,15 @@
 package com.TravelAgency.rest.service;
 
-import com.TravelAgency.rest.model.country.Country;
-import com.TravelAgency.rest.model.hotel.Hotel;
-import com.TravelAgency.rest.model.offer.Offer;
-import com.TravelAgency.rest.model.offer.OfferRequest;
-import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
-import com.TravelAgency.rest.model.opinion.Opinion;
-import com.TravelAgency.rest.model.opinion.OpinionRequest;
+import com.TravelAgency.rest.model.database.Country;
+import com.TravelAgency.rest.model.database.Offer;
 import com.TravelAgency.rest.repository.OfferRepository;
-import com.TravelAgency.security.user.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.lang.module.FindException;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDate;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.TravelAgency.comunicates.Communicates.*;
 
@@ -54,5 +46,11 @@ public class OfferService {
                 new FindException(NOT_FOUND_WITH_ID + id));
         object.setVisible(false);
         offerRepository.save(object);
+    }
+
+    public Offer update(Offer request) {
+        offerRepository.findById(request.getId()).orElseThrow(() ->
+                new FindException(NOT_FOUND_WITH_ID + request.getId()));
+        return offerRepository.save(request);
     }
 }

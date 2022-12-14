@@ -10,6 +10,8 @@ import {User} from "./user.service";
 export class OfferService {
   private apiServerUrl = environment.apiBaseUrl + "/api";
 
+  private uploadImageData :any;
+
   constructor(private http: HttpClient) {
   }
 
@@ -31,6 +33,22 @@ export class OfferService {
 
   public updateOffer(offer: Offer): Observable<Offer> {
     return this.http.put<Offer>(`${this.apiServerUrl}/offer/update`, offer)
+  }
+
+  public uploadRoomImage(file:File, roomId:number): Observable<Image> {
+    this.uploadImageData = new FormData();
+    this.uploadImageData.append('image', file, file.name);
+    this.uploadImageData.append('room', roomId.toString());
+
+    return this.http.post<Image>(`${this.apiServerUrl}/offer/upload-room-image`, this.uploadImageData)
+  }
+
+  public uploadOfferImage(file:File, offerId:number): Observable<Image> {
+    this.uploadImageData = new FormData();
+    this.uploadImageData.append('image', file, file.name);
+    this.uploadImageData.append('offer', offerId.toString());
+
+    return this.http.post<Image>(`${this.apiServerUrl}/offer/upload-offer-image`, this.uploadImageData)
   }
 
   public deleteOffer(businessKey: String): Observable<void> {
@@ -114,6 +132,7 @@ export class Room {
   public roomDetail: RoomDetails = new RoomDetails(0, "", true)
   public hotel: Hotel = new Hotel(0, "", 0, [], 0, 0, true)
   public roomImage: Image[] = [];
+  public roomImageFile: File[] = [];
   public description: String = "";
   public quantity: number = 0;
   public selected: boolean = false;
@@ -170,6 +189,7 @@ export class Image {
 
 export class OfferAvailability {
   public id: number = 0;
+  public rangeDate: any = [];
   public datetimeStart: Date = new Date();
   public datetimeEnd: Date = new Date();
   public price:number = 10;

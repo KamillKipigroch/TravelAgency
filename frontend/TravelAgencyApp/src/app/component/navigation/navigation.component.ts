@@ -35,6 +35,10 @@ export class NavigationComponent implements OnInit {
     }
   }
 
+  resetItem(){
+    this.storageService.resetItem()
+  }
+
   logout(): void {
     this.messageService.add({severity: 'info', summary: 'You can login again', detail:  "You can login again", life: 3000});
 

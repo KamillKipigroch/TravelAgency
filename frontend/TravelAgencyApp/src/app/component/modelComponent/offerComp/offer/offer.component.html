@@ -67,7 +67,7 @@
                   <p class="text-center" *ngIf="offer.promotionPrice != null"><b>Promotion price: {{offer.promotionPrice}}$</b></p>
                 </div>
                 <div class="col-sm">
-                  <p-button label="Check offfer" icon="pi pi-search"></p-button>
+                  <p-button label="Check offfer" icon="pi pi-search" (onClick)="checkOfferDetail(offer)"></p-button>
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-package com.TravelAgency.rest.model.order;
+package com.TravelAgency.rest.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

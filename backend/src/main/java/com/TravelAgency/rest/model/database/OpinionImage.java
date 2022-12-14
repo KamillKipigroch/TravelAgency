@@ -1,6 +1,6 @@
-package com.TravelAgency.rest.model.opinionImage;
+package com.TravelAgency.rest.model.database;
 
-import com.TravelAgency.rest.model.opinion.Opinion;
+import com.TravelAgency.rest.model.database.Opinion;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,5 @@
-package com.TravelAgency.rest.model.opinion;
+package com.TravelAgency.rest.model.database;
 
-import com.TravelAgency.rest.model.opinionImage.OpinionImage;
-import com.TravelAgency.rest.model.offer.Offer;
 import com.TravelAgency.security.user.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

@@ -1,7 +1,7 @@
 package com.TravelAgency.rest.service;
 
-import com.TravelAgency.rest.model.roomDetail.RoomDetail;
-import com.TravelAgency.rest.model.roomDetail.RoomDetailRequest;
+import com.TravelAgency.rest.model.database.RoomDetail;
+import com.TravelAgency.rest.model.dto.RoomDetailRequest;
 import com.TravelAgency.rest.repository.RoomDetailRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

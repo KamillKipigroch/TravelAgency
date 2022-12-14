@@ -1,25 +1,29 @@
 package com.TravelAgency.rest.controller;
 
-import com.TravelAgency.rest.model.offer.Offer;
-import com.TravelAgency.rest.model.offer.OfferRequest;
-import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
-import com.TravelAgency.rest.model.offerImage.OfferImage;
-import com.TravelAgency.rest.model.roomDetail.RoomDetail;
+import com.TravelAgency.rest.model.database.Offer;
+import com.TravelAgency.rest.model.database.OfferAvailability;
+import com.TravelAgency.rest.model.database.OfferImage;
+import com.TravelAgency.rest.model.database.RoomImage;
 import com.TravelAgency.rest.service.*;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static com.TravelAgency.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @AllArgsConstructor
@@ -30,10 +34,8 @@ public class OfferController {
     private final HotelService hotelService;
     private final OfferImageService offerImageService;
     private final RoomImageService roomImageService;
+    private final Cloudinary cloudinary;
     private final OfferAvailabilityService offerAvailabilityService;
-    private final RoomDetailService roomDetailService;
-    private final OpinionService opinionService;
-    private final OrderService orderService;
     private final RoomService roomService;
 
     @GetMapping("/get-all")
@@ -49,6 +51,24 @@ public class OfferController {
         return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/upload-offer-image", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<OfferImage> uploadOfferImage(@RequestPart("offer") String offerId, @RequestPart("image") MultipartFile image) throws IOException {
+        var offer = offerService.findById(Long.parseLong(offerId));
+        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        var opinionImage = offerImageService.add(offer, uploadResult.get("url").toString());
+
+        return new ResponseEntity<>(opinionImage, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/upload-room-image", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseEntity<RoomImage> uploadRoomImage(@RequestPart("room") String roomId, @RequestPart("image") MultipartFile image) throws IOException {
+        var room = roomService.findById(Long.parseLong(roomId));
+        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        var opinionImage = roomImageService.add(room, uploadResult.get("url").toString());
+
+        return new ResponseEntity<>(opinionImage, HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     public ResponseEntity<Offer> add(@RequestBody Offer request) {
@@ -56,7 +76,6 @@ public class OfferController {
         if (hotelService.findByName(requestHotel.getName()).isPresent()) {
             throw new FindException("Hotel with this name already exist !");
         }
-
         var country = countryService.findById(request.getCountry().getId());
         var offer = offerService.add(request, country);
 
@@ -74,12 +93,16 @@ public class OfferController {
 
         if (request.getHotel().get(0).getRooms() != null && !request.getHotel().get(0).getRooms().isEmpty()) {
             request.getHotel().get(0).getRooms().forEach(roomRequest -> {
-                var room = roomService.add(roomRequest, hotel);
+                roomService.add(roomRequest, hotel);
             });
         }
+
         var respond = offerService.findById(offer.getId());
         respond.setHotel(new ArrayList<>());
         respond.getHotel().add(hotel);
+        respond.getHotel().get(0).setRooms(
+                new HashSet<>(roomService.findByHotel(respond.getHotel().get(0).getId()))
+        );
         respond.setAvailabilities(availability);
         return new ResponseEntity<>(respond, HttpStatus.OK);
     }
@@ -87,8 +110,8 @@ public class OfferController {
     @PutMapping("/update")
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     public ResponseEntity<Offer> update(@RequestBody Offer request) {
-//        var roomDetails = opinionService.update(request);
-        return new ResponseEntity<>(HttpStatus.OK);
+        var offer = offerService.update(request);
+        return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
     @PutMapping("/disable-visibility")

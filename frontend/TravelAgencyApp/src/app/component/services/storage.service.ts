@@ -45,4 +45,8 @@ export class StorageService {
   public logout():any {
     window.sessionStorage.removeItem(USER_KEY);
   }
+
+  resetItem() {
+    window.sessionStorage.removeItem(OFFER_ID);
+  }
 }

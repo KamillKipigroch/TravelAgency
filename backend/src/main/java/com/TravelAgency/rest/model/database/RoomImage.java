@@ -1,6 +1,6 @@
-package com.TravelAgency.rest.model.offerImage;
+package com.TravelAgency.rest.model.database;
 
-import com.TravelAgency.rest.model.offer.Offer;
+import com.TravelAgency.rest.model.database.Room;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,35 +10,29 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "offer_image_t")
+@Table(name = "room_image_t")
 @NoArgsConstructor
 @Getter
 @Setter
-public class OfferImage implements Serializable {
+public class RoomImage implements Serializable {
     @Id
-    @SequenceGenerator(name = "s_offer_image",
-            sequenceName = "s_offer_image",
+    @SequenceGenerator(name = "s_room_image",
+            sequenceName = "s_room_image",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "s_offer_image"
+            generator = "s_room_image"
     )
     @Column(nullable = false, updatable = false)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "offer_id")
+    @JoinColumn(name = "room_id")
     @JsonIgnore
-    private Offer offer;
+    private Room room;
 
     private String name;
 
     private Boolean visible;
-
-    public OfferImage(String name, Offer offer) {
-        this.name = name;
-        this.offer= offer;
-        this.visible = true;
-    }
 }

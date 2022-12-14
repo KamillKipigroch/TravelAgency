@@ -1,4 +1,6 @@
-package com.TravelAgency.rest.model.offerAvailability;
+package com.TravelAgency.rest.model.dto;
+
+import com.TravelAgency.rest.model.database.OfferAvailability;
 
 import java.util.Comparator;
 

@@ -1,18 +1,13 @@
-package com.TravelAgency.rest.model.offerAvailability;
+package com.TravelAgency.rest.model.database;
 
-import com.TravelAgency.rest.model.offer.Offer;
-import com.TravelAgency.rest.model.room.Room;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.TravelAgency.rest.model.database.Offer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SortComparator;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table (name = "availability_t")

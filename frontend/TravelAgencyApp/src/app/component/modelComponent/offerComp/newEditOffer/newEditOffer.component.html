@@ -4,12 +4,15 @@
 <div *ngIf="detailTab">
   <p-fieldset legend="Offer Images" [toggleable]="true">
     <div class="field" style="padding-top: 2rem">
-      <p-fileUpload name="demo[]" url="./upload.php" [maxFileSize]="1000000" [showUploadButton]="true"
+      <p-fileUpload name="demo[]" url="./upload.php" [showUploadButton]="true"
                     (onSelect)="onUploadOfferImage($event)"
                     [multiple]="true" accept="image/*">
         <ng-template pTemplate="content">
           <ul *ngIf="onUploadOfferImage.length">
             <li *ngFor="let file of offerImage">{{file.name}} - {{file.size}} bytes</li>
+          </ul>
+          <ul *ngIf="offer.images">
+            <li *ngFor="let file of offer.images">{{file.url}}</li>
           </ul>
         </ng-template>
       </p-fileUpload>
@@ -59,7 +62,7 @@
     </div>
     <div class="field" style="padding-top: 2rem">
       <label for="promotionPrice">Promotion Price: </label>
-      <p-inputNumber [style]="{'margin-left': '33pt'}" [(ngModel)]="available.price" id="promotionPrice"
+      <p-inputNumber [style]="{'margin-left': '33pt'}" [(ngModel)]="available.promotionPrice" id="promotionPrice"
                      inputId="currency-us" mode="currency" currency="USD"
                      locale="en-US" [minFractionDigits]="2"></p-inputNumber>
     </div>
@@ -71,8 +74,8 @@
     </div>
     <div class="field" style="padding-top: 2rem">
       <br><br>
-      <p-calendar [showButtonBar]="false" [minDate]="todayDate" [inline]="true"
-                  [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true"
+      <p-calendar [showButtonBar]="false" [inline]="true"
+                  [(ngModel)]="available.rangeDate" selectionMode="range"
                   inputId="range"></p-calendar>
     </div>
   </div>
@@ -87,12 +90,15 @@
       <p-accordionTab>
         <p-fieldset legend="Room Images" [toggleable]="true">
           <div class="field" style="padding-top: 2rem">
-            <p-fileUpload name="demo[]" url="./upload.php" [maxFileSize]="1000000" [showUploadButton]="true"
-                          (onSelect)="onUploadRoomImage($event)"
+            <p-fileUpload name="demo[]" url="./upload.php" [showUploadButton]="true"
+                          (onSelect)="onUploadRoomImage($event,room)"
                           [multiple]="true" accept="image/*">
               <ng-template pTemplate="content">
                 <ul *ngIf="onUploadOfferImage.length">
-                  <li *ngFor="let file of offerImage">{{file.name}} - {{file.size}} bytes</li>
+                  <li *ngFor="let roomfile of room.roomImageFile">{{roomfile.name}}</li>
+                </ul>
+                <ul *ngIf="room.roomImage">
+                  <li *ngFor="let file of room.roomImage">{{file.url.toString()}}</li>
                 </ul>
               </ng-template>
             </p-fileUpload>

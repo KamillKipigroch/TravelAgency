@@ -1,7 +1,7 @@
 package com.TravelAgency.rest.repository;
 
-import com.TravelAgency.rest.model.offer.Offer;
-import com.TravelAgency.rest.model.opinion.Opinion;
+import com.TravelAgency.rest.model.database.Offer;
+import com.TravelAgency.rest.model.database.Opinion;
 import com.TravelAgency.security.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

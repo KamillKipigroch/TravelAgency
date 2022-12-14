@@ -1,6 +1,6 @@
 package com.TravelAgency.rest.controller;
 
-import com.TravelAgency.rest.model.country.Country;
+import com.TravelAgency.rest.model.database.Country;
 import com.TravelAgency.rest.service.CountryService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

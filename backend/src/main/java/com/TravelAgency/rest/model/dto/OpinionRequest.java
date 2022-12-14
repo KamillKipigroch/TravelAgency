@@ -1,4 +1,4 @@
-package com.TravelAgency.rest.model.opinion;
+package com.TravelAgency.rest.model.dto;
 
 import com.TravelAgency.rest.model.ImageRequest;
 import lombok.Data;

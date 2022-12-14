@@ -1,7 +1,7 @@
 package com.TravelAgency.rest.controller;
 
-import com.TravelAgency.rest.model.orderStatus.OrderStatus;
-import com.TravelAgency.rest.model.orderStatus.OrderStatusRequest;
+import com.TravelAgency.rest.model.database.OrderStatus;
+import com.TravelAgency.rest.model.dto.OrderStatusRequest;
 import com.TravelAgency.rest.service.OrderStatusService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

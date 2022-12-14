@@ -1,9 +1,5 @@
-package com.TravelAgency.rest.model.order;
+package com.TravelAgency.rest.model.database;
 
-import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
-import com.TravelAgency.rest.model.orderStatus.OrderStatus;
-import com.TravelAgency.rest.model.offer.Offer;
-import com.TravelAgency.rest.model.room.Room;
 import com.TravelAgency.security.user.model.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

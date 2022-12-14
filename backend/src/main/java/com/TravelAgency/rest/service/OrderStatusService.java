@@ -1,7 +1,7 @@
 package com.TravelAgency.rest.service;
 
-import com.TravelAgency.rest.model.orderStatus.OrderStatus;
-import com.TravelAgency.rest.model.orderStatus.OrderStatusRequest;
+import com.TravelAgency.rest.model.database.OrderStatus;
+import com.TravelAgency.rest.model.dto.OrderStatusRequest;
 import com.TravelAgency.rest.repository.OrderStatusRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

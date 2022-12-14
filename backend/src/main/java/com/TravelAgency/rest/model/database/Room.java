@@ -1,8 +1,5 @@
-package com.TravelAgency.rest.model.room;
+package com.TravelAgency.rest.model.database;
 
-import com.TravelAgency.rest.model.roomDetail.RoomDetail;
-import com.TravelAgency.rest.model.hotel.Hotel;
-import com.TravelAgency.rest.model.roomImage.RoomImage;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,8 +1,8 @@
 package com.TravelAgency.rest.service;
 
 import com.TravelAgency.LoadDatabase;
-import com.TravelAgency.rest.model.opinion.Opinion;
-import com.TravelAgency.rest.model.opinionImage.OpinionImage;
+import com.TravelAgency.rest.model.database.Opinion;
+import com.TravelAgency.rest.model.database.OpinionImage;
 import com.TravelAgency.rest.repository.OpinionImageRepository;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;

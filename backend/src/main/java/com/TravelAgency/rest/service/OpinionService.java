@@ -1,9 +1,8 @@
 package com.TravelAgency.rest.service;
 
-import com.TravelAgency.rest.model.offer.Offer;
-import com.TravelAgency.rest.model.opinion.Opinion;
-import com.TravelAgency.rest.model.opinion.OpinionRequest;
-import com.TravelAgency.rest.model.opinionImage.OpinionImage;
+import com.TravelAgency.rest.model.database.Offer;
+import com.TravelAgency.rest.model.database.Opinion;
+import com.TravelAgency.rest.model.dto.OpinionRequest;
 import com.TravelAgency.rest.repository.OpinionRepository;
 import com.TravelAgency.security.user.model.User;
 import lombok.AllArgsConstructor;

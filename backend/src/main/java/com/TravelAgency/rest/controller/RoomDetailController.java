@@ -1,8 +1,7 @@
 package com.TravelAgency.rest.controller;
 
-import com.TravelAgency.rest.model.ModelDTO;
-import com.TravelAgency.rest.model.roomDetail.RoomDetail;
-import com.TravelAgency.rest.model.roomDetail.RoomDetailRequest;
+import com.TravelAgency.rest.model.database.RoomDetail;
+import com.TravelAgency.rest.model.dto.RoomDetailRequest;
 import com.TravelAgency.rest.service.RoomDetailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

@@ -128,4 +128,9 @@ export class OfferComponent implements OnInit {
     this.storageService.saveOffer(offer.id.toString())
     this.router.navigate(['offer-detail'], {state: offer})
   }
+
+  updateOfferDetail(offer :Offer){
+    this.storageService.saveOffer(offer.id.toString())
+    this.router.navigate(['configure/new-offer'], {state: offer})
+  }
 }

@@ -1,6 +1,6 @@
 package com.TravelAgency.rest.repository;
 
-import com.TravelAgency.rest.model.orderStatus.OrderStatus;
+import com.TravelAgency.rest.model.database.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

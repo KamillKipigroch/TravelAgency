@@ -1,8 +1,5 @@
-package com.TravelAgency.rest.model.hotel;
+package com.TravelAgency.rest.model.database;
 
-import com.TravelAgency.rest.model.offerImage.OfferImage;
-import com.TravelAgency.rest.model.offer.Offer;
-import com.TravelAgency.rest.model.room.Room;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +9,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity

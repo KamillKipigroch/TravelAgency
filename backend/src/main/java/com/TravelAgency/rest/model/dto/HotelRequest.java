@@ -1,6 +1,5 @@
-package com.TravelAgency.rest.model.hotel;
+package com.TravelAgency.rest.model.dto;
 
-import com.TravelAgency.rest.model.room.RoomRequest;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

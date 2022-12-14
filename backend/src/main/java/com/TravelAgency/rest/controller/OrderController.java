@@ -1,12 +1,9 @@
 package com.TravelAgency.rest.controller;
 
-import com.TravelAgency.rest.model.offerAvailability.OfferAvailability;
-import com.TravelAgency.rest.model.opinion.Opinion;
-import com.TravelAgency.rest.model.opinion.OpinionRequest;
-import com.TravelAgency.rest.model.order.Order;
-import com.TravelAgency.rest.model.order.OrderRequest;
-import com.TravelAgency.rest.model.orderStatus.OrderStatus;
-import com.TravelAgency.rest.model.room.Room;
+import com.TravelAgency.rest.model.database.OfferAvailability;
+import com.TravelAgency.rest.model.database.Order;
+import com.TravelAgency.rest.model.dto.OrderRequest;
+import com.TravelAgency.rest.model.database.Room;
 import com.TravelAgency.rest.service.OfferAvailabilityService;
 import com.TravelAgency.rest.service.OrderService;
 import com.TravelAgency.rest.service.OrderStatusService;
