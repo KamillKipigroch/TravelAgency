@@ -12,6 +12,7 @@ import {Router, NavigationExtras} from "@angular/router";
 })
 export class HomeComponent implements OnInit {
   offers: Offer[] = [];
+  lastMinuteOffers: Offer[] = [];
 
   millisecondsPerDay = 1000 * 60 * 60 * 24;
   isAdmin: boolean = false;
@@ -26,9 +27,16 @@ export class HomeComponent implements OnInit {
     if (user.rol != null)
       this.isAdmin = user.rol.includes('Admin');
 
-    this.offerService.getOffers().subscribe(
+    this.offerService.getRecommendedOffers().subscribe(
       (response: Offer[]) => {
         this.offers = response
+        this.setSelectedAvailable()
+        this.setOfferPrice()
+      })
+
+    this.offerService.getRecommendedOffers().subscribe(
+      (response: Offer[]) => {
+        this.lastMinuteOffers = response
         this.setSelectedAvailable()
         this.setOfferPrice()
       })

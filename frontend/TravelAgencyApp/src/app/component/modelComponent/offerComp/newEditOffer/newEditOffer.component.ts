@@ -216,7 +216,7 @@ export class NewEditOfferComponent implements OnInit {
     }
 
     if (valid) {
-      valid = this.checkNumber(this.offer.country.id)
+      valid = this.checkNumber(this.offer.hotel[0].country.id)
       this.showInfoIfNoValid("offer country", valid)
     }
     if (valid) {

@@ -18,6 +18,13 @@ export class OfferService {
   public getOffers(): Observable<Offer[]> {
     return this.http.get<Offer[]>(`${this.apiServerUrl}/offer/get-all`)
   }
+  public getRecommendedOffers(): Observable<Offer[]> {
+    return this.http.get<Offer[]>(`${this.apiServerUrl}/offer/get-recommended`)
+  }
+
+  public getLastMinuteOffers(): Observable<Offer[]> {
+    return this.http.get<Offer[]>(`${this.apiServerUrl}/offer/get-last-minute`)
+  }
 
   public getOfferById(id: number): Observable<Offer> {
     return this.http.get<Offer>(`${this.apiServerUrl}/offer/find/` + id)
@@ -62,8 +69,6 @@ export class Offer {
 
   public id: number = 0;
 
-  public country: Country = new Country(0, "", "");
-
   public hotel: Hotel[] = [];
 
   public images: Image[] = [];
@@ -87,8 +92,6 @@ export class Offer {
   constructor(id: number, country: Country, hotel: Hotel[], images: Image[], availabilities: OfferAvailability[], opinions: Opinion[], description: String,
               visible: boolean, price: number, days: number, promotionPrice: number) {
     this.id = id;
-
-    this.country = country;
 
     this.hotel = hotel;
 
@@ -155,6 +158,7 @@ export class Hotel {
   public id: number = 0;
   public name: String = "";
   public standard: number = 0;
+  public country: Country = new Country(0, "", "");
   public rooms: Room[] = [];
   public lat = 0.0;
   public lng = 0.0;

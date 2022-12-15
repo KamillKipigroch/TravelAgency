@@ -27,10 +27,6 @@ public class Offer implements Serializable {
     @OneToMany(mappedBy = "offer")
     List<Hotel> hotel;
 
-    @OneToOne
-    @JoinColumn(name = "country_id")
-    Country country;
-
     @OneToMany(mappedBy = "offer")
     List<OfferImage> images;
 

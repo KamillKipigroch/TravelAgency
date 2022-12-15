@@ -32,9 +32,8 @@ public class OfferService {
     }
 
 
-    public Offer add(Offer offerRequest, Country country) {
+    public Offer add(Offer offerRequest) {
         var newObject = new Offer();
-        newObject.setCountry(country);
         newObject.setDescription(offerRequest.getDescription());
         newObject.setCreateDate(LocalDateTime.now());
         newObject.setVisible(true);

@@ -1,5 +1,6 @@
 package com.TravelAgency.rest.service;
 
+import com.TravelAgency.rest.model.database.Country;
 import com.TravelAgency.rest.model.database.Hotel;
 import com.TravelAgency.rest.model.database.Offer;
 import com.TravelAgency.rest.repository.HotelRepository;
@@ -26,11 +27,12 @@ public class HotelService {
         return hotelRepository.findByName(name);
     }
 
-    public Hotel addHotel(Hotel hotelRequest, Offer offer) {
+    public Hotel addHotel(Hotel hotelRequest, Offer offer, Country country) {
         if (hotelRepository.findByName(hotelRequest.getName()).isPresent()) {
             throw new FindException(IS_ALREADY_EXIST);
         }
         var newObject = new Hotel();
+        newObject.setCountry(country);
         newObject.setOffer(offer);
         newObject.setLat(hotelRequest.getLat());
         newObject.setLng(hotelRequest.getLng());

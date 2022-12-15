@@ -24,6 +24,10 @@ public class Hotel implements Serializable {
     @JsonIgnore
     Long id;
 
+    @OneToOne
+    @JoinColumn(name = "country_id")
+    Country country;
+
     @ManyToOne
     @JoinColumn(name = "offer_id")
     @JsonIgnore

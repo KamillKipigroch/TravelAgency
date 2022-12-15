@@ -27,7 +27,7 @@
           <p style="margin-top:0;" *ngIf="offer.promotionPrice != null"><s>Price : {{offer.price}}$</s></p>
           <p style="margin-top:0;" *ngIf="offer.promotionPrice != null">Promotion price : {{offer.promotionPrice}}$</p>
           <br>
-          <button pButton pRipple type="button" label="Order" style="width: 15rem"(click)="order()"
+          <button pButton pRipple type="button" label="Order" style="width: 15rem" (click)="order()"
                   class="p-button-outlined p-button-rounded p-button-success"></button>
           <br>
           <button pButton pRipple type="button" label="Add Opinion" (click)="openNew()"
@@ -79,52 +79,58 @@
     </div>
 
     <div style="width:100%;border-top:1px solid silver" *ngIf="calendarTab">
-      <p>You can change date for offer in here :</p>
-      <p-dropdown [options]="allDates" [(ngModel)]="selectedAvailability" [autoDisplayFirst]="true"
-                  (onChange)="initOrUpdateOfferData()" [virtualScroll]="true" [virtualScrollItemSize]="38"
-                  [style]="{'width': '400pt'}"></p-dropdown>
-      <br>
-      <p-calendar [(ngModel)]="selectedDate" selectionMode="range" [readonlyInput]="true" [focusTrap]="true"
-                  [inline]="true" [disabled]="true" [style]="{'width': '400pt'}" id="dataPicker"></p-calendar>
+
+      <div class="container" style="width: 60%">
+        <p>You can change date for offer in here :</p>
+        <p-dropdown [options]="allDates" [(ngModel)]="selectedAvailability" [autoDisplayFirst]="true"
+                    (onChange)="initOrUpdateOfferData()" [virtualScroll]="true" [virtualScrollItemSize]="38"
+                    [style]="{'width': '400pt'}"></p-dropdown>
+        <br>
+        <p-calendar [(ngModel)]="selectedDate" selectionMode="range" [readonlyInput]="true" [focusTrap]="true"
+                    [inline]="true" [disabled]="true" [style]="{'width': '400pt'}" id="dataPicker"></p-calendar>
+      </div>
     </div>
   </div>
 
-  <div style="width:100%;border-top:1px solid silver" *ngIf="roomTab">
-    <p>You can select room in here :</p>
-    <div id="RoomPanel" *ngFor="let room of offer.hotel[0].rooms">
-      <p-card class="justify-content-center" [header]="room.roomDetail.name.toString()"
-              [subheader]="room.price.toString()+'$'" [style]="{'margin-bottom': '50pt', 'padding': '10pt'}">
-        <ng-template pTemplate="header" styleclass="wi">
-          <p-galleria [value]="room.roomImage"
-                      [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
-            <ng-template pTemplate="item" let-image>
-              <img [src]="image.name" class="scaling-image content" style="max-height: 400pt"
-                   [alt]="offer.hotel[0].name"/>
-            </ng-template>
-          </p-galleria>
-        </ng-template>
-        <div>
-          <div style="padding:15px;">
-            <h4>Description:</h4>
-            {{room.description}}
-            <br>
-          </div>
-        </div>
-
-        <ng-template pTemplate="footer">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm">
-              </div>
-              <div class="col-sm">
-                <p-toggleButton inputId="test" [ngModel]="room.selected" id="toggle" [disabled]="room.selected"
-                                (onChange)="selectedRoom(room)" onLabel="Selected" offLabel="You can change"
-                                onIcon="pi pi-check" offIcon="pi pi-times" [style]="{'width': '15em'}"></p-toggleButton>
-              </div>
+  <div class="container" style="width: 60%">
+    <div style="border-top:1px solid silver" *ngIf="roomTab">
+      <p>You can select room in here :</p>
+      <div id="RoomPanel" *ngFor="let room of offer.hotel[0].rooms">
+        <p-card class="justify-content-center" [header]="room.roomDetail.name.toString()"
+                [subheader]="room.price.toString()+'$'" [style]="{'margin-bottom': '50pt', 'padding': '10pt'}">
+          <ng-template pTemplate="header" styleclass="wi">
+            <p-galleria [value]="room.roomImage"
+                        [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
+              <ng-template pTemplate="item" let-image>
+                <img [src]="image.name" class="scaling-image content" style="max-height: 400pt"
+                     [alt]="offer.hotel[0].name"/>
+              </ng-template>
+            </p-galleria>
+          </ng-template>
+          <div>
+            <div style="padding:15px;">
+              <h4>Description:</h4>
+              {{room.description}}
+              <br>
             </div>
           </div>
-        </ng-template>
-      </p-card>
+
+          <ng-template pTemplate="footer">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                </div>
+                <div class="col-sm">
+                  <p-toggleButton inputId="test" [ngModel]="room.selected" id="toggle" [disabled]="room.selected"
+                                  (onChange)="selectedRoom(room)" onLabel="Selected" offLabel="You can change"
+                                  onIcon="pi pi-check" offIcon="pi pi-times"
+                                  [style]="{'width': '15em'}"></p-toggleButton>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-card>
+      </div>
     </div>
   </div>
 
@@ -157,15 +163,16 @@
           <div styleclass="wi">
             <p>{{opinion.description}}</p>
 
-            <div  style="max-width: 450pt; max-height: 400pt">
+            <div style="max-width: 450pt; max-height: 400pt">
 
-            <p-galleria [value]="opinion.opinionImages"
-                        [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
-              <ng-template pTemplate="item" let-image>
-                <img [src]="image.url" class="scaling-image content" style="max-width: 400pt; max-height: 400pt" [alt]="opinion.header"/>
-              </ng-template>
-            </p-galleria>
-              </div>
+              <p-galleria [value]="opinion.opinionImages"
+                          [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
+                <ng-template pTemplate="item" let-image>
+                  <img [src]="image.url" class="scaling-image content" style="max-width: 400pt; max-height: 400pt"
+                       [alt]="opinion.header"/>
+                </ng-template>
+              </p-galleria>
+            </div>
 
           </div>
         </p-accordionTab>

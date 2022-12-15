@@ -9,6 +9,6 @@ public class OfferAvailabilityComparator implements Comparator<OfferAvailability
 
     @Override
     public int compare(OfferAvailability o1, OfferAvailability o2) {
-        return o1.datetimeStart.compareTo(o2.getDatetimeStart());
+        return o1.getDatetimeStart().compareTo(o2.getDatetimeStart());
     }
 }

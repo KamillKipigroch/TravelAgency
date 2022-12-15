@@ -27,7 +27,7 @@
     </div>
     <div class="field" style="padding-top: 2rem">
       <label for="name">Country: </label>
-      <p-listbox [showToggleAll]="false" [options]="countries" [(ngModel)]="offer.country"
+      <p-listbox [showToggleAll]="false" [options]="countries" [(ngModel)]="offer.hotel[0].country"
                  [checkbox]="false" [multiple]="false" optionLabel="select" [listStyle]="{'max-height':'300px'}">
         <ng-template let-country pTemplate="item">
           <div class="country-item">

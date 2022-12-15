@@ -1,9 +1,6 @@
 package com.TravelAgency.rest.controller;
 
-import com.TravelAgency.rest.model.database.Offer;
-import com.TravelAgency.rest.model.database.OfferAvailability;
-import com.TravelAgency.rest.model.database.OfferImage;
-import com.TravelAgency.rest.model.database.RoomImage;
+import com.TravelAgency.rest.model.database.*;
 import com.TravelAgency.rest.service.*;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
@@ -44,6 +41,25 @@ public class OfferController {
         return new ResponseEntity<>(offers, HttpStatus.OK);
     }
 
+    @GetMapping("/get-recommended")
+    public ResponseEntity<List<Offer>> getRecommender() {
+        var offers = offerService.findAll();
+        offers = getRecommended(offers);
+
+        return new ResponseEntity<>(offers, HttpStatus.OK);
+    }
+    @GetMapping("/get-last-minute")
+    public ResponseEntity<List<Offer>> getLastMinute() {
+        var offers = offerService.findAll();
+
+        offers.forEach(offer -> offer.setAvailabilities(offer.getAvailabilities().stream().filter(OfferAvailability::getPromotion).toList()));
+        offers = getRecommended(offers);
+
+        return new ResponseEntity<>(offers, HttpStatus.OK);
+    }
+
+
+
     @Operation(security = {})
     @RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
     public ResponseEntity<Offer> getBrand(@PathVariable Long id) {
@@ -51,7 +67,7 @@ public class OfferController {
         return new ResponseEntity<>(offer, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/upload-offer-image", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @RequestMapping(path = "/upload-offer-image", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<OfferImage> uploadOfferImage(@RequestPart("offer") String offerId, @RequestPart("image") MultipartFile image) throws IOException {
         var offer = offerService.findById(Long.parseLong(offerId));
         var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
@@ -60,7 +76,7 @@ public class OfferController {
         return new ResponseEntity<>(opinionImage, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/upload-room-image", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @RequestMapping(path = "/upload-room-image", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<RoomImage> uploadRoomImage(@RequestPart("room") String roomId, @RequestPart("image") MultipartFile image) throws IOException {
         var room = roomService.findById(Long.parseLong(roomId));
         var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
@@ -76,10 +92,10 @@ public class OfferController {
         if (hotelService.findByName(requestHotel.getName()).isPresent()) {
             throw new FindException("Hotel with this name already exist !");
         }
-        var country = countryService.findById(request.getCountry().getId());
-        var offer = offerService.add(request, country);
+        var country = countryService.findById(request.getHotel().get(0).getCountry().getId());
+        var offer = offerService.add(request);
 
-        var hotel = hotelService.addHotel(request.getHotel().get(0), offer);
+        var hotel = hotelService.addHotel(request.getHotel().get(0), offer, country);
         List<OfferAvailability> availability = new ArrayList<>();
 
         var availabe = request.getAvailabilities().get(0);
@@ -119,5 +135,14 @@ public class OfferController {
     public ResponseEntity<HttpStatus> delete(@RequestBody Long id) {
         offerService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK, HttpStatus.OK);
+    }
+
+    private List<Offer> getRecommended(List<Offer> offers) {
+        return offers.stream()
+                .sorted((o1, o2) -> {
+                    var average1 = o1.getOpinions().stream().mapToDouble(Opinion::getValue).average().orElse(0.0);
+                    var average2 = o2.getOpinions().stream().mapToDouble(Opinion::getValue).average().orElse(0.0);
+                    return average1 > average2 ? 1 : 0;
+                }).limit(20).toList();
     }
 }

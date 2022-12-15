@@ -74,7 +74,7 @@ export class OfferLastMinuteComponent implements OnInit, OnChanges {
   }
 
   filterCountries() {
-    this.offers = this.offers.filter(offer => this.selectedCountries.some(country => country.name == offer.country.name))
+    this.offers = this.offers.filter(offer => this.selectedCountries.some(country => country.name == offer.hotel[0].country.name))
   }
 
   filterDate() {

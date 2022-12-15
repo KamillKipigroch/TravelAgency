@@ -33,7 +33,7 @@
     <div class="col-sm">
       <div *ngFor="let offer of offers | slice:0:(more ? undefined : number)">
         <p-card class="justify-content-center" [header]="offer.hotel[0].name.toString()"
-                [subheader]="offer.country.name.toString()" [style]="{'margin-bottom': '50pt', 'padding': '10pt'}">
+                [subheader]="offer.hotel[0].country.name.toString()" [style]="{'margin-bottom': '50pt', 'padding': '10pt'}">
 
           <ng-template pTemplate="header" styleclass="wi">
             <p-galleria [value]="offer.images"
