@@ -4,6 +4,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {MessageService, SelectItem} from "primeng/api";
 import {Router} from "@angular/router";
 import {StorageService} from "../../../services/storage.service";
+import {IUser} from "../../../../model/user/user";
 
 @Component({
   selector: 'app-offer-component',
@@ -11,6 +12,7 @@ import {StorageService} from "../../../services/storage.service";
   styleUrls: ['./offer.component.css']
 })
 export class OfferComponent implements OnInit {
+  isAdmin: boolean = false;
 
   offers: Offer[] = [];
 
@@ -43,6 +45,10 @@ export class OfferComponent implements OnInit {
   }
 
   ngOnInit() {
+    const user: IUser = this.storageService.getUser();
+    if (user.rol != null)
+      this.isAdmin = user.rol.includes('Admin');
+
     this.offerService.getOffers().subscribe(
       (response: Offer[]) => {
         this.all = response

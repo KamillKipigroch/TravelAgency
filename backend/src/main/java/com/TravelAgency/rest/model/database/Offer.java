@@ -38,6 +38,7 @@ public class Offer implements Serializable {
     @JsonIgnoreProperties({"offer"})
     List<OfferAvailability> availabilities;
 
+    @Column(length = 3000)
     String description;
 
     @Column(name = "create_date")

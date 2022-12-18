@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Country, Offer, OfferAvailability, OfferService, Opinion, Room} from "../../../services/offer.service";
 import {Router,} from "@angular/router";
 import {StorageService} from "../../../services/storage.service";
@@ -33,6 +33,11 @@ export class OfferDetailComponent implements OnInit {
   detailTab = true;
 
   calendarTab = false;
+
+  @ViewChild('myCalendar')
+  private myCalendar: any;
+
+  selectedMonth: number = 0
 
   roomTab = false;
 
@@ -114,15 +119,9 @@ export class OfferDetailComponent implements OnInit {
   }
 
   initAllDates() {
-
     this.offer!.availabilities.forEach(available => {
-      const days = ((new Date(available.datetimeEnd).getTime() -
-        new Date(available.datetimeEnd).getTime()) / this.millisecondsPerDay) + 1
-
-      const price = (this.offer!.hotel[0].rooms[this.roomSelected].price * days) * this.people;
-
       this.allDates.push({
-        label: 'Start date: ' + available.datetimeStart + ' date end: ' + available.datetimeEnd + ' price: ' + price,
+        label: 'Start date: ' + available.datetimeStart + ' date end: ' + available.datetimeEnd,
         value: available
       })
     })
@@ -130,7 +129,6 @@ export class OfferDetailComponent implements OnInit {
   }
 
   initOrUpdateOfferData() {
-    this.calendarTab = false
     this.selectedDate[0] = new Date(this.selectedAvailability.datetimeStart)
     this.selectedDate[1] = new Date(this.selectedAvailability.datetimeEnd)
 
@@ -144,7 +142,7 @@ export class OfferDetailComponent implements OnInit {
       this.offer!.promotionPrice =
         (this.offer!.hotel[this.roomSelected].rooms[this.roomSelected].price - this.selectedAvailability.promotionPrice) * this.offer!.days * this.people;
     }
-
+    this.myCalendar?.updateModel(this.selectedDate!)
   }
 
   unselectAllTab() {
@@ -180,12 +178,11 @@ export class OfferDetailComponent implements OnInit {
   }
 
   openNew() {
-    if(this.storageService.isLoggedIn()) {
+    if (this.storageService.isLoggedIn()) {
       this.submitted = false;
       this.addEditOpinion = true;
       this.header = "Add opinion for hotel: " + this.offer.hotel[0].name;
-    }
-    else {
+    } else {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -220,8 +217,8 @@ export class OfferDetailComponent implements OnInit {
     this.header = "Edit";
   }
 
-  order(){
-    if (this.storageService.isLoggedIn()){
+  order() {
+    if (this.storageService.isLoggedIn()) {
       let orderRequest = new OrderRequest();
       orderRequest.selectedRoom = this.offer!.hotel[0].rooms[this.roomSelected].id
       console.log(this.selectedAvailability.id)
@@ -236,13 +233,12 @@ export class OfferDetailComponent implements OnInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail:  error.error.message,
+            detail: error.error.message,
             life: 3000
           });
 
         })
-    }
-    else {
+    } else {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -252,8 +248,8 @@ export class OfferDetailComponent implements OnInit {
     }
   }
 
-  displayDate(opinion: Opinion):string {
+  displayDate(opinion: Opinion): string {
     let date = new Date(opinion.createDate)
-    return formatDate(date, 'short','en-US' )
+    return formatDate(date, 'short', 'en-US')
   }
 }

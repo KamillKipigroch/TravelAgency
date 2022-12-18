@@ -18,6 +18,8 @@ import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.TravelAgency.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -53,6 +55,7 @@ public class OfferController {
         var offers = offerService.findAll();
 
         offers.forEach(offer -> offer.setAvailabilities(offer.getAvailabilities().stream().filter(OfferAvailability::getPromotion).toList()));
+        offers = offers.stream().filter(offer -> !offer.getAvailabilities().isEmpty()).toList();
         offers = getRecommended(offers);
 
         return new ResponseEntity<>(offers, HttpStatus.OK);

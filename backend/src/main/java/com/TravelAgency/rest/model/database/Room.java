@@ -39,6 +39,7 @@ public class Room implements Serializable {
     @JsonIgnore
     Hotel hotel;
 
+    @Column(length = 3000)
     String description;
 
     Double price;

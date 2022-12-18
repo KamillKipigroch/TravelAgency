@@ -3,6 +3,7 @@ import {Country, Offer, OfferService} from "../../../services/offer.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {StorageService} from "../../../services/storage.service";
+import {IUser} from "../../../../model/user/user";
 
 @Component({
   selector: 'app-offer-component',
@@ -12,19 +13,31 @@ import {StorageService} from "../../../services/storage.service";
 export class OfferLastMinuteComponent implements OnInit, OnChanges {
 
   offers: Offer[] = [];
+
   all: Offer[] = [];
+
+  isAdmin: boolean = false;
 
   sortOrder: number = 0;
 
   sortField: string = "";
+
   more: boolean = false;
+
   number: number = 3;
+
   readonly: boolean = true;
+
   selectedCountries: Country[] = [];
+
   countries: Country[] = [];
+
   rangeDates: Date[] = [];
+
   millisecondsPerDay = 1000 * 60 * 60 * 24;
+
   people: number = 1;
+
   todayDate = new Date();
 
   ngOnChanges() {
@@ -35,6 +48,10 @@ export class OfferLastMinuteComponent implements OnInit, OnChanges {
               private storageService: StorageService) {}
 
   ngOnInit() {
+    const user: IUser = this.storageService.getUser();
+    if (user.rol != null)
+      this.isAdmin = user.rol.includes('Admin');
+
     this.offerService.getOffers().subscribe(
       (response: Offer[]) => {
         response = response.filter(offer => offer.availabilities.some(available => available.promotion))
@@ -123,19 +140,13 @@ export class OfferLastMinuteComponent implements OnInit, OnChanges {
     })
   }
 
-  onSortChange(event: any) {
-    let value = event.value;
-
-    if (value.indexOf('!') === 0) {
-      this.sortOrder = -1;
-      this.sortField = value.substring(1, value.length);
-    } else {
-      this.sortOrder = 1;
-      this.sortField = value;
-    }
-  }
   checkOfferDetail(offer :Offer){
     this.storageService.saveOffer(offer.id.toString())
     this.router.navigate(['offer-detail'], {state: offer})
+  }
+
+  updateOfferDetail(offer :Offer){
+    this.storageService.saveOffer(offer.id.toString())
+    this.router.navigate(['configure/new-offer'], {state: offer})
   }
 }

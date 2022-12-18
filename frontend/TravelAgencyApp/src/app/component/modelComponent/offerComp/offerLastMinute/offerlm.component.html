@@ -1,4 +1,4 @@
-<div class="sticky-top float-left filters" style="height: 450pt;max-width: 200pt;">
+<div class="sticky-top float-left filters" style="height: 600pt;max-width: 200pt;">
   <p class="text-center "><b>Select country</b></p>
   <p-listbox [showToggleAll]="false" [options]="countries" [(ngModel)]="selectedCountries" [checkbox]="true"
              [multiple]="true" optionLabel="name" [listStyle]="{'max-height':'300px'}"
@@ -48,7 +48,6 @@
           <div class="row">
             <div class="col-sm">
               <p-rating [readonly]="readonly" [ngModel]="offer.hotel[0].standard" [cancel]="false"></p-rating>
-              <p>{{offer.description}}</p>
             </div>
 
             <div class="col-sm">
@@ -67,7 +66,8 @@
                   <p class="text-center" *ngIf="offer.promotionPrice != null"><b>Promotion price: {{offer.promotionPrice}}$</b></p>
                 </div>
                 <div class="col-sm">
-                  <p-button label="Check offfer" icon="pi pi-search"></p-button>
+                  <p-button label="Check offer" (onClick)="checkOfferDetail(offer)" icon="pi pi-search" ></p-button>
+                  <p-button label="Update offer" [style]="{'padding-left': '10pt'}" icon="pi pi-cog" (onClick)="updateOfferDetail(offer)"></p-button>
                 </div>
               </div>
             </div>

@@ -1,5 +1,4 @@
 export interface IUser {
-
   iat: number;
   jti: string;
   iss: string;

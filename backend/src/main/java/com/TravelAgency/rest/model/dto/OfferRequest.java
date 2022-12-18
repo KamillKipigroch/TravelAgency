@@ -1,6 +1,5 @@
 package com.TravelAgency.rest.model.dto;
 
-import com.TravelAgency.rest.model.ImageRequest;
 import lombok.*;
 
 import java.util.Set;

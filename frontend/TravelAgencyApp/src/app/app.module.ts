@@ -51,6 +51,7 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {AccordionModule} from "primeng/accordion";
 import {NewEditOfferComponent} from "./component/modelComponent/offerComp/newEditOffer/newEditOffer.component";
 import {FieldsetModule} from "primeng/fieldset";
+import {QuestionComponent} from "./component/modelComponent/menage/question/question.component";
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import {FieldsetModule} from "primeng/fieldset";
     ConfigRoomDetailComponent,
     EmployeeComponent,
     UserComponent,
+    QuestionComponent,
     OfferLastMinuteComponent,
     OfferDetailComponent,
 
@@ -104,6 +106,10 @@ import {FieldsetModule} from "primeng/fieldset";
         {
           path: 'users',
           component: UserComponent
+        },
+        {
+          path: 'menage/question',
+          component: QuestionComponent
         },
         {
           path: 'configure/room-details',

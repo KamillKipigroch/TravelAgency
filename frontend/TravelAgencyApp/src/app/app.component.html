@@ -3,10 +3,60 @@
 </header>
 
 <div id="content" class="mw-100">
+  <p-toast></p-toast>
+
   <router-outlet></router-outlet>
 </div>
 
 <footer class="text-center text-lg-start bg-white text-muted">
+  <section class="footer-card" style="padding-top: 20pt; background-color: rgba(0, 0, 0, 0.025);">
+    <div class="container text-center text-md-start mt-5">
+      <div class="row mt-2">
+        <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-md-0 mb-4">
+          <h4>Have you any question ?</h4>
+          <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm">
+
+            <div class="form-group">
+              <div class="form-outline mb-4">
+                <label class="form-label" for="address">Email address</label>
+                <input type="email" id="address" class="form-control"
+                       name="email" [(ngModel)]="form.addressEmail"
+                       required email #email="ngModel"
+                       [ngClass]="{ 'is-invalid': f.submitted && email.errors }"/>
+              </div>
+
+              <div class="form-outline mb-4">
+                <label class="form-label" for="message">Message</label>
+                <textarea class="form-control" id="message" rows="3"
+                          type="text" name="username" [(ngModel)]="form.message"
+                          required minlength="3" maxlength="5000"
+                          #message="ngModel" [ngClass]="{ 'is-invalid': f.submitted && message.errors }"
+
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+            <button pButton pRipple label="Send a message"
+                    class="p-button-rounded p-button-secondary"></button>
+            </div>
+          </form>
+        </div>
+
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4" style="margin-top: 20pt">
+          <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+          <p><i class="fas fa-home me-3 text-secondary"></i> New York, NY 10012, US</p>
+          <p>
+            <i class="fas fa-envelope me-3 text-secondary"></i>
+            TravelAgency@travelAgency.com
+          </p>
+          <p><i class="fas fa-phone me-3 text-secondary"></i> + 01 234 567 80</p>
+          <p><i class="fas fa-print me-3 text-secondary"></i> + 01 234 567 89</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
     © 2022 Copyright: Kamil Kipigroch
   </div>
