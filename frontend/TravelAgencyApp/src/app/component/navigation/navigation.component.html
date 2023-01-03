@@ -62,8 +62,20 @@
           <li class="nav-item" *ngIf="!isLoggedIn">
             <a href="/login" class="nav-link" routerLink="login">Login</a>
           </li>
-          <li class="nav-item" *ngIf="isLoggedIn">
-            <a href class="nav-link" (click)="logout()">LogOut</a>
+          <li *ngIf="isLoggedIn" class="nav-item dropdown" routerLinkActive="active current"
+              [routerLinkActiveOptions]="{exact: true}">
+            <a class="nav-link dropdown-toggle" id="account" role="button"
+               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Account
+            </a>
+            <div class="dropdown-menu" aria-labelledby="account" style="font-size: 15pt">
+              <a class="dropdown-item"  *ngIf="isLoggedIn && !showAdminBoard && !showModeratorBoard"  routerLink="/account/orders">Orders</a>
+              <a href class="dropdown-item" routerLink="/account/password">Change Password</a>
+              <a href class="dropdown-item" (click)="logout()">LogOut</a>
+            </div>
+          </li>
+          <li *ngIf="isLoggedIn" style="padding-right: 50pt">
+
           </li>
         </ul>
       </div>

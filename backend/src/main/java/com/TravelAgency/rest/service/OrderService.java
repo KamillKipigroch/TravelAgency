@@ -32,12 +32,19 @@ public class OrderService {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new FindException(NOT_FOUND_WITH_ID + id));
     }
-    public Order addOrder(OrderStatus status, OfferAvailability deadline, Room room, User user) {
+    public Order addOrder(OrderStatus status, OfferAvailability deadline, Room room, User user, double price) {
         var order = new Order();
         order.setOrderStatus(status);
         order.setDeadline(deadline);
         order.setRoom(room);
         order.setUser(user);
+        order.setPrice(price);
         return orderRepository.save(order);
+    }
+
+    public Order update(Order order) {
+        var o = orderRepository.findById(order.getId()).orElseThrow( () -> new FindException(NOT_FOUND_WITH_ID + order.getId()));
+        o.setOrderStatus(order.getOrderStatus());
+        return orderRepository.save(o);
     }
 }

@@ -34,8 +34,6 @@ public class HotelService {
         var newObject = new Hotel();
         newObject.setCountry(country);
         newObject.setOffer(offer);
-        newObject.setLat(hotelRequest.getLat());
-        newObject.setLng(hotelRequest.getLng());
         newObject.setName(hotelRequest.getName());
         newObject.setStandard(hotelRequest.getStandard());
         newObject.setVisible(true);

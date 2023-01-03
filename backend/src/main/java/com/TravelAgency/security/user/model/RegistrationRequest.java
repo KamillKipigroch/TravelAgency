@@ -1,4 +1,4 @@
-package com.TravelAgency.security.user.registration;
+package com.TravelAgency.security.user.model;
 
 import lombok.*;
 

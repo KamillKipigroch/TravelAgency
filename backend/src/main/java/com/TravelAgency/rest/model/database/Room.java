@@ -1,6 +1,7 @@
 package com.TravelAgency.rest.model.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,7 +37,7 @@ public class Room implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")
-    @JsonIgnore
+    @JsonIgnoreProperties({"rooms"})
     Hotel hotel;
 
     @Column(length = 3000)

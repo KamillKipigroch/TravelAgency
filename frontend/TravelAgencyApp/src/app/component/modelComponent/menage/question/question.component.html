@@ -1,14 +1,7 @@
 <p-toast></p-toast>
 <div class="global">
-  <div *ngIf="showAdminBoard||showModeratorBoard">
+  <div *ngIf="showAdminBoard || showModeratorBoard">
     <div class="card">
-      <p-toolbar styleClass="mb-4">
-        <ng-template pTemplate="left">
-          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2"
-                  (click)="openNew()"></button>
-        </ng-template>
-      </p-toolbar>
-
       <p-table [value]="all" [rows]="10" [paginator]="true" [globalFilterFields]="['name']" responsiveLayout="scroll"
                [rowHover]="true" dataKey="id"
                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
@@ -32,13 +25,13 @@
             <th></th>
           </tr>
         </ng-template>
-        <ng-template ng pTemplate="body" let-question>
+        <ng-template pTemplate="body" let-question>
           <tr>
             <td>{{question.id}}</td>
             <td>{{question.email}}</td>
             <td *ngIf="showAdminBoard">{{question.employee?.email}}</td>
-            <td *ngIf="question.answered"><span style="background-color: #7ec699; padding: 10pt">ANSWERED</span></td>
-            <td *ngIf="!question.answered"><span style="background-color: #e2777a; padding: 10pt">NOT ANSWERED</span></td>
+            <td *ngIf="question?.answered"><span style="background-color: #7ec699; padding: 10pt">ANSWERED</span></td>
+            <td *ngIf="!question?.answered"><span style="background-color: #e2777a; padding: 10pt">NOT ANSWERED</span></td>
             <td>
               <button pButton pRipple icon="pi pi-align-center" class="p-button-rounded p-button-success mr-2"
                       (click)="edit(question)"></button>

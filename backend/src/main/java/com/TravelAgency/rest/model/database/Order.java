@@ -1,6 +1,7 @@
 package com.TravelAgency.rest.model.database;
 
 import com.TravelAgency.security.user.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,7 @@ public class Order implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "deadline")
+    @JsonIgnoreProperties({"offer"})
     private OfferAvailability deadline;
 
     @ManyToOne
@@ -41,6 +43,8 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    private double price;
 
     private Boolean visible;
 }

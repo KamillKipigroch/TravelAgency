@@ -1,22 +1,19 @@
-package com.TravelAgency.security.user.registration;
+package com.TravelAgency.security.user.service;
 
 
-import com.TravelAgency.security.user.model.LoginUser;
+import com.TravelAgency.security.user.model.*;
+import com.TravelAgency.security.user.registration.EmailValidator;
 import com.TravelAgency.security.user.registration.token.ConfirmationToken;
 import com.TravelAgency.security.user.registration.token.ConfirmationTokenService;
 import com.TravelAgency.security.sender.EmailSender;
-import com.TravelAgency.security.user.model.User;
-import com.TravelAgency.security.user.model.UserRole;
 import com.TravelAgency.security.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Random;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -60,10 +57,7 @@ public class RegistrationService {
         boolean isValidEmail = emailValidator.test(request.getEmail());
         if (!isValidEmail)
             throw new IllegalStateException(EMAIL_NOT_VALID);
-
-        byte[] array = new byte[GENERATED_PASSWORD_LENGTH];
-        new Random().nextBytes(array);
-        String password = new String(array, StandardCharsets.UTF_8);
+        String password = renderPassword();
 
         UserRole role = switch (request.getUserRole()) {
             case "Admin" -> UserRole.Admin;
@@ -89,6 +83,14 @@ public class RegistrationService {
 
 
         return userService.loginUser(new LoginUser(request.getEmail(),password));
+    }
+
+    private String renderPassword() {
+        UUID randomUUID = UUID.randomUUID();
+
+        var password = randomUUID.toString().replaceAll("_", "");
+
+        return password.substring(0, GENERATED_PASSWORD_LENGTH);
     }
 
     @Transactional
@@ -135,12 +137,12 @@ public class RegistrationService {
                 "    <tr>\n" +
                 "      <td style=\"padding-top:15pt;font-size:19px\">\n" +
                 "        Hi " + name + "\n" +
-                "        <br/> Thank you for registering in CosplayCostumes.\n" +
+                "        <br/> Thank you for registering in TravelAgency.\n" +
                 "        <br/> Please click on the link to activate your account:\n" +
                 "        <p></p>\n" +
                 "        <blockquote\n" +
                 "          style=\"background-color: #f2f1ef;padding:12pt;font-size:19px\">\n" +
-                "          <a href=\"" + link + "\">Activate your account in CosplayCostumes !</a>\n" +
+                "          <a href=\"" + link + "\">Activate your account in TravelAgency !</a>\n" +
                 "        </blockquote>\n" +
                 "        Link will expire in 15 minutes. <p>See you soon</p>\n" +
                 "      </td>\n" +
@@ -171,14 +173,14 @@ public class RegistrationService {
                 "    <tr>\n" +
                 "      <td style=\"padding-top:15pt;font-size:19px\">\n" +
                 "        Hi " + name + "\n" +
-                "        <br/> Thank you for registering in CosplayCostumes.\n" +
+                "        <br/> Thanks for join to Travel Agency !\n" +
                 "        <br/> This is your password:\n" +
                 "        <p></p>\n" +
                 "        <blockquote\n" +
                 "          style=\"background-color: #f2f1ef;padding:12pt;font-size:19px\">\n" +
                 "          <h3>" + password + "</h3>" + "\n" +
                 "        </blockquote>\n" +
-                "        Link will expire in 15 minutes. <p>See you soon</p>\n" +
+                "        <p>See you soon</p>\n" +
                 "      </td>\n" +
                 "    </tr>\n" +
                 "    </tbody>\n" +

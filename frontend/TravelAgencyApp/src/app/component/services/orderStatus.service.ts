@@ -29,5 +29,6 @@ export class OrderStatus{
   public id:number = 0;
   public name:String = "" ;
   public level:number = 0;
+  public itsFinal: Boolean = false;
   public visible:Boolean = true;
 }

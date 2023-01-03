@@ -133,7 +133,7 @@ export class Room {
   public id: number = 0;
   public visible: Boolean = true;
   public roomDetail: RoomDetails = new RoomDetails(0, "", true)
-  public hotel: Hotel = new Hotel(0, "", 0, [], 0, 0, true)
+  public hotel: Hotel = new Hotel()
   public roomImage: Image[] = [];
   public roomImageFile: File[] = [];
   public description: String = "";
@@ -164,15 +164,6 @@ export class Hotel {
   public lng = 0.0;
   public visible: Boolean = true;
 
-  constructor(id: number, name: String, standard: number, rooms: Room[], lat: number, lng: number, visible: Boolean) {
-    this.id = id;
-    this.name = name;
-    this.standard = standard;
-    this.rooms = rooms;
-    this.lng = lng;
-    this.lat = lat;
-    this.visible = visible
-  }
 }
 
 export class Opinion {

@@ -66,8 +66,8 @@
                   <p class="text-center" *ngIf="offer.promotionPrice != null"><b>Promotion price: {{offer.promotionPrice}}$</b></p>
                 </div>
                 <div class="col-sm">
-                  <p-button label="Check offer" (onClick)="checkOfferDetail(offer)" icon="pi pi-search" ></p-button>
-                  <p-button label="Update offer" [style]="{'padding-left': '10pt'}" icon="pi pi-cog" (onClick)="updateOfferDetail(offer)"></p-button>
+                  <p-button label="Check offer" (onClick)="checkOfferDetail(offer)" class="pr-2" icon="pi pi-search" ></p-button>
+                  <p-button *ngIf="isAdmin" label="Update offer" icon="pi pi-cog" (onClick)="updateOfferDetail(offer)"></p-button>
                 </div>
               </div>
             </div>

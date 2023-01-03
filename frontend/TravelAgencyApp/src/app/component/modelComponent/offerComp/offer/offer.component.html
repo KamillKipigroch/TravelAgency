@@ -12,12 +12,12 @@
   <br>
   <p class="text-center "><b>Select date</b></p>
   <div class="field col-12 md:col-4">
-    <p-calendar [showButtonBar]="true" [minDate]="todayDate" (onClearClick)="filter()" (onSelect)="filter()" (onClear)="filter()"
+    <p-calendar [showButtonBar]="true" [minDate]="todayDate" (onClearClick)="filter()" (onSelect)="filter()"
+                (onClear)="filter()"
                 [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true"
                 inputId="range"></p-calendar>
   </div>
-  <br>
-  <br>
+  <br><br>
   <p class="text-center "><b>How many people</b></p>
   <div class="field col-12 md:col-4">
     <p-inputNumber [(ngModel)]="people" [showButtons]="true" buttonLayout="vertical" spinnerMode="vertical"
@@ -33,18 +33,18 @@
     <div class="col-sm">
       <div *ngFor="let offer of offers | slice:0:(more ? undefined : number)">
         <p-card class="justify-content-center" [header]="offer.hotel[0].name.toString()"
-                [subheader]="offer.hotel[0].country.name.toString()" [style]="{'margin-bottom': '50pt', 'padding': '10pt'}">
+                [subheader]="offer.hotel[0].country.name.toString()"
+                [style]="{'margin-bottom': '50pt', 'padding': '10pt'}">
 
           <ng-template pTemplate="header" styleclass="wi">
             <p-galleria [value]="offer.images"
                         [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
               <ng-template pTemplate="item" let-item>
-                <img [src]="item.name" style="max-height: 550pt;"/>
+                <img [src]="item.name" [alt]="item.name" style="max-height: 550pt;"/>
               </ng-template>
             </p-galleria>
 
           </ng-template>
-
           <div class="row">
             <div class="col-sm">
               <p-rating [readonly]="readonly" [ngModel]="offer.hotel[0].standard" [cancel]="false"></p-rating>
@@ -63,11 +63,14 @@
                 <div class="col-sm cente">
                   <p class="text-center"><b><s *ngIf="offer.promotionPrice != null">price: {{offer.price}}$</s></b></p>
                   <p class="text-center" *ngIf="offer.promotionPrice == null"><b>price: {{offer.price}}$</b></p>
-                  <p class="text-center" *ngIf="offer.promotionPrice != null"><b>Promotion price: {{offer.promotionPrice}}$</b></p>
+                  <p class="text-center" *ngIf="offer.promotionPrice != null"><b>Promotion
+                    price: {{offer.promotionPrice}}$</b></p>
                 </div>
                 <div class="col-sm">
-                  <p-button label="Check offer" icon="pi pi-search" (onClick)="checkOfferDetail(offer)"></p-button>
-                  <p-button label="Update offer" [style]="{'padding-left': '10pt'}" icon="pi pi-cog" (onClick)="updateOfferDetail(offer)"></p-button>
+                  <p-button label="Check offer" icon="pi pi-search" class="pr-2"
+                            (onClick)="checkOfferDetail(offer)"></p-button>
+                  <p-button *ngIf="isAdmin" label="Update offer" icon="pi pi-cog"
+                            (onClick)="updateOfferDetail(offer)"></p-button>
                 </div>
               </div>
             </div>

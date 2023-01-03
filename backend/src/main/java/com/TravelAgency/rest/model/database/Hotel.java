@@ -1,6 +1,7 @@
 package com.TravelAgency.rest.model.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,21 +37,15 @@ public class Hotel implements Serializable {
     @Max(5) @Min(0) int standard;
 
     @OneToMany(mappedBy = "hotel")
+    @JsonIgnoreProperties({"hotel"})
     Set<Room> rooms;
     String name;
-
-    Double lat;
-
-    Double lng;
-
     Boolean visible;
 
-    public Hotel(Offer offer, int standard, String name, Double lat, Double lng) {
+    public Hotel(Offer offer, int standard, String name) {
         this.offer = offer;
         this.standard = standard;
         this.name = name;
-        this.lat = lat;
-        this.lng = lng;
         this.visible = true;
     }
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from "primeng/api";
 import {MailService, Question} from "./component/services/emailService.service";
+import {User} from "./component/services/user.service";
 
 
 @Component({
@@ -28,6 +29,10 @@ export class AppComponent implements OnInit {
     let mail = new Question();
     mail.email = addressEmail;
     mail.message = message;
+    let user = new User();
+    user.userRole = 'Employee'
+    mail.employee = user;
+
     this.messageService.clear();
 
     console.log(mail)

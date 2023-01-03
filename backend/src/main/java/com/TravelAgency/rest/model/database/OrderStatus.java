@@ -29,6 +29,8 @@ public class OrderStatus implements Serializable {
 
     private Boolean visible;
 
+    private Boolean itsFinal;
+
     @Column(nullable = false)
     private Integer level;
 }

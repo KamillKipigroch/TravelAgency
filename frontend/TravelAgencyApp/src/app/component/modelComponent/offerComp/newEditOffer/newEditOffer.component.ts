@@ -53,7 +53,14 @@ export class NewEditOfferComponent implements OnInit {
       this.offer.hotel[0].rooms[0].selected = true
     }
     if (this.offer.hotel.length == 0) {
-      this.offer.hotel.push(new Hotel(0, "", 0, [], 0, 0, true))
+      let hotel = new Hotel()
+      hotel.id = 0
+      hotel.rooms = []
+      hotel.country = new Country(0, "", "")
+      hotel.lat = 0
+      hotel.lng = 0
+      hotel.visible = true
+      this.offer.hotel.push(hotel)
     }
   }
 

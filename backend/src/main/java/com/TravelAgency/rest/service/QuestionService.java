@@ -27,6 +27,7 @@ public class QuestionService {
 
     public Question addQuestion(Question question) {
         question.setAnswered(false);
+        question.setEmployee(null);
         return questionRepository.save(question);
     }
 

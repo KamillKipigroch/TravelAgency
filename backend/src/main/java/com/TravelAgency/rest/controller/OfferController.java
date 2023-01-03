@@ -7,6 +7,7 @@ import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.lang.module.FindException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.TravelAgency.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
@@ -28,6 +26,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @AllArgsConstructor
 @RequestMapping("/api/offer")
 public class OfferController {
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
     private final OfferService offerService;
     private final CountryService countryService;
     private final HotelService hotelService;
@@ -141,11 +140,13 @@ public class OfferController {
     }
 
     private List<Offer> getRecommended(List<Offer> offers) {
-        return offers.stream()
+        var list = new ArrayList<>(offers.stream()
                 .sorted((o1, o2) -> {
                     var average1 = o1.getOpinions().stream().mapToDouble(Opinion::getValue).average().orElse(0.0);
                     var average2 = o2.getOpinions().stream().mapToDouble(Opinion::getValue).average().orElse(0.0);
-                    return average1 > average2 ? 1 : 0;
-                }).limit(20).toList();
+                    return Double.compare(average1, average2);
+                }).limit(20).toList());
+        Collections.reverse(list);
+        return list;
     }
 }

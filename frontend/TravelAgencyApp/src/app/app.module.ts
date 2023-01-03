@@ -52,6 +52,8 @@ import {AccordionModule} from "primeng/accordion";
 import {NewEditOfferComponent} from "./component/modelComponent/offerComp/newEditOffer/newEditOffer.component";
 import {FieldsetModule} from "primeng/fieldset";
 import {QuestionComponent} from "./component/modelComponent/menage/question/question.component";
+import {OrderComponent} from "./component/modelComponent/menage/order/order.component";
+import {ChangePasswordComponent} from "./component/modelComponent/user/changePassword/changePassword.component";
 
 @NgModule({
   declarations: [
@@ -66,9 +68,11 @@ import {QuestionComponent} from "./component/modelComponent/menage/question/ques
     ConfigRoomDetailComponent,
     EmployeeComponent,
     UserComponent,
+    OrderComponent,
     QuestionComponent,
     OfferLastMinuteComponent,
     OfferDetailComponent,
+    ChangePasswordComponent,
 
     NotFoundComponent
 
@@ -108,12 +112,24 @@ import {QuestionComponent} from "./component/modelComponent/menage/question/ques
           component: UserComponent
         },
         {
+          path: 'account/orders',
+          component: OrderComponent
+        },
+        {
           path: 'menage/question',
           component: QuestionComponent
         },
         {
+          path: 'menage/orders',
+          component: OrderComponent
+        },
+        {
           path: 'configure/room-details',
           component: ConfigRoomDetailComponent
+        },
+        {
+          path: 'account/password',
+          component: ChangePasswordComponent
         },
         {
           path: 'configure/order-status',

@@ -1,0 +1,55 @@
+<p-toast></p-toast>
+<div class="global">
+  <div>
+    <div class="card">
+      <p-table [value]="all" [rows]="10" [paginator]="true" [globalFilterFields]="['name']" responsiveLayout="scroll"
+               [rowHover]="true" dataKey="id"
+               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngIf="showModeratorBoard || showModeratorBoard" pSortableColumn="email">User Email
+              <p-sortIcon field="email"></p-sortIcon>
+            </th>
+            <th pSortableColumn="deadline">Departure date
+              <p-sortIcon field="deadline"></p-sortIcon>
+            </th>
+            <th pSortableColumn="status">Status
+              <p-sortIcon field="status"></p-sortIcon>
+            </th>
+            <th pSortableColumn="hotel" style="min-width:10rem">Offer name
+              <p-sortIcon field="hotel"></p-sortIcon>
+            </th>
+            <th pSortableColumn="price">Price
+              <p-sortIcon field="price"></p-sortIcon>
+            </th>
+
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+          <tr>
+            <td *ngIf="showModeratorBoard || showModeratorBoard">{{order.user.email}}</td>
+            <td>{{order.deadline.datetimeStart}} - {{order.deadline.datetimeEnd}}</td>
+            <td>{{order.orderStatus.name}}</td>
+            <td>{{order.room.hotel.name}}</td>
+            <td>{{order.price}}</td>
+
+            <td>
+              <button *ngIf="(showAdminBoard || showModeratorBoard) && !order.orderStatus.itsFinal" pButton pRipple icon="pi pi-align-center" class="p-button-rounded p-button-success mr-2"
+                      (click)="changeToNextStatus(order)"></button>
+              <button *ngIf="order.orderStatus.level == 0" pButton pRipple icon="pi pi-align-center" class="p-button-rounded p-button-success mr-2"
+                      (click)="changeToNextStatus(order)"></button>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div class="flex align-items-center justify-content-between">
+            In total there are {{all ? all.length : 0 }} elements
+          </div>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+  </div>
+</div>

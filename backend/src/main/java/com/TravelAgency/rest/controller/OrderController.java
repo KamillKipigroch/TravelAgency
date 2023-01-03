@@ -17,8 +17,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.module.FindException;
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.SimpleFormatter;
 
 import static com.TravelAgency.comunicates.Communicates.LIST_IS_EMPTY;
 import static com.TravelAgency.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
@@ -46,6 +48,15 @@ public class OrderController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
+    @PutMapping("/next-status")
+    public ResponseEntity<Order> findNextStatus(@RequestBody Order order) {
+        var status = orderStatusService.findNext(order.getOrderStatus());
+        order.setOrderStatus(status);
+        var response =orderService.update(order);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
     @PostMapping("/add")
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
     public ResponseEntity<Order> add(@RequestBody OrderRequest request) {
@@ -53,9 +64,13 @@ public class OrderController {
         var room = roomService.findById(request.getSelectedRoom());
         var deadline = offerAvailability.findById(request.getOfferAvailabilityId());
         var status = orderStatusService.findAll().stream().findFirst().orElseThrow(() -> new FindException(LIST_IS_EMPTY + " Order Status"));
-
+        var days = Math.abs( Duration.between( deadline.getDatetimeEnd().atStartOfDay(),deadline.getDatetimeStart().atStartOfDay()).toDays() - 1);
+        var price = (room.getPrice() * days);
+        if (deadline.getPromotion() != null && deadline.getPromotion()) {
+            price = (room.getPrice() - deadline.getPromotionPrice()) *days;
+        }
         this.validOrder(deadline, room);
-        var order = orderService.addOrder(status, deadline, room, user);
+        var order = orderService.addOrder(status, deadline, room, user, price);
 
         return new ResponseEntity<>(order, HttpStatus.OK);
     }

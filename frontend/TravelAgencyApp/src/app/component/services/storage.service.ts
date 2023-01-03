@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from "jwt-decode";
 import {Offer} from "./offer.service";
+import {User} from "./user.service";
 
 const USER_KEY = 'auth-user';
 const OFFER_ID = 'offer-id';
@@ -29,6 +30,15 @@ export class StorageService {
     const token = window.sessionStorage.getItem(USER_KEY);
     if (token) {
       return jwt_decode(token);
+    }
+    return {};
+  }
+
+  public getEmail(): any {
+    const token = window.sessionStorage.getItem(USER_KEY);
+    if (token) {
+      let user: User = jwt_decode(token);
+      return user!.email
     }
     return {};
   }

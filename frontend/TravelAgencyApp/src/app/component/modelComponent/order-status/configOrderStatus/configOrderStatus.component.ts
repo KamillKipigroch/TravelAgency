@@ -44,6 +44,7 @@ export class ConfigOrderStatusComponent implements OnInit {
       id: 0,
       name: '',
       level: 0,
+      itsFinal: false,
       visible: true,
     };
   }
@@ -58,7 +59,8 @@ export class ConfigOrderStatusComponent implements OnInit {
     this.choose = {
       id: 0,
       name: '',
-      level:0,
+      level: 0,
+      itsFinal: false,
       visible: true,
     };
     this.initOffers();
@@ -181,6 +183,9 @@ export class ConfigOrderStatusComponent implements OnInit {
     this.all = [...this.all!];
     this.addEditDialog = false;
     this.header = "Edit";
-    this.choose = {id: 0, level:0, name: '', visible: true};
+    this.choose = {
+      id: 0, level: 0, name: '',
+      itsFinal: false, visible: true
+    };
   }
 }

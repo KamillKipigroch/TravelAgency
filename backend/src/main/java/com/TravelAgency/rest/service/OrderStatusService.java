@@ -36,7 +36,21 @@ public class OrderStatusService {
         if (orderStatusRepository.findByName(request.getName()).isPresent()) {
             throw new FindException(IS_ALREADY_EXIST + request.getName());
         }
+
         var newObject = new OrderStatus();
+
+        var all = orderStatusRepository.findAll();
+        all.sort((OrderStatus o1, OrderStatus o2) -> Long.compare(o1.getLevel(), o2.getLevel()));
+        if(all.stream().allMatch(status -> status.getLevel() < request.getLevel())){
+            all.forEach(orderStatus -> {orderStatus.setItsFinal(false);});
+            orderStatusRepository.saveAll(all);
+            newObject.setItsFinal(true);
+        }
+        else {
+            newObject.setItsFinal(false);
+        }
+
+
         newObject.setLevel(request.getLevel());
         newObject.setVisible(true);
         newObject.setName(request.getName());
@@ -57,10 +71,16 @@ public class OrderStatusService {
                 new FindException(NOT_FOUND_WITH_ID + id));
         object.setVisible(false);
         orderStatusRepository.save(object);
-        if(orderStatusRepository.findAll().stream().noneMatch(OrderStatus::getVisible)){
+        if (orderStatusRepository.findAll().stream().noneMatch(OrderStatus::getVisible)) {
             object.setVisible(true);
             orderStatusRepository.save(object);
             throw new IllegalStateException("You cant disable all objects !");
         }
+    }
+
+    public OrderStatus findNext(OrderStatus orderStatus) {
+        var list = orderStatusRepository.findAll();
+        list.sort((OrderStatus o1, OrderStatus o2) -> Long.compare(o1.getLevel(), o2.getLevel()));
+        return list.stream().filter(status -> status.getLevel() > orderStatus.getLevel()).findFirst().orElse(null);
     }
 }

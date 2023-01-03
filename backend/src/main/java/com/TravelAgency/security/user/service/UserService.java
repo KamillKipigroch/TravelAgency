@@ -1,11 +1,8 @@
 package com.TravelAgency.security.user.service;
 
-import com.TravelAgency.security.user.registration.RegisterUserRequest;
+import com.TravelAgency.security.user.model.*;
 import com.TravelAgency.security.user.registration.token.ConfirmationToken;
 import com.TravelAgency.security.user.registration.token.ConfirmationTokenService;
-import com.TravelAgency.security.user.model.LoginUser;
-import com.TravelAgency.security.user.model.User;
-import com.TravelAgency.security.user.model.UserRole;
 import com.TravelAgency.security.user.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -135,6 +132,15 @@ public class UserService implements UserDetailsService {
 
         user.setLocked(false);
         return userRepository.save(user);
+    }
+
+
+    public void changePassword(ChangePasswordRequest request) {
+        var user = userRepository.findUserByEmail(request.getEmail()).orElseThrow( () -> new FindException(USER_NOT_FOUND));
+        if(bCryptPasswordEncoder.matches(request.getLastPassword(), user.getPassword())){
+            user.setPassword(bCryptPasswordEncoder.encode(request.getNewPassword()));
+            userRepository.save(user);
+        }
     }
 
     public String generate(User user) {

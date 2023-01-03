@@ -1,7 +1,8 @@
 package com.TravelAgency.security.user.controller;
 
-import com.TravelAgency.security.user.registration.RegistrationRequest;
-import com.TravelAgency.security.user.registration.RegistrationService;
+import com.TravelAgency.security.user.model.ChangePasswordRequest;
+import com.TravelAgency.security.user.model.RegistrationRequest;
+import com.TravelAgency.security.user.service.RegistrationService;
 import com.TravelAgency.security.TokenProvider;
 import com.TravelAgency.security.user.model.AuthResponse;
 import com.TravelAgency.security.user.model.LoginUser;
@@ -46,6 +47,12 @@ public class LoginController {
             throw new FindException(VERIFY_YOUR_EMAIL);
         }
         return new ResponseEntity<>(new AuthResponse(token), HttpStatus.OK);
+    }
+
+    @PostMapping("password")
+    public HttpStatus changePassword(@RequestBody ChangePasswordRequest request){
+        userService.changePassword(request);
+        return HttpStatus.OK;
     }
 
 

@@ -1,8 +1,8 @@
 package com.TravelAgency.rest.controller;
 
 import com.TravelAgency.security.user.model.User;
-import com.TravelAgency.security.user.registration.RegisterUserRequest;
-import com.TravelAgency.security.user.registration.RegistrationService;
+import com.TravelAgency.security.user.model.RegisterUserRequest;
+import com.TravelAgency.security.user.service.RegistrationService;
 import com.TravelAgency.security.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

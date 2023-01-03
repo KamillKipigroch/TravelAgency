@@ -6,6 +6,7 @@ import {IUser} from "../../../../model/user/user";
 import {StorageService} from "../../../services/storage.service";
 import {MailService, Question} from "../../../services/emailService.service";
 import {User} from "../../../services/user.service";
+import {logMessages} from "@angular-devkit/build-angular/src/builders/browser-esbuild/esbuild";
 
 @Component({
   selector: 'app-configure-offer',
@@ -67,6 +68,7 @@ export class QuestionComponent implements OnInit {
       answered: false
     };
     this.initQuestion();
+
   }
 
   openNew() {
@@ -78,6 +80,9 @@ export class QuestionComponent implements OnInit {
     this.questionService.getAll().subscribe(
       (response: Question[]) => {
         this.all = response;
+        if(this.showModeratorBoard){
+          this.all = this.all.filter(question => !question.answered)
+        }
       },
       (error: HttpErrorResponse) => {
         this.messageService.add({

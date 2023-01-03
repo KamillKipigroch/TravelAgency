@@ -89,6 +89,7 @@ public class QuestionController {
                 "        Hi " +
                 "        <br/> Thank you for write a question.\n" +
                 "        <br/> We will try respond as soon as possible \n" +
+                "        <br/> <p>Yours faithfully</p><br/>TravelAgency\n"+
                 "      </td>\n" +
                 "    </tr>\n" +
                 "    </tbody>\n" +
@@ -117,7 +118,8 @@ public class QuestionController {
                 "    <tr>\n" +
                 "      <td style=\"padding-top:15pt;font-size:19px\">\n" +
                 "        Hi  \n" +
-                "        "+ answer +
+                "        <br/> "+ answer +
+                "         <p>Yours faithfully</p><br>TravelAgency\n"+
                 "      </td>\n" +
                 "    </tr>\n" +
                 "    </tbody>\n" +
