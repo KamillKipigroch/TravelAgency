@@ -56,6 +56,14 @@ public class OrderController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PutMapping("/cancel")
+    public ResponseEntity<Order> cancel(@RequestBody Order order) {
+        var status = orderStatusService.findByName("Cancel");
+        order.setOrderStatus(status);
+        var response =orderService.update(order);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 
     @PostMapping("/add")
     @Operation(security = {@SecurityRequirement(name = BEARER_KEY_SECURITY_SCHEME)})
@@ -77,7 +85,8 @@ public class OrderController {
 
 
     private void validOrder(OfferAvailability offerAvailability, Room room) {
-        var count = orderService.findAll().stream().filter(order -> Objects.equals(order.getRoom().getId(), room.getId()) && Objects.equals(order.getDeadline().getId(), offerAvailability.getId())).count();
+        var count = orderService.findAll().stream().filter(order -> !Objects.equals(order.getOrderStatus().getName(), "Cancel") && Objects.equals(order.getRoom().getId(), room.getId())
+                && Objects.equals(order.getDeadline().getId(), offerAvailability.getId())).count();
         if (room.getQuantity() <= count) {
             throw new IllegalStateException("Selected room is not available on this deadline !");
         }

@@ -10,8 +10,7 @@ import java.lang.module.FindException;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.TravelAgency.comunicates.Communicates.IS_ALREADY_EXIST;
-import static com.TravelAgency.comunicates.Communicates.NOT_FOUND_WITH_ID;
+import static com.TravelAgency.comunicates.Communicates.*;
 
 
 @Service
@@ -30,6 +29,11 @@ public class OrderStatusService {
     public OrderStatus findById(Long id) {
         return orderStatusRepository.findById(id)
                 .orElseThrow(() -> new FindException(NOT_FOUND_WITH_ID + id));
+    }
+
+    public OrderStatus findByName(String name) {
+        return orderStatusRepository.findByName(name)
+                .orElseThrow(() -> new FindException(NOT_FOUND_WITH_NAME + name));
     }
 
     public OrderStatus add(OrderStatusRequest request) {
@@ -79,8 +83,7 @@ public class OrderStatusService {
     }
 
     public OrderStatus findNext(OrderStatus orderStatus) {
-        var list = orderStatusRepository.findAll();
-        list.sort((OrderStatus o1, OrderStatus o2) -> Long.compare(o1.getLevel(), o2.getLevel()));
+        var list = orderStatusRepository.findAll().stream().filter(status -> !status.getName().equals("Cancel")).toList();
         return list.stream().filter(status -> status.getLevel() > orderStatus.getLevel()).findFirst().orElse(null);
     }
 }

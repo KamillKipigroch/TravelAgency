@@ -35,7 +35,7 @@ public class OfferService {
 
     private boolean verifyRoomIsEmpty(OfferAvailability offerAvailability, Room room) {
         var count = orderService.findAll().stream().filter(
-                order -> Objects.equals(order.getRoom().getId(), room.getId()) && Objects.equals(order.getDeadline().getId(), offerAvailability.getId())).count();
+                order -> !Objects.equals(order.getOrderStatus().getName(), "Cancel") &&Objects.equals(order.getRoom().getId(), room.getId()) && Objects.equals(order.getDeadline().getId(), offerAvailability.getId())).count();
         return room.getQuantity() > count;
     }
 

@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface OpinionImageRepository extends JpaRepository<OpinionImage, Long> {
     Optional<OpinionImage> findById(Long id);
-
-
 }

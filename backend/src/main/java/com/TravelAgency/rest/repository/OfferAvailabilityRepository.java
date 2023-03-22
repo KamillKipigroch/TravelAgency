@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface OfferAvailabilityRepository extends JpaRepository<OfferAvailability, Long> {
     Optional<OfferAvailability> findById(Long id);
-
-
 }

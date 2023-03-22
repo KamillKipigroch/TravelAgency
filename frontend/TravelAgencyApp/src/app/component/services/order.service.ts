@@ -37,6 +37,15 @@ export class OrderService {
     order.user.userRole = role
     return this.http.put<Order>(`${this.apiServerUrl}/next-status`, order)
   }
+
+  cancel(order: Order) {
+    let userEmail = order.user.email;
+    let role = order.user.userRole;
+    order.user = new User()
+    order.user.email = userEmail
+    order.user.userRole = role
+    return this.http.put<Order>(`${this.apiServerUrl}/cancel`, order)
+  }
 }
 
 export class Order {

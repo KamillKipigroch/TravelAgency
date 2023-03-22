@@ -119,7 +119,7 @@ export class OrderComponent implements OnInit {
   }
 
   changeToNextStatus(order: Order) {
-    let msg;
+    let msg = '';
     if (order.orderStatus.level == 0) {
       msg = ' You must sura its paid ! '
     }
@@ -129,6 +129,36 @@ export class OrderComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.orderService.nextStatus(order).subscribe(
+          (response) => {
+            this.initOrders();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Successful',
+              detail: 'User enabled',
+              life: 3000
+            });
+          },
+          (error) => {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Something go wrong ' + error.detail,
+              life: 3000
+            });
+          }
+        )
+      }
+    })
+  }
+
+
+  cancel(order: Order) {
+    this.confirmationService.confirm({
+      message: 'Are you sure you want change to cancel this order?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.orderService.cancel(order).subscribe(
           (response) => {
             this.initOrders();
             this.messageService.add({
