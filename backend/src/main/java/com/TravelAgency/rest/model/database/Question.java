@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table (name = "question_t")
+@Table (name = "question")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -33,6 +33,8 @@ public class Question implements Serializable {
     String message;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    @PrimaryKeyJoinColumn
     User employee;
 
     @Column(length = 3000)

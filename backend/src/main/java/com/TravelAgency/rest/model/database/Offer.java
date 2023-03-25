@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "offer_t")
+@Table(name = "offer")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -25,15 +25,19 @@ public class Offer implements Serializable {
     Long id;
 
     @OneToMany(mappedBy = "offer")
+    @PrimaryKeyJoinColumn
     List<Hotel> hotel;
 
     @OneToMany(mappedBy = "offer")
+    @PrimaryKeyJoinColumn
     List<OfferImage> images;
 
     @OneToMany(mappedBy = "offer")
+    @PrimaryKeyJoinColumn
     List<Opinion> opinions;
 
     @OneToMany(mappedBy = "offer")
+    @PrimaryKeyJoinColumn
     @SortComparator(OfferAvailabilityComparator.class)
     @JsonIgnoreProperties({"offer"})
     List<OfferAvailability> availabilities;

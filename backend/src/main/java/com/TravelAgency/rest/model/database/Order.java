@@ -32,19 +32,21 @@ public class Order implements Serializable {
     private OrderStatus orderStatus;
 
     @ManyToOne
-    @JoinColumn(name = "deadline")
+    @JoinColumn(name = "deadline_id")
     @JsonIgnoreProperties({"offer"})
     private OfferAvailability deadline;
 
     @ManyToOne
-    @JoinColumn(name = "room")
+    @JoinColumn(name = "room_id")
     private Room room;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @PrimaryKeyJoinColumn
     private User user;
 
     private double price;
+    private boolean isPaid;
 
     private Boolean visible;
 }

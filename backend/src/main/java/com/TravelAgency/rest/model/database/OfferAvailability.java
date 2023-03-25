@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table (name = "availability_t")
+@Table (name = "availability")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -29,6 +29,7 @@ public class OfferAvailability implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "offer_id")
+    @PrimaryKeyJoinColumn
     Offer offer;
 
     @Column(nullable = false)

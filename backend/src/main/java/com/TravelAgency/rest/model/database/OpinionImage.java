@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "opinion_image_t")
+@Table(name = "opinion_image")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -30,6 +30,7 @@ public class OpinionImage implements Serializable {
     @ManyToOne
     @JoinColumn(name = "opinion_id")
     @JsonIgnore
+    @PrimaryKeyJoinColumn
     private Opinion opinion;
 
     private String url;

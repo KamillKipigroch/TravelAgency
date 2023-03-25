@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table (name = "country_t")
+@Table (name = "country")
 @NoArgsConstructor
 @Data
 public class Country implements Serializable {

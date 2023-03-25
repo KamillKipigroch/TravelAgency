@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "hotel_t")
+@Table(name = "hotel")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -25,19 +25,22 @@ public class Hotel implements Serializable {
     @JsonIgnore
     Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "country_id")
+    @PrimaryKeyJoinColumn
     Country country;
 
     @ManyToOne
     @JoinColumn(name = "offer_id")
     @JsonIgnore
+    @PrimaryKeyJoinColumn
     Offer offer;
 
     @Max(5) @Min(0) int standard;
 
     @OneToMany(mappedBy = "hotel")
     @JsonIgnoreProperties({"hotel"})
+    @PrimaryKeyJoinColumn
     Set<Room> rooms;
     String name;
     Boolean visible;

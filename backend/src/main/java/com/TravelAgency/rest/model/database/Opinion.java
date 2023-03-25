@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "opinion_t")
+@Table(name = "opinion")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -32,12 +32,14 @@ public class Opinion implements Serializable {
 
     @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @PrimaryKeyJoinColumn
     @JsonIgnoreProperties({"id","userRole", "username", "authorities","accountNonExpired","credentialsNonExpired","accountNonLocked"})
     User user;
 
     @ManyToOne
     @JoinColumn(name = "offer_id")
     @JsonIgnore
+    @PrimaryKeyJoinColumn
     Offer offer;
 
     private Double value;
@@ -48,6 +50,7 @@ public class Opinion implements Serializable {
 
     @OneToMany(mappedBy = "opinion")
     @JsonIgnoreProperties({"opinion"})
+    @PrimaryKeyJoinColumn
     private Set<OpinionImage> opinionImages;
 
     private LocalDateTime createDate;

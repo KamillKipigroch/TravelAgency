@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name = "room_t")
+@Table(name = "room")
 @NoArgsConstructor
 @Getter
 @Setter

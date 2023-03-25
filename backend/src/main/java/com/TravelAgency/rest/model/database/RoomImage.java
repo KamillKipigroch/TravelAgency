@@ -10,7 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "room_image_t")
+@Table(name = "room_image")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -28,8 +28,9 @@ public class RoomImage implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))
     @JsonIgnore
+    @PrimaryKeyJoinColumn
     private Room room;
 
     private String name;
