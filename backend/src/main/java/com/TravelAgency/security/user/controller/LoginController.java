@@ -34,13 +34,13 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> loginUser(@Valid @RequestBody LoginUser user) {
+    public ResponseEntity<AuthResponse> loginUser(@RequestBody LoginUser user) {
         String token;
         try {
             if (!userService.isUserEnabled(user.getEmail()))
                 throw new IllegalStateException(VERIFY_YOUR_EMAIL);
             token = authenticateAndGetToken(user.getEmail(), user.getPassword());
-        } catch (Exception e) {
+            } catch (Exception e) {
             if (e.getMessage() != VERIFY_YOUR_EMAIL) {
                 throw new FindException("Bad login or Password");
             }

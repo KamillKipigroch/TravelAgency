@@ -37,12 +37,12 @@ export class AuthService {
     );
   }
 
-  register(firstName: string, lastname: string, email: string, password: string): Observable<any> {
+  register(firstName: string, lastName: string, email: string, password: string): Observable<any> {
     return this.http.post(
       AUTH_API + 'register',
       {
         firstName,
-        lastname,
+        lastName,
         email,
         password,
       },

@@ -72,8 +72,8 @@ public class OfferController {
     @RequestMapping(path = "/upload-offer-image", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<OfferImage> uploadOfferImage(@RequestPart("offer") String offerId, @RequestPart("image") MultipartFile image) throws IOException {
         var offer = offerService.findById(Long.parseLong(offerId));
-        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        var opinionImage = offerImageService.add(offer, uploadResult.get("url").toString());
+//        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        var opinionImage = offerImageService.add(offer, "");
 
         return new ResponseEntity<>(opinionImage, HttpStatus.OK);
     }
@@ -81,8 +81,8 @@ public class OfferController {
     @RequestMapping(path = "/upload-room-image", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<RoomImage> uploadRoomImage(@RequestPart("room") String roomId, @RequestPart("image") MultipartFile image) throws IOException {
         var room = roomService.findById(Long.parseLong(roomId));
-        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        var opinionImage = roomImageService.add(room, uploadResult.get("url").toString());
+//        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        var opinionImage = roomImageService.add(room, "");
 
         return new ResponseEntity<>(opinionImage, HttpStatus.OK);
     }

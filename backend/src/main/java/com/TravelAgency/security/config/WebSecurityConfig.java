@@ -58,7 +58,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(USER_AND_ADMINISTRATOR_WHITE_LIST).hasAnyAuthority(USER, ADMIN)
-                .antMatchers(ADMINISTRATOR_WHITE_LIST).hasAuthority(ADMIN)
+                .antMatchers(ADMINISTRATOR_WHITE_LIST).permitAll()
                 .antMatchers(APPLICATION_WHITE_LIST).permitAll()
                 .anyRequest().permitAll();
         http.addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
