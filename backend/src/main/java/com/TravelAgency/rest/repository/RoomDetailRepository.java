@@ -12,8 +12,8 @@ public interface RoomDetailRepository extends JpaRepository<RoomDetail, Long> {
     @Query("SELECT o FROM RoomDetail o WHERE o.visible = true  and o.id = :id")
     Optional<RoomDetail> findById(@Param("id") Long id);
 
-    @Query("SELECT o FROM RoomDetail o WHERE o.visible = true ")
-    Optional<RoomDetail> findByName(String name);
+    @Query("SELECT o FROM RoomDetail o WHERE o.visible = true and o.name = :name ")
+    Optional<RoomDetail> findByName(@Param("name") String name);
 
     @Query("SELECT o FROM RoomDetail o WHERE o.visible = true ")
     List<RoomDetail> findAll();
