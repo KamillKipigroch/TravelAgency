@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import jwt_decode from "jwt-decode";
-import {Offer} from "./offer.service";
 import {User} from "./user.service";
 
 const USER_KEY = 'auth-user';
@@ -14,11 +13,6 @@ export class StorageService {
 
   clean(): void {
     window.sessionStorage.clear();
-  }
-
-  public saveOffer(offerId: any): void{
-    window.sessionStorage.removeItem(OFFER_ID)
-    window.sessionStorage.setItem(OFFER_ID, offerId)
   }
 
   public saveToken(token: any): void {

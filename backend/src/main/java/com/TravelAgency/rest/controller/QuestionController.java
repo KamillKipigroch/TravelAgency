@@ -1,7 +1,7 @@
 package com.TravelAgency.rest.controller;
 
 import com.TravelAgency.rest.model.database.Question;
-import com.TravelAgency.rest.service.*;
+import com.TravelAgency.rest.service.QuestionService;
 import com.TravelAgency.security.sender.EmailSender;
 import com.TravelAgency.security.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +40,7 @@ public class QuestionController {
         try {
             emailSender.send(
                     request.getEmail(),
-                    buildEmail());
+                    buildEmail(), "Send question");
         } catch (Exception e) {
             logger.error("Email sender dont work !");
         }
@@ -58,7 +58,7 @@ public class QuestionController {
         try {
             emailSender.send(
                     request.getEmail(),
-                    buildAnswer(request.getAnswerMessage()));
+                    buildAnswer(request.getAnswerMessage()), "Answer for your question");
         } catch (Exception e) {
             logger.error("Email sender dont work !");
         }

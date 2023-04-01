@@ -1,12 +1,11 @@
 package com.TravelAgency.security.user.service;
 
 
+import com.TravelAgency.security.sender.EmailSender;
 import com.TravelAgency.security.user.model.*;
 import com.TravelAgency.security.user.registration.EmailValidator;
 import com.TravelAgency.security.user.registration.token.ConfirmationToken;
 import com.TravelAgency.security.user.registration.token.ConfirmationTokenService;
-import com.TravelAgency.security.sender.EmailSender;
-import com.TravelAgency.security.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -46,7 +45,7 @@ public class RegistrationService {
         try {
             emailSender.send(
                     request.getEmail(),
-                    buildEmail(request.getFirstName(), link));
+                    buildEmail(request.getFirstName(), link), "Confirm your email");
         } catch (Exception e) {
             logger.error("Email sender dont work !");
         }
@@ -76,7 +75,7 @@ public class RegistrationService {
         try {
             emailSender.send(
                     request.getEmail(),
-                    buildEmailToUser(request.getFirstName(), password));
+                    buildEmailToUser(request.getFirstName(), password), "Password generated in TravelAgency");
         } catch (Exception e) {
             logger.error("Email sender dont work !");
         }
