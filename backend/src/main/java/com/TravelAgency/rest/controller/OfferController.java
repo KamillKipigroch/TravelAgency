@@ -113,15 +113,9 @@ public class OfferController {
 
         if (request.getHotel().get(0).getRooms() != null && !request.getHotel().get(0).getRooms().isEmpty()) {
             request.getHotel().get(0).getRooms().forEach(roomRequest -> {
-                var room = roomService.add(roomRequest, hotel);
-
-//        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-                var opinionImage = roomImageService.add(room, "");
+                roomService.add(roomRequest, hotel);
             });
         }
-
-//        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        var opinionImage = offerImageService.add(offer, "respond");
 
         var respond = offerService.findById(offer.getId());
         respond.setHotel(new ArrayList<>());
@@ -130,7 +124,6 @@ public class OfferController {
                 new HashSet<>(roomService.findByHotel(respond.getHotel().get(0).getId()))
         );
         respond.setAvailabilities(availability);
-
 
         return new ResponseEntity<>(respond, HttpStatus.OK);
     }
