@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
 
     this.messageService.clear();
 
-    console.log(mail)
     this.mailService.addQuestion(mail).subscribe({
       next: data => {
         this.messageService.add({
@@ -54,12 +53,5 @@ export class AppComponent implements OnInit {
         });
       },
     });
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: "We will respond as soon as possible",
-      life: 3000
-    });
-
   }
 }
