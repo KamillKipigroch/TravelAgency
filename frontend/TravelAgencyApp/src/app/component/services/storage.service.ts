@@ -9,10 +9,16 @@ const OFFER_ID = 'offer-id';
   providedIn: 'root'
 })
 export class StorageService {
-  constructor() {}
+  constructor() {
+  }
 
   clean(): void {
     window.sessionStorage.clear();
+  }
+
+  public saveOffer(offerId: any): void {
+    window.sessionStorage.removeItem(OFFER_ID)
+    window.sessionStorage.setItem(OFFER_ID, offerId)
   }
 
   public saveToken(token: any): void {

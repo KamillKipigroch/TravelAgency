@@ -16,8 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.lang.module.FindException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 import static com.TravelAgency.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -72,8 +74,8 @@ public class OfferController {
     @RequestMapping(path = "/upload-offer-image", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<OfferImage> uploadOfferImage(@RequestPart("offer") String offerId, @RequestPart("image") MultipartFile image) throws IOException {
         var offer = offerService.findById(Long.parseLong(offerId));
-//        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        var opinionImage = offerImageService.add(offer, "");
+        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        var opinionImage = offerImageService.add(offer, uploadResult.get("url").toString());
 
         return new ResponseEntity<>(opinionImage, HttpStatus.OK);
     }
@@ -81,8 +83,8 @@ public class OfferController {
     @RequestMapping(path = "/upload-room-image", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<RoomImage> uploadRoomImage(@RequestPart("room") String roomId, @RequestPart("image") MultipartFile image) throws IOException {
         var room = roomService.findById(Long.parseLong(roomId));
-//        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        var opinionImage = roomImageService.add(room, "");
+        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        var opinionImage = roomImageService.add(room, uploadResult.get("url").toString());
 
         return new ResponseEntity<>(opinionImage, HttpStatus.OK);
     }
@@ -111,9 +113,15 @@ public class OfferController {
 
         if (request.getHotel().get(0).getRooms() != null && !request.getHotel().get(0).getRooms().isEmpty()) {
             request.getHotel().get(0).getRooms().forEach(roomRequest -> {
-                roomService.add(roomRequest, hotel);
+                var room = roomService.add(roomRequest, hotel);
+
+//        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+                var opinionImage = roomImageService.add(room, "");
             });
         }
+
+//        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
+        var opinionImage = offerImageService.add(offer, "respond");
 
         var respond = offerService.findById(offer.getId());
         respond.setHotel(new ArrayList<>());
@@ -122,6 +130,8 @@ public class OfferController {
                 new HashSet<>(roomService.findByHotel(respond.getHotel().get(0).getId()))
         );
         respond.setAvailabilities(availability);
+
+
         return new ResponseEntity<>(respond, HttpStatus.OK);
     }
 
