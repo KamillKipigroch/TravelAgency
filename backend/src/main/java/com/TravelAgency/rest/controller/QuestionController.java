@@ -74,7 +74,7 @@ public class QuestionController {
                 "        <table role=\"presentation\" width=\"100%\" style=\"max-width:480pt\" align=\"center\">\n" +
                 "          <tr>\n" +
                 "            <td style=\"background-color:#1D70B8;font-size:28px;padding-left:30pt\">\n" +
-                "                    <span style=\"color:#ffffff\">Confirm your email</span>\n" +
+                "                    <span style=\"color:#ffffff\">Thanks for posting the question</span>\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "        </table>\n" +
@@ -87,9 +87,9 @@ public class QuestionController {
                 "    <tr>\n" +
                 "      <td style=\"padding-top:15pt;font-size:19px\">\n" +
                 "        Hi " +
-                "        <br/> Thank you for write a question.\n" +
-                "        <br/> We will try respond as soon as possible \n" +
-                "        <br/> <p>Yours faithfully</p><br/>TravelAgency\n"+
+                "        <br/> Thank you for writing the question.\n" +
+                "        <br/> We will try to answer as soon as possible.\n" +
+                "        <br/> <p>Yours faithfully</p>TravelAgency\n" +
                 "      </td>\n" +
                 "    </tr>\n" +
                 "    </tbody>\n" +
@@ -105,7 +105,7 @@ public class QuestionController {
                 "        <table role=\"presentation\" width=\"100%\" style=\"max-width:480pt\" align=\"center\">\n" +
                 "          <tr>\n" +
                 "            <td style=\"background-color:#1D70B8;font-size:28px;padding-left:30pt\">\n" +
-                "                    <span style=\"color:#ffffff\">Confirm your email</span>\n" +
+                "                    <span style=\"color:#ffffff\">Thanks for posting the question</span>\n" +
                 "            </td>\n" +
                 "          </tr>\n" +
                 "        </table>\n" +
@@ -118,8 +118,8 @@ public class QuestionController {
                 "    <tr>\n" +
                 "      <td style=\"padding-top:15pt;font-size:19px\">\n" +
                 "        Hi  \n" +
-                "        <br/> "+ answer +
-                "         <p>Yours faithfully</p><br>TravelAgency\n"+
+                "        <br/> " + answer +
+                "         <p>Yours faithfully</p>TravelAgency\n" +
                 "      </td>\n" +
                 "    </tr>\n" +
                 "    </tbody>\n" +
