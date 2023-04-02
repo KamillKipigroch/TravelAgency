@@ -38,6 +38,7 @@ public class OrderService {
         order.setDeadline(deadline);
         order.setRoom(room);
         order.setUser(user);
+        order.setVisible(true);
         order.setPrice(price);
         return orderRepository.save(order);
     }

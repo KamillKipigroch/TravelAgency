@@ -1,11 +1,11 @@
 package com.TravelAgency.security.user.controller;
 
-import com.TravelAgency.security.user.model.ChangePasswordRequest;
-import com.TravelAgency.security.user.model.RegistrationRequest;
-import com.TravelAgency.security.user.service.RegistrationService;
 import com.TravelAgency.security.TokenProvider;
 import com.TravelAgency.security.user.model.AuthResponse;
+import com.TravelAgency.security.user.model.ChangePasswordRequest;
 import com.TravelAgency.security.user.model.LoginUser;
+import com.TravelAgency.security.user.model.RegistrationRequest;
+import com.TravelAgency.security.user.service.RegistrationService;
 import com.TravelAgency.security.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.lang.module.FindException;
 
 import static com.TravelAgency.comunicates.Communicates.VERIFY_YOUR_EMAIL;
@@ -50,9 +49,9 @@ public class LoginController {
     }
 
     @PostMapping("password")
-    public HttpStatus changePassword(@RequestBody ChangePasswordRequest request){
+    public ResponseEntity<AuthResponse> changePassword(@RequestBody ChangePasswordRequest request) {
         userService.changePassword(request);
-        return HttpStatus.OK;
+        return loginUser(new LoginUser(request.getEmail(), request.getNewPassword()));
     }
 
 

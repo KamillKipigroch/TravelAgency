@@ -94,12 +94,14 @@ public class UserService implements UserDetailsService {
         return token;
     }
 
-    public List<User> findAllUsers(){
-        return userRepository.findAll().stream().filter(it-> it.getUserRole()== UserRole.User).toList();
+    public List<User> findAllUsers() {
+        return userRepository.findAll().stream().filter(it -> it.getUserRole() == UserRole.User).toList();
     }
-    public List<User> findAllEmployers(){
-        return userRepository.findAll().stream().filter(it-> it.getUserRole()== UserRole.Employee).toList();
+
+    public List<User> findAllEmployers() {
+        return userRepository.findAll().stream().filter(it -> it.getUserRole() == UserRole.Employee).toList();
     }
+
     public User loginUser(LoginUser loginUser) {
         if (loginUser == null || loginUser.getEmail().isEmpty()) {
             throw new FindException(USER_NOT_FOUND);
@@ -127,6 +129,7 @@ public class UserService implements UserDetailsService {
         user.setLocked(true);
         return userRepository.save(user);
     }
+
     public User unlockUser(RegisterUserRequest request) {
         var user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(FindException::new);
 
@@ -136,10 +139,16 @@ public class UserService implements UserDetailsService {
 
 
     public void changePassword(ChangePasswordRequest request) {
-        var user = userRepository.findUserByEmail(request.getEmail()).orElseThrow( () -> new FindException(USER_NOT_FOUND));
-        if(bCryptPasswordEncoder.matches(request.getLastPassword(), user.getPassword())){
+        var user = userRepository.findUserByEmail(request.getEmail()).orElseThrow(() -> new FindException(USER_NOT_FOUND));
+
+        if (bCryptPasswordEncoder.matches(request.getLastPassword(), user.getPassword())) {
+            if (bCryptPasswordEncoder.matches(request.getNewPassword(), user.getPassword())) {
+                throw new IllegalStateException("Cannot change password to this same!");
+            }
             user.setPassword(bCryptPasswordEncoder.encode(request.getNewPassword()));
             userRepository.save(user);
+        } else {
+            throw new IllegalStateException("Last password its incorrect");
         }
     }
 

@@ -199,6 +199,7 @@ export class OfferDetailComponent implements OnInit {
   }
 
   save() {
+    this.addEditOpinion = false;
     this.submitted = true;
     let user = this.storageService.getUser()
     this.newEditOpinion.userEmail = user.email;
@@ -213,7 +214,10 @@ export class OfferDetailComponent implements OnInit {
         )
         this.uploadedFiles = [];
         this.offer.opinions?.push(responseOpinion);
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Opinion was added!', life: 3000});
       })
+
+    this.newEditOpinion = new OpinionRequest();
     this.header = "Edit";
   }
 

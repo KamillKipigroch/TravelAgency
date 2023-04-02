@@ -26,16 +26,27 @@ export class RegisterComponent implements OnInit {
   onSubmit(): void {
     this.messageService.clear();
 
-    const {firstName, lastname, email, password} = this.form;
+    const {firstName, lastName, email, password} = this.form;
 
-    this.authService.register(firstName, lastname, email, password).subscribe({
+    console.log(firstName, lastName, email, password)
+    this.authService.register(firstName, lastName, email, password).subscribe({
       next: data => {
         console.log(data);
         this.isSuccessful = true;
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Your registration is successful!', life: 3000});
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Your registration is successful!',
+          life: 3000
+        });
       },
       error: err => {
-        this.messageService.add({severity: 'error', summary: 'Error', detail:  "Signup failed! "+err.error.message, life: 3000});
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: "Signup failed! " + err.error.message,
+          life: 3000
+        });
       }
     });
   }

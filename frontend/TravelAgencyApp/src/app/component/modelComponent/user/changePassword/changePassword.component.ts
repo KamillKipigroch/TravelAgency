@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../../services/auth.service';
-import { StorageService } from '../../../services/storage.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../../services/auth.service';
+import {StorageService} from '../../../services/storage.service';
 import {MessageService} from "primeng/api";
 
 
@@ -32,13 +32,24 @@ export class ChangePasswordComponent implements OnInit {
     this.messageService.clear();
     this.authService.changePassword(userEmail, lastPassword, newPassword).subscribe({
       next: data => {
-        this.reloadPage();
         this.isLoggedIn = true;
         this.storageService.saveToken(data.accessToken);
+        this.reloadPage();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Successful',
+          detail: 'Password was changed!',
+          life: 3000
+        });
       },
       error: err => {
         this.isLoggedIn = false;
-        this.messageService.add({severity: 'error', summary: 'Error', detail:  "Login failed! "+err.error.message, life: 3000});
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: "Change password failed! " + err.error.message,
+          life: 3000
+        });
       },
     });
   }
