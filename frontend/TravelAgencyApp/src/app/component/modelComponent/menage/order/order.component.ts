@@ -164,7 +164,7 @@ export class OrderComponent implements OnInit {
             this.messageService.add({
               severity: 'success',
               summary: 'Successful',
-              detail: 'User enabled',
+              detail: 'Order Canceled',
               life: 3000
             });
           },

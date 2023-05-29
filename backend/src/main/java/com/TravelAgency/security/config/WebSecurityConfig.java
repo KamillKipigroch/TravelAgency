@@ -1,8 +1,8 @@
 package com.TravelAgency.security.config;
 
 
+import com.TravelAgency.rest.user.model.UserRole;
 import com.TravelAgency.security.TokenAuthenticationFilter;
-import com.TravelAgency.security.user.model.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;

@@ -71,7 +71,7 @@
             <div class="dropdown-menu" aria-labelledby="account" style="font-size: 15pt">
               <a class="dropdown-item"  *ngIf="isLoggedIn && !showAdminBoard && !showModeratorBoard"  routerLink="/account/orders">Orders</a>
               <a href class="dropdown-item" routerLink="/account/password">Change Password</a>
-              <a href class="dropdown-item" (click)="logout()">LogOut</a>
+              <a href class="dropdown-item" (click)="logout()">Log out</a>
             </div>
           </li>
           <li *ngIf="isLoggedIn" style="padding-right: 50pt">

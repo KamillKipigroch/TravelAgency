@@ -1,6 +1,6 @@
 package com.TravelAgency.security;
 
-import com.TravelAgency.security.user.model.User;
+import com.TravelAgency.rest.user.model.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;

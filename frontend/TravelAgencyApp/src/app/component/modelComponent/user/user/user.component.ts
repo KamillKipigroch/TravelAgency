@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ConfirmationService} from 'primeng/api';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import {HttpErrorResponse} from "@angular/common/http";
-import {User, AddUser, UserService} from "../../../services/user.service";
+import {User, UserService} from "../../../services/user.service";
 import {IUser} from "../../../../model/user/user";
 import {StorageService} from "../../../services/storage.service";
 
@@ -126,8 +125,6 @@ export class UserComponent implements OnInit {
   }
 
   lockOrUnlock(user: User) {
-
-
     if(!user.locked) {
       this.confirmationService.confirm({
         message: 'Are you sure you want to lock user with email ' + user.email + '?',

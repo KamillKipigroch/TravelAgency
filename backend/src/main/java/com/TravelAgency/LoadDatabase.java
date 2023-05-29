@@ -1,10 +1,10 @@
 package com.TravelAgency;
 
-import com.TravelAgency.rest.model.database.Country;
-import com.TravelAgency.rest.repository.CountryRepository;
-import com.TravelAgency.security.user.model.User;
-import com.TravelAgency.security.user.model.UserRole;
-import com.TravelAgency.security.user.repository.UserRepository;
+import com.TravelAgency.rest.country.model.Country;
+import com.TravelAgency.rest.country.repository.CountryRepository;
+import com.TravelAgency.rest.user.model.User;
+import com.TravelAgency.rest.user.model.UserRole;
+import com.TravelAgency.rest.user.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -406,6 +406,5 @@ public class LoadDatabase {
 
     }
 
-    ;
 }
 

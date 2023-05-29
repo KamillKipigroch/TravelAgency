@@ -37,7 +37,7 @@
             <td>
               <button *ngIf="(showAdminBoard || showModeratorBoard) && !order.orderStatus.itsFinal" pButton pRipple icon="pi pi-align-center" class="p-button-rounded p-button-success mr-2"
                       (click)="changeToNextStatus(order)"></button>
-              <button *ngIf="(showAdminBoard || showModeratorBoard) && !order.orderStatus.itsFinal" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2"
+              <button *ngIf="!order.orderStatus.itsFinal" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning mr-2"
                       (click)="cancel(order )"></button>
               <button *ngIf="(!showAdminBoard && !showModeratorBoard) && order.orderStatus.level == 0" pButton pRipple icon="pi pi-align-center" class="p-button-rounded p-button-success mr-2"
                       (click)="changeToNextStatus(order)"></button>
