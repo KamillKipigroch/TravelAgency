@@ -1,6 +1,5 @@
 package com.TravelAgency.rest.opinion.controller;
 
-import com.TravelAgency.rest.image.opinion.model.OpinionImage;
 import com.TravelAgency.rest.image.opinion.service.OpinionImageService;
 import com.TravelAgency.rest.offer.service.OfferService;
 import com.TravelAgency.rest.opinion.OpinionRequest;
@@ -8,21 +7,16 @@ import com.TravelAgency.rest.opinion.model.Opinion;
 import com.TravelAgency.rest.opinion.service.OpinionService;
 import com.TravelAgency.rest.user.service.UserService;
 import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 import static com.TravelAgency.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @AllArgsConstructor
@@ -48,15 +42,6 @@ public class OpinionController {
         var offer = offerService.findById(request.getOfferId());
         var roomDetails = opinionService.add(request, user, offer);
         return new ResponseEntity<>(roomDetails, HttpStatus.OK);
-    }
-
-    @RequestMapping(path = "/upload-image", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-    public ResponseEntity<OpinionImage> upload(@RequestPart("opinion") String opinionId, @RequestPart("image") MultipartFile image) throws IOException {
-        var opinion = opinionService.findById(Long.parseLong(opinionId));
-        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        var opinionImage = opinionImageService.add(opinion, uploadResult.get("url").toString());
-
-        return new ResponseEntity<>(opinionImage, HttpStatus.OK);
     }
 
     @PutMapping("/update")

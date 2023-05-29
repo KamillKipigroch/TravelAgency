@@ -21,7 +21,7 @@ export class OpinionService {
     const uploadImageData = new FormData();
     uploadImageData.append('image', file, file.name);
     uploadImageData.append('opinion', opinionId.toString());
-    return this.http.post<Image>(`${this.apiServerUrl}/opinion/upload-image`, uploadImageData)
+    return this.http.post<Image>(`${this.apiServerUrl}/image/upload-opinion-image`, uploadImageData)
   }
 
 }

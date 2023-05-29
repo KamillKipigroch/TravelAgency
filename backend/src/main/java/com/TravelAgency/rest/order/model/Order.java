@@ -1,6 +1,6 @@
 package com.TravelAgency.rest.order.model;
 
-import com.TravelAgency.rest.offer.offerAvailability.OfferAvailability;
+import com.TravelAgency.rest.offer.offerAvailability.model.OfferAvailability;
 import com.TravelAgency.rest.order.status.model.OrderStatus;
 import com.TravelAgency.rest.room.model.Room;
 import com.TravelAgency.rest.user.model.User;

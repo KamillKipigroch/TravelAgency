@@ -1,7 +1,7 @@
 package com.TravelAgency.rest.offer.service;
 
 import com.TravelAgency.rest.offer.model.Offer;
-import com.TravelAgency.rest.offer.offerAvailability.OfferAvailability;
+import com.TravelAgency.rest.offer.offerAvailability.model.OfferAvailability;
 import com.TravelAgency.rest.offer.repository.OfferRepository;
 import com.TravelAgency.rest.order.service.OrderService;
 import com.TravelAgency.rest.room.model.Room;
@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.TravelAgency.comunicates.Communicates.NOT_FOUND_WITH_ID;
-
 
 @Service
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.TravelAgency.rest.offer.offerAvailability;
+package com.TravelAgency.rest.offer.offerAvailability.model;
 
 import com.TravelAgency.rest.offer.model.Offer;
 import lombok.Getter;

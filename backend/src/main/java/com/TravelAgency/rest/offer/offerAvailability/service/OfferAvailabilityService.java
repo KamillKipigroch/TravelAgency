@@ -1,7 +1,7 @@
 package com.TravelAgency.rest.offer.offerAvailability.service;
 
 import com.TravelAgency.rest.offer.model.Offer;
-import com.TravelAgency.rest.offer.offerAvailability.OfferAvailability;
+import com.TravelAgency.rest.offer.offerAvailability.model.OfferAvailability;
 import com.TravelAgency.rest.offer.offerAvailability.repository.OfferAvailabilityRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

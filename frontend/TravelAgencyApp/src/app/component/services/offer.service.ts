@@ -47,7 +47,7 @@ export class OfferService {
     this.uploadImageData.append('image', file, file.name);
     this.uploadImageData.append('room', roomId.toString());
 
-    return this.http.post<Image>(`${this.apiServerUrl}/offer/upload-room-image`, this.uploadImageData)
+    return this.http.post<Image>(`${this.apiServerUrl}/image/upload-room-image`, this.uploadImageData)
   }
 
   public uploadOfferImage(file:File, offerId:number): Observable<Image> {
@@ -55,7 +55,7 @@ export class OfferService {
     this.uploadImageData.append('image', file, file.name);
     this.uploadImageData.append('offer', offerId.toString());
 
-    return this.http.post<Image>(`${this.apiServerUrl}/offer/upload-offer-image`, this.uploadImageData)
+    return this.http.post<Image>(`${this.apiServerUrl}/image/upload-offer-image`, this.uploadImageData)
   }
 
   public deleteOffer(businessKey: String): Observable<void> {

@@ -2,8 +2,8 @@ package com.TravelAgency.rest.offer.model;
 
 import com.TravelAgency.rest.hotel.model.Hotel;
 import com.TravelAgency.rest.image.offer.model.OfferImage;
-import com.TravelAgency.rest.offer.offerAvailability.OfferAvailability;
 import com.TravelAgency.rest.offer.offerAvailability.OfferAvailabilityComparator;
+import com.TravelAgency.rest.offer.offerAvailability.model.OfferAvailability;
 import com.TravelAgency.rest.opinion.model.Opinion;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;

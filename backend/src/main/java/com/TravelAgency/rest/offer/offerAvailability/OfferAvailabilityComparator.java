@@ -1,7 +1,8 @@
 package com.TravelAgency.rest.offer.offerAvailability;
 
-import java.util.Comparator;
+import com.TravelAgency.rest.offer.offerAvailability.model.OfferAvailability;
 
+import java.util.Comparator;
 
 public class OfferAvailabilityComparator implements Comparator<OfferAvailability> {
 

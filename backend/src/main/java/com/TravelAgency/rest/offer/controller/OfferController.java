@@ -2,29 +2,19 @@ package com.TravelAgency.rest.offer.controller;
 
 import com.TravelAgency.rest.country.service.CountryService;
 import com.TravelAgency.rest.hotel.service.HotelService;
-import com.TravelAgency.rest.image.offer.model.OfferImage;
-import com.TravelAgency.rest.image.offer.service.OfferImageService;
-import com.TravelAgency.rest.image.room.model.RoomImage;
-import com.TravelAgency.rest.image.room.service.RoomImageService;
 import com.TravelAgency.rest.offer.model.Offer;
-import com.TravelAgency.rest.offer.offerAvailability.OfferAvailability;
+import com.TravelAgency.rest.offer.offerAvailability.model.OfferAvailability;
 import com.TravelAgency.rest.offer.offerAvailability.service.OfferAvailabilityService;
 import com.TravelAgency.rest.offer.service.OfferService;
 import com.TravelAgency.rest.opinion.model.Opinion;
 import com.TravelAgency.rest.room.service.RoomService;
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AllArgsConstructor;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.lang.module.FindException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,19 +22,14 @@ import java.util.HashSet;
 import java.util.List;
 
 import static com.TravelAgency.config.SwaggerConfig.BEARER_KEY_SECURITY_SCHEME;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/offer")
 public class OfferController {
-    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
     private final OfferService offerService;
     private final CountryService countryService;
     private final HotelService hotelService;
-    private final OfferImageService offerImageService;
-    private final RoomImageService roomImageService;
-    private final Cloudinary cloudinary;
     private final OfferAvailabilityService offerAvailabilityService;
     private final RoomService roomService;
 
@@ -72,31 +57,11 @@ public class OfferController {
         return new ResponseEntity<>(offers, HttpStatus.OK);
     }
 
-
-
     @Operation(security = {})
     @RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
     public ResponseEntity<Offer> getBrand(@PathVariable Long id) {
         var offer = offerService.findById(id);
         return new ResponseEntity<>(offer, HttpStatus.OK);
-    }
-
-    @RequestMapping(path = "/upload-offer-image", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<OfferImage> uploadOfferImage(@RequestPart("offer") String offerId, @RequestPart("image") MultipartFile image) throws IOException {
-        var offer = offerService.findById(Long.parseLong(offerId));
-        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        var opinionImage = offerImageService.add(offer, uploadResult.get("url").toString());
-
-        return new ResponseEntity<>(opinionImage, HttpStatus.OK);
-    }
-
-    @RequestMapping(path = "/upload-room-image", method = POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<RoomImage> uploadRoomImage(@RequestPart("room") String roomId, @RequestPart("image") MultipartFile image) throws IOException {
-        var room = roomService.findById(Long.parseLong(roomId));
-        var uploadResult = cloudinary.uploader().upload(image.getBytes(), ObjectUtils.emptyMap());
-        var opinionImage = roomImageService.add(room, uploadResult.get("url").toString());
-
-        return new ResponseEntity<>(opinionImage, HttpStatus.OK);
     }
 
     @PostMapping("/add")
